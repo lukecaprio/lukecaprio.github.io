@@ -1,0 +1,11 @@
+{
+  "name": "lukecaprio-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio website",
+  "scripts": {
+    "start": "npx serve -s . -l 3000"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

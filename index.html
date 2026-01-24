@@ -608,6 +608,117 @@
             height: 16px;
         }
 
+        /* Writing Section */
+        #writing {
+            background: var(--bg-secondary);
+            max-width: none;
+        }
+
+        .writing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .writing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .writing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .writing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .writing-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--text-muted);
+            transform: translateY(-4px);
+        }
+
+        .writing-card:hover::before {
+            opacity: 1;
+        }
+
+        .writing-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-glow);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .writing-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .writing-description {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .writing-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .writing-year {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .writing-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        .writing-link:hover {
+            color: var(--accent);
+        }
+
+        .writing-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
         /* Skills Section */
         .skills-grid {
             display: grid;
@@ -933,6 +1044,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .writing-grid {
+                grid-template-columns: 1fr;
+            }
+
             .education-card {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -966,6 +1081,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#writing">Writing</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#education">Education</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -1026,7 +1142,8 @@
                 <div class="about-text">
                     <p>I'm a dual-major in Computer Science and Mathematics at the University of Miami, with a minor in French. My work sits at the intersection of machine learning, statistical modeling, and software engineering.</p>
                     <p>I've built deep learning models for medical signal classification, developed agentic AI systems for voice-based workflows, and trained large language models on complex reasoning tasks. I'm driven by the challenge of turning mathematical concepts into systems that solve real problems.</p>
-                    <p>Currently seeking opportunities in machine learning engineering, data science, and AI research for Summer 2025 and beyond.</p>
+                    <p>When I'm not coding or working on ML projects, you'll find me diving into music, movies, and sports. I write about these topics regularly, bringing the same analytical lens I use in my technical work to explore what makes great art and compelling competition.</p>
+                    <p>Currently seeking opportunities in machine learning engineering, data science, and AI research for Summer 2026 and beyond.</p>
                 </div>
                 <div class="about-highlights">
                     <div class="highlight-card">
@@ -1161,10 +1278,6 @@
                             <span class="project-stat-value">100+</span>
                             <span class="project-stat-label">Files</span>
                         </div>
-                        <div class="project-stat">
-                            <span class="project-stat-value">2</span>
-                            <span class="project-stat-label">Days Built</span>
-                        </div>
                     </div>
                     <div class="project-tech">
                         <span class="tech-tag">React</span>
@@ -1220,10 +1333,59 @@
         </div>
     </section>
 
+    <!-- Writing Section -->
+    <section id="writing">
+        <div class="writing-container">
+            <div class="section-header">
+                <p class="section-label">04 / Writing</p>
+                <h2 class="section-title">Academic Writing</h2>
+            </div>
+            <!-- To add more papers: Copy the writing-card div below and update the icon, title, description, year, and link -->
+            <div class="writing-grid">
+                <div class="writing-card">
+                    <div class="writing-icon">📄</div>
+                    <h3 class="writing-title">Efficient Digit Recognition Using K-Means Clustering and K-Nearest Neighbors</h3>
+                    <p class="writing-description">A hybrid ML model achieving 98% faster classification speed while maintaining 92% accuracy on MNIST handwritten digits.</p>
+                    <div class="writing-meta">
+                        <span class="writing-year">2024</span>
+                    </div>
+                    <a href="docs/KNNKMEANSFINALPAPER.pdf" class="writing-link" target="_blank">
+                        Read Paper
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    </a>
+                </div>
+                <div class="writing-card">
+                    <div class="writing-icon">📝</div>
+                    <h3 class="writing-title">Le faux noble et le vrai bonheur dans Le Bourgeois gentilhomme (French)</h3>
+                    <p class="writing-description">A literary analysis of Molière's comedy exploring how the pursuit of social status leads to absurdity, while true happiness comes from honesty and love.</p>
+                    <div class="writing-meta">
+                        <span class="writing-year">2025</span>
+                    </div>
+                    <a href="papers/Le Bourgeois gentilhomme.pdf" class="writing-link" target="_blank">
+                        Read Essay
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    </a>
+                </div>
+                <div class="writing-card">
+                    <div class="writing-icon">📄</div>
+                    <h3 class="writing-title">La ville intelligente et IA à Paris : innovation ou précipitation ? (French)</h3>
+                    <p class="writing-description">A research-based analysis of how artificial intelligence is shaping Paris as a "smart city," weighing innovation and efficiency against ethical concerns like algorithmic surveillance, weak public accountability, and limited citizen participation.</p>
+                    <div class="writing-meta">
+                        <span class="writing-year">2025</span>
+                    </div>
+                    <a href="papers/La ville intelligent.pdf" class="writing-link" target="_blank">
+                        Read Paper
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Skills Section -->
     <section id="skills">
         <div class="section-header">
-            <p class="section-label">04 / Skills</p>
+            <p class="section-label">05 / Skills</p>
             <h2 class="section-title">Technical Toolkit</h2>
         </div>
         <div class="skills-grid">
@@ -1294,7 +1456,7 @@
     <section id="education">
         <div class="education-container">
             <div class="section-header">
-                <p class="section-label">05 / Education</p>
+                <p class="section-label">06 / Education</p>
                 <h2 class="section-title">Academic Background</h2>
             </div>
             <div class="education-card">
@@ -1330,7 +1492,7 @@
     <!-- Contact Section -->
     <section id="contact">
         <div class="section-header">
-            <p class="section-label">06 / Contact</p>
+            <p class="section-label">07 / Contact</p>
             <h2 class="section-title">Let's Connect</h2>
         </div>
         <div class="contact-grid">
@@ -1375,7 +1537,7 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p class="footer-text">© 2025 Luke Caprio. Built with care.</p>
+            <p class="footer-text">© 2026 Luke Caprio. Built with care.</p>
             <div class="footer-links">
                 <a href="https://github.com/lukecaprio" target="_blank">GitHub</a>
                 <a href="https://linkedin.com/in/lukecaprio" target="_blank">LinkedIn</a>
