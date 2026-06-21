@@ -16,29 +16,69 @@
     ::-webkit-scrollbar-thumb:hover{background:#333b46;}
     @keyframes lcblink{0%,100%{opacity:1}50%{opacity:.35}}
     @keyframes lcfade{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+    @media(max-width:768px){
+      /* Nav */
+      .m-nav{padding:14px 20px !important;}
+      .m-nav-link{display:none !important;}
+
+      /* Hero */
+      .m-hero{padding:90px 20px 56px !important;}
+      .m-hero-grid{grid-template-columns:1fr !important; gap:36px !important;}
+      .m-hero-photo{height:300px !important; position:relative !important;}
+      .m-hero-stats{gap:20px !important; flex-wrap:wrap !important;}
+
+      /* Sections */
+      .m-section{padding:64px 20px !important;}
+
+      /* About */
+      .m-about-grid{grid-template-columns:1fr !important; gap:36px !important;}
+
+      /* Experience */
+      .m-exp-card{grid-template-columns:1fr !important;}
+      .m-exp-date{text-align:left !important; white-space:normal !important; margin-top:4px !important;}
+
+      /* Education */
+      .m-edu-grid{grid-template-columns:auto 1fr !important; gap:20px !important;}
+      .m-edu-stats{grid-column:1 / -1 !important; text-align:left !important; display:flex !important; align-items:center !important; gap:20px !important;}
+      .m-edu-stats>div:first-child{font-size:32px !important;}
+
+      /* Contact */
+      .m-contact-grid{grid-template-columns:1fr !important; gap:32px !important;}
+
+      /* Footer */
+      .m-footer{padding:28px 20px !important;}
+      .m-footer-inner{flex-direction:column !important; gap:14px !important; align-items:center !important;}
+    }
+
+    @media(max-width:480px){
+      .m-hero h1{font-size:52px !important;}
+      .m-section{padding:52px 16px !important;}
+      .m-nav{padding:12px 16px !important;}
+    }
   </style>
 </head>
 <body>
 <div style="--bg:#0b0d10; --panel:#14181e; --panel2:#1b212a; --panelhov:#1c222b; --ink:#f3f4f6; --ink2:#9ba3ad; --ink3:#5c646e; --line:rgba(255,255,255,0.09); --line2:rgba(255,255,255,0.16); --blue:#7aa2ff; --bluedim:rgba(122,162,255,0.13); --serif:'Newsreader',Georgia,serif; --sans:'Hanken Grotesk',sans-serif; --mono:'JetBrains Mono',monospace; background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.6; overflow-x:hidden;">
 
   <!-- ============ NAV ============ -->
-  <nav style="position:fixed; top:0; left:0; right:0; z-index:1000; padding:18px 40px; background:rgba(11,13,16,0.78); backdrop-filter:blur(18px); border-bottom:1px solid var(--line);">
-    <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+  <nav class="m-nav" style="position:fixed; top:0; left:0; right:0; z-index:1000; padding:18px 40px; background:rgba(11,13,16,0.78); backdrop-filter:blur(18px); border-bottom:1px solid var(--line);">
+    <div class="m-footer-inner" style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
       <a href="#top" style="font-family:var(--serif); font-size:20px; font-weight:500; letter-spacing:0.3px; color:var(--ink); text-decoration:none;">Luke Caprio</a>
       <div style="display:flex; align-items:center; gap:26px;">
-        <a href="#about" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" style-hover="color:var(--ink)">About</a>
-        <a href="#experience" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" style-hover="color:var(--ink)">Experience</a>
-        <a href="#projects" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" style-hover="color:var(--ink)">Projects</a>
-        <a href="#writing" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" style-hover="color:var(--ink)">Writing</a>
-        <a href="#contact" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" style-hover="color:var(--ink)">Contact</a>
+        <a href="#about" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" class="m-nav-link" style-hover="color:var(--ink)">About</a>
+        <a href="#experience" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" class="m-nav-link" style-hover="color:var(--ink)">Experience</a>
+        <a href="#projects" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" class="m-nav-link" style-hover="color:var(--ink)">Projects</a>
+        <a href="#writing" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" class="m-nav-link" style-hover="color:var(--ink)">Writing</a>
+        <a href="#contact" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" class="m-nav-link" style-hover="color:var(--ink)">Contact</a>
         <a href="assets/LukeCaprioResume2026.pdf" target="_blank" style="display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11px; letter-spacing:0.5px; color:var(--blue); border:1px solid var(--bluedim); background:var(--bluedim); padding:6px 13px; border-radius:100px; text-decoration:none;"><span style="width:6px; height:6px; border-radius:50%; background:var(--blue); animation:lcblink 2.4s ease-in-out infinite;"></span>Available</a>
       </div>
     </div>
   </nav>
 
   <!-- ============ HERO ============ -->
-  <section id="top" style="min-height:100vh; display:flex; align-items:center; padding:128px 40px 72px;">
-    <div style="max-width:1200px; margin:0 auto; width:100%; display:grid; grid-template-columns:1.12fr 0.88fr; gap:64px; align-items:center; animation:lcfade .8s ease both;">
+  <section id="top" class="m-hero" style="min-height:100vh; display:flex; align-items:center; padding:128px 40px 72px;">
+    <div class="m-hero-grid" style="max-width:1200px; margin:0 auto; width:100%; display:grid; grid-template-columns:1.12fr 0.88fr; gap:64px; align-items:center; animation:lcfade .8s ease both;">
       <div style="display:flex; flex-direction:column;">
         <div style="font-family:var(--mono); font-size:12px; letter-spacing:2.5px; text-transform:uppercase; color:var(--blue); margin-bottom:26px;">Software Engineer · Miami, FL</div>
         <h1 style="font-family:var(--serif); font-weight:400; font-size:clamp(56px,7vw,92px); line-height:0.96; letter-spacing:-2px; margin-bottom:26px;">Luke<br><span style="font-style:italic; font-weight:300;">Caprio</span></h1>
@@ -47,12 +87,12 @@
           <a href="#projects" style="display:inline-flex; align-items:center; gap:8px; background:var(--blue); color:#0b0d10; padding:13px 22px; border-radius:100px; font-weight:600; font-size:14px; text-decoration:none; transition:transform .2s, box-shadow .2s;" style-hover="transform:translateY(-2px); box-shadow:0 10px 30px rgba(122,162,255,0.25)">View Projects →</a>
           <a href="assets/LukeCaprioResume2026.pdf" target="_blank" style="display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line2); color:var(--ink); padding:13px 22px; border-radius:100px; font-weight:500; font-size:14px; text-decoration:none; transition:background .2s, border-color .2s;" style-hover="background:var(--panel); border-color:var(--ink3)">Résumé</a>
         </div>
-        <div style="display:flex; gap:48px; border-top:1px solid var(--line); padding-top:22px;">
+        <div class="m-hero-stats" style="display:flex; gap:48px; border-top:1px solid var(--line); padding-top:22px;">
           <div style="display:flex; align-items:center; gap:13px;"><img src="assets/bizzy.jpeg" alt="Bizzy" style="width:40px; height:40px; border-radius:9px; object-fit:cover; border:1px solid var(--line2); flex-shrink:0;"><div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:16px; font-weight:600;"><a href="https://bizzyu.com/" target="_blank" style="color:inherit; text-decoration:none; transition:color .2s;" style-hover="color:var(--blue)">Bizzy</a></span><span style="font-family:var(--mono); font-size:11px; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink3);">Lead Engineer</span></div></div>
           <div style="display:flex; align-items:center; gap:13px;"><div style="width:40px; height:40px; border-radius:9px; background:#fff; border:1px solid var(--line2); display:flex; align-items:center; justify-content:center; padding:6px; flex-shrink:0;"><img src="assets/umiami.png" alt="University of Miami" style="width:100%; height:100%; object-fit:contain;"></div><div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:16px; font-weight:600;">Math + CS</span><span style="font-family:var(--mono); font-size:11px; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink3);">Univ. of Miami</span></div></div>
         </div>
       </div>
-      <div style="position:relative; height:520px; animation:lcfade .8s ease .15s both;">
+      <div class="m-hero-photo" style="position:relative; height:520px; animation:lcfade .8s ease .15s both;">
         <div style="position:absolute; inset:0; border-radius:8px; border:1px solid var(--line2); overflow:hidden; background:linear-gradient(160deg,var(--panel2),var(--panel));">
           <div style="position:absolute; inset:0; background:repeating-linear-gradient(135deg,rgba(255,255,255,0.018) 0 2px,transparent 2px 14px);"></div>
           <div style="position:absolute; top:-30%; right:-30%; width:80%; height:80%; background:radial-gradient(circle,var(--bluedim),transparent 70%); pointer-events:none;"></div>
@@ -64,12 +104,12 @@
   </section>
 
   <!-- ============ ABOUT ============ -->
-  <section id="about" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
+  <section id="about" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
     <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
       <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">01</span>
       <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">About</h2>
     </div>
-    <div style="display:grid; grid-template-columns:1.55fr 1fr; gap:64px; align-items:start;">
+    <div class="m-about-grid" style="display:grid; grid-template-columns:1.55fr 1fr; gap:64px; align-items:start;">
       <div style="font-size:19px; line-height:1.65; color:var(--ink2);">
         <p style="margin-bottom:22px;">I'm a software engineer, born and raised in Naples, Florida, who just graduated from the University of Miami with a degree in computer science and mathematics. Right now I lead engineering at Bizzy, where we help college students find local deals and give event organizers a clean way to sell tickets and get paid.</p>
         <p style="margin-bottom:22px;">I like building things end to end, from the backend and infrastructure all the way to the app people actually tap through. Before Bizzy I built agentic AI and voice agents at Retentive Labs and trained AI models on code and math at Outlier.</p>
@@ -107,14 +147,14 @@
   </div></div></div></section>
 
   <!-- ============ EXPERIENCE ============ -->
-  <section id="experience" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
+  <section id="experience" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
     <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
       <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">02</span>
       <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">Experience</h2>
     </div>
     <div style="display:flex; flex-direction:column; gap:16px;">
 
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:32px; display:grid; grid-template-columns:1fr auto; gap:24px; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
+      <div class="m-exp-card" style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:32px; display:grid; grid-template-columns:1fr auto; gap:24px; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
         <div>
           <div style="display:flex; align-items:center; gap:16px; margin-bottom:14px;">
             <img src="assets/bizzy.jpeg" alt="Bizzy" style="width:52px; height:52px; border-radius:12px; object-fit:cover; border:1px solid var(--line2); flex-shrink:0;">
@@ -142,10 +182,10 @@
             <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Stripe Connect</span>
           </div>
         </div>
-        <div style="font-family:var(--mono); font-size:12.5px; letter-spacing:0.5px; color:var(--ink3); text-align:right; white-space:nowrap;">Apr 2026 – Present</div>
+        <div class="m-exp-date" style="font-family:var(--mono); font-size:12.5px; letter-spacing:0.5px; color:var(--ink3); text-align:right; white-space:nowrap;">Apr 2026 – Present</div>
       </div>
 
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:32px; display:grid; grid-template-columns:1fr auto; gap:24px; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
+      <div class="m-exp-card" style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:32px; display:grid; grid-template-columns:1fr auto; gap:24px; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
         <div>
           <div style="display:flex; align-items:center; gap:16px; margin-bottom:14px;">
             <img src="assets/retentive.png" alt="Retentive Labs" style="width:52px; height:52px; border-radius:12px; object-fit:cover; border:1px solid var(--line2); flex-shrink:0;">
@@ -169,10 +209,10 @@
             <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Agentic AI</span>
           </div>
         </div>
-        <div style="font-family:var(--mono); font-size:12.5px; letter-spacing:0.5px; color:var(--ink3); text-align:right; white-space:nowrap;">May 2025 – Aug 2025</div>
+        <div class="m-exp-date" style="font-family:var(--mono); font-size:12.5px; letter-spacing:0.5px; color:var(--ink3); text-align:right; white-space:nowrap;">May 2025 – Aug 2025</div>
       </div>
 
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:32px; display:grid; grid-template-columns:1fr auto; gap:24px; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
+      <div class="m-exp-card" style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:32px; display:grid; grid-template-columns:1fr auto; gap:24px; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
         <div>
           <div style="display:flex; align-items:center; gap:16px; margin-bottom:14px;">
             <div style="width:52px; height:52px; border-radius:12px; background:#fff; border:1px solid var(--line2); display:flex; align-items:center; justify-content:center; padding:7px; flex-shrink:0;"><img src="assets/outlier.png" alt="Outlier" style="width:100%; height:100%; object-fit:contain;"></div>
@@ -195,14 +235,14 @@
             <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">LLM Training</span>
           </div>
         </div>
-        <div style="font-family:var(--mono); font-size:12.5px; letter-spacing:0.5px; color:var(--ink3); text-align:right; white-space:nowrap;">Jun 2024 – May 2025</div>
+        <div class="m-exp-date" style="font-family:var(--mono); font-size:12.5px; letter-spacing:0.5px; color:var(--ink3); text-align:right; white-space:nowrap;">Jun 2024 – May 2025</div>
       </div>
 
     </div>
   </section>
 
   <!-- ============ PROJECTS ============ -->
-  <section id="projects" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
+  <section id="projects" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
     <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
       <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">03</span>
       <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">Projects</h2>
@@ -272,7 +312,7 @@
   </section>
 
   <!-- ============ WRITING ============ -->
-  <section id="writing" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
+  <section id="writing" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
     <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
       <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">04</span>
       <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">Writing</h2>
@@ -307,7 +347,7 @@
   </section>
 
   <!-- ============ SKILLS ============ -->
-  <section id="skills" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
+  <section id="skills" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
     <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
       <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">05</span>
       <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">Skills</h2>
@@ -376,12 +416,12 @@
   </section>
 
   <!-- ============ EDUCATION ============ -->
-  <section id="education" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
+  <section id="education" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
     <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
       <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">06</span>
       <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">Education</h2>
     </div>
-    <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:40px; display:grid; grid-template-columns:auto 1fr auto; gap:36px; align-items:start;">
+    <div class="m-edu-grid" style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:40px; display:grid; grid-template-columns:auto 1fr auto; gap:36px; align-items:start;">
       <div style="width:64px; height:64px; border:1px solid var(--line2); border-radius:12px; background:#fff; display:flex; align-items:center; justify-content:center; padding:11px; flex-shrink:0;"><img src="assets/umiami.png" alt="University of Miami" style="width:100%; height:100%; object-fit:contain;"></div>
       <div>
         <h3 style="font-family:var(--serif); font-size:28px; font-weight:500; margin-bottom:6px;">University of Miami</h3>
@@ -394,7 +434,7 @@
           <div style="display:flex; align-items:center; gap:11px; color:var(--ink2); font-size:14.5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--blue); flex-shrink:0;"></span>Phi Delta Theta, FL Delta Chapter</div>
         </div>
       </div>
-      <div style="text-align:right;">
+      <div class="m-edu-stats" style="text-align:right;">
         <div style="font-family:var(--mono); font-size:44px; font-weight:600; line-height:1; color:var(--ink); margin-bottom:8px;">3.81</div>
         <div style="font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink3); margin-bottom:18px;">Cumulative GPA</div>
         <p style="font-size:14px; color:var(--ink2);">May 2026</p>
@@ -403,12 +443,12 @@
   </section>
 
   <!-- ============ CONTACT ============ -->
-  <section id="contact" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
+  <section id="contact" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
     <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
       <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">07</span>
       <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">Contact</h2>
     </div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
+    <div class="m-contact-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
       <div>
         <h3 style="font-family:var(--serif); font-size:26px; font-weight:500; margin-bottom:14px;">Want to chat?</h3>
         <p style="color:var(--ink2); font-size:16px; line-height:1.6; margin-bottom:30px; max-width:440px;">Feel free to reach out, whether you have a question, want to talk about something I'm building, or just want to say hi.</p>
@@ -434,8 +474,8 @@
   </section>
 
   <!-- ============ FOOTER ============ -->
-  <footer style="border-top:1px solid var(--line); padding:36px 40px;">
-    <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+  <footer class="m-footer" style="border-top:1px solid var(--line); padding:36px 40px;">
+    <div class="m-footer-inner" style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
       <p style="font-family:var(--mono); font-size:12px; letter-spacing:0.5px; color:var(--ink3);">© 2026 Luke Caprio</p>
       <div style="display:flex; gap:22px;">
         <a href="https://github.com/lukecaprio" target="_blank" style="font-family:var(--mono); font-size:12px; letter-spacing:0.5px; color:var(--ink3); text-decoration:none; transition:color .2s;" style-hover="color:var(--ink)">GitHub</a>
