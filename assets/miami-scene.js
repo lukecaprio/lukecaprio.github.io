@@ -1,0 +1,1102 @@
+/* An original, procedural pixel scene. No renderer, image downloads, or build step.
+ * Art is cached in layers; only water, clouds, boats and fronds redraw at 30 fps.
+ * CSS owns hotspot coordinates, which the artwork reads to stay aligned. */
+(() => {
+  "use strict";
+  const canvas = document.getElementById("miami-scene");
+  const hero = document.querySelector(".miami-hero");
+  const toggle = document.getElementById("motion-toggle");
+  if (!canvas || !hero || !toggle) return;
+  const ctx = canvas.getContext("2d", { alpha: false });
+  if (!ctx) return;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const mobile = matchMedia("(max-width: 600px)");
+  let W,
+    H,
+    horizon,
+    shore,
+    points,
+    sky,
+    city,
+    land,
+    frame = 0;
+  let paused = reduced.matches,
+    visible = true,
+    elapsed = 0,
+    last = 0;
+  let pointer = 0,
+    drift = 0;
+  const palettes = {
+    teal: "#64dbcb",
+    cream: "#ffe4b2",
+    pink: "#ff99b7",
+    night: "#29223d",
+  };
+  const random = (seed) => {
+    let n = seed;
+    return () => {
+      n = (n * 1664525 + 1013904223) >>> 0;
+      return n / 4294967296;
+    };
+  };
+  function rect(c, x, y, w, h, color) {
+    c.fillStyle = color;
+    c.fillRect(Math.round(x), Math.round(y), Math.ceil(w), Math.ceil(h));
+  }
+  function poly(c, coords, color) {
+    c.fillStyle = color;
+    c.beginPath();
+    coords.forEach(([x, y], i) =>
+      i
+        ? c.lineTo(Math.round(x), Math.round(y))
+        : c.moveTo(Math.round(x), Math.round(y)),
+    );
+    c.closePath();
+    c.fill();
+  }
+  function line(c, x, y, ex, ey, color, width = 1) {
+    // Bresenham keeps every contour pixel-crisp.
+    x = Math.round(x);
+    y = Math.round(y);
+    ex = Math.round(ex);
+    ey = Math.round(ey);
+    let dx = Math.abs(ex - x),
+      dy = -Math.abs(ey - y),
+      sx = x < ex ? 1 : -1,
+      sy = y < ey ? 1 : -1,
+      err = dx + dy;
+    for (let i = 0; i < 4000; i++) {
+      rect(c, x, y, width, width, color);
+      if (x === ex && y === ey) break;
+      const e = err * 2;
+      if (e >= dy) {
+        err += dy;
+        x += sx;
+      }
+      if (e <= dx) {
+        err += dx;
+        y += sy;
+      }
+    }
+  }
+  function ellipse(c, x, y, rx, ry, color) {
+    for (let yy = -ry; yy <= ry; yy++) {
+      const xx = Math.sqrt(1 - (yy * yy) / (ry * ry)) * rx;
+      rect(c, x - xx, y + yy, xx * 2, 1, color);
+    }
+  }
+  function makeLayer(draw) {
+    const el = document.createElement("canvas");
+    el.width = W;
+    el.height = H;
+    draw(el.getContext("2d"));
+    return el;
+  }
+  function mix(a, b, t) {
+    const rgb = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
+    const aa = rgb(a),
+      bb = rgb(b);
+    return (
+      "#" +
+      aa
+        .map((v, i) =>
+          Math.round(v + (bb[i] - v) * t)
+            .toString(16)
+            .padStart(2, "0"),
+        )
+        .join("")
+    );
+  }
+  // Tiny bitmap lettering is painted into actual buildings; UI text stays in HTML.
+  const glyphs = {
+    A: ["01110", "10001", "10001", "11111", "10001", "10001", "10001"],
+    B: ["11110", "10001", "10001", "11110", "10001", "10001", "11110"],
+    C: ["01111", "10000", "10000", "10000", "10000", "10000", "01111"],
+    D: ["11110", "10001", "10001", "10001", "10001", "10001", "11110"],
+    E: ["11111", "10000", "10000", "11110", "10000", "10000", "11111"],
+    G: ["01111", "10000", "10000", "10111", "10001", "10001", "01111"],
+    I: ["111", "010", "010", "010", "010", "010", "111"],
+    K: ["10001", "10010", "10100", "11000", "10100", "10010", "10001"],
+    L: ["10000", "10000", "10000", "10000", "10000", "10000", "11111"],
+    N: ["10001", "11001", "11001", "10101", "10011", "10011", "10001"],
+    O: ["01110", "10001", "10001", "10001", "10001", "10001", "01110"],
+    P: ["11110", "10001", "10001", "11110", "10000", "10000", "10000"],
+    R: ["11110", "10001", "10001", "11110", "10100", "10010", "10001"],
+    S: ["01111", "10000", "10000", "01110", "00001", "00001", "11110"],
+    T: ["11111", "00100", "00100", "00100", "00100", "00100", "00100"],
+    U: ["10001", "10001", "10001", "10001", "10001", "10001", "01110"],
+    V: ["10001", "10001", "10001", "10001", "10001", "01010", "00100"],
+    Y: ["10001", "10001", "01010", "00100", "00100", "00100", "00100"],
+    Z: ["11111", "00001", "00010", "00100", "01000", "10000", "11111"],
+    " ": ["000", "000", "000", "000", "000", "000", "000"],
+  };
+  function letters(c, text, x, y, color, size = 1) {
+    for (const char of text) {
+      const rows = glyphs[char] || glyphs[" "];
+      rows.forEach((row, yy) =>
+        [...row].forEach((p, xx) => {
+          if (p === "1")
+            rect(c, x + xx * size, y + yy * size, size, size, color);
+        }),
+      );
+      x += (rows[0].length + 1) * size;
+    }
+  }
+  function skyLayer(c) {
+    const stops = [
+      [0, "#49375f"],
+      [0.22, "#935782"],
+      [0.5, "#e584a6"],
+      [0.8, "#ffb2ad"],
+      [1, "#ffd0a5"],
+    ];
+    for (let y = 0; y < horizon; y += 2) {
+      const p = y / horizon;
+      let i = 1;
+      while (i < stops.length - 1 && p > stops[i][0]) i++;
+      rect(
+        c,
+        0,
+        y,
+        W,
+        2,
+        mix(
+          stops[i - 1][1],
+          stops[i][1],
+          (p - stops[i - 1][0]) / (stops[i][0] - stops[i - 1][0]),
+        ),
+      );
+    }
+    const sx = W * (mobile.matches ? 0.57 : 0.62),
+      sy = horizon - 39,
+      r = mobile.matches ? 38 : 49;
+    for (let i = 5; i > 0; i--) {
+      c.globalAlpha = 0.025;
+      ellipse(c, sx, sy, r + i * 14, r + i * 11, "#fff1b0");
+    }
+    c.globalAlpha = 1;
+    for (let y = -r; y <= r; y++) {
+      if (y > 7 && (y + 3) % 9 < 3) continue;
+      const half = Math.sqrt(r * r - y * y);
+      rect(
+        c,
+        sx - half,
+        sy + y,
+        half * 2,
+        1,
+        mix("#fff5c5", "#ffa68e", (y + r) / (2 * r)),
+      );
+    }
+    const rng = random(38);
+    for (let i = 0; i < 75; i++) {
+      const x = rng() * W,
+        y = rng() * horizon * 0.5;
+      c.globalAlpha = 0.12 + rng() * 0.36;
+      rect(c, x, y, 1, 1, "#ffe3c2");
+      if (i % 12 === 0) {
+        rect(c, x - 1, y, 3, 1, "#ffd9cb");
+        rect(c, x, y - 1, 1, 3, "#ffd9cb");
+      }
+    }
+    c.globalAlpha = 1;
+    // A narrow, hazy island at the far edge of the bay.
+    for (let x = 0; x < W; x += 4) {
+      rect(c, x, horizon - 5 - rng() * 4, 5, 12, "#af7f9d");
+    }
+  }
+  function building(c, x, base, w, h, tone, rng, detail = true) {
+    const y = base - h;
+    rect(c, x, y, w, h, tone);
+    rect(c, x + w - 5, y, 5, h, "#413958");
+    rect(c, x, y, w, 2, "#d195a6");
+    if (h > 55) {
+      rect(c, x + 3, y - 3, w - 6, 3, tone);
+      rect(c, x + 7, y - 6, w - 14, 3, tone);
+      if (rng() > 0.6) rect(c, x + w * 0.6, y - 17, 1, 12, "#6c5473");
+    }
+    if (detail) {
+      for (let yy = y + 6; yy < base - 3; yy += 7) {
+        rect(c, x + 2, yy, w - 8, 1, "#ac88a043");
+        for (let xx = x + 4; xx < x + w - 7; xx += 5) {
+          const n = rng();
+          rect(
+            c,
+            xx,
+            yy + 2,
+            2,
+            3,
+            n > 0.83
+              ? "#ffdab0"
+              : n > 0.57
+                ? "#b4cbb9"
+                : n > 0.3
+                  ? "#8dc4cb"
+                  : "#715478",
+          );
+        }
+      }
+      rect(c, x + 1, y + 3, 1, h - 3, "#bc91ac");
+    }
+  }
+  function cityLayer(c) {
+    const rng = random(927),
+      base = horizon + 5;
+    // Three independently colored depth planes and rooftop silhouettes.
+    for (let x = -10; x < W; ) {
+      let w = 9 + rng() * 18,
+        h = 12 + rng() * 48;
+      building(c, x, base - 4, w, h, "#ba88a4", rng, false);
+      x += w + 3;
+    }
+    for (let x = -10; x < W; ) {
+      let w = 14 + rng() * 19,
+        h = 15 + rng() * 66;
+      if (x > W * 0.42 && x < W * 0.69) h *= 0.48;
+      building(c, x, base, w, h, "#8b7195", rng);
+      x += w + 5;
+    }
+    for (let x = 8; x < W; ) {
+      let w = 15 + rng() * 26,
+        h = 28 + rng() * 76;
+      if (x > W * 0.4 && x < W * 0.67) {
+        x += 70;
+        continue;
+      }
+      building(c, x, base + 4, w, h, "#615674", rng);
+      x += w + 14 + rng() * 30;
+    }
+    // Brickell-style glass crown and illuminated vertical edges.
+    const x = points.metro.x - 13,
+      y = points.metro.y - 15,
+      b = base + 6;
+    rect(c, x, y, 27, b - y, "#424560");
+    rect(c, x + 4, y - 8, 19, 8, "#605773");
+    rect(c, x + 8, y - 14, 11, 6, "#7c6684");
+    for (let i = 2; i < 26; i += 5) {
+      rect(c, x + i, y + 3, 1, b - y - 3, "#a0c6ca");
+      for (let j = y + 7; j < b; j += 8) rect(c, x + i + 1, j, 2, 2, "#d8aabd");
+    }
+    rect(c, x + 11, y + 7, 6, 2, "#a4ffdf");
+    rect(c, x + 13, y + 5, 2, 6, "#a4ffdf");
+    rect(c, 0, base + 5, W, 3, "#474968");
+    rect(c, 0, base + 8, W, 2, "#b58baf");
+    for (let xx = 0; xx < W; xx += 13) {
+      rect(c, xx, base + 7, 2, 1, "#ffe3b0");
+    }
+  }
+  function cloud(c, x, y, w, tone) {
+    // Stepped silhouettes, thin peach under-light, and separate wisps.
+    poly(
+      c,
+      [
+        [x, y],
+        [x + 8, y],
+        [x + 8, y - 3],
+        [x + 18, y - 3],
+        [x + 18, y - 6],
+        [x + w * 0.4, y - 6],
+        [x + w * 0.4, y - 4],
+        [x + w * 0.66, y - 4],
+        [x + w * 0.66, y - 1],
+        [x + w - 8, y - 1],
+        [x + w - 8, y + 2],
+        [x + w, y + 2],
+        [x + w, y + 5],
+        [x, y + 5],
+      ],
+      tone,
+    );
+    rect(c, x + 9, y + 5, w - 15, 1, "#fbb5c1");
+    rect(c, x - 13, y + 9, w * 0.5, 1, tone);
+    rect(c, x + w * 0.65, y + 8, w * 0.5, 2, tone);
+  }
+  function water(c, t) {
+    for (let y = horizon; y < H; y += 3)
+      rect(
+        c,
+        0,
+        y,
+        W,
+        3,
+        mix("#8c95c0", "#155b76", Math.min(1, (y - horizon) / (H * 0.32))),
+      );
+    const rng = random(331),
+      sunX = W * (mobile.matches ? 0.57 : 0.62);
+    // Sunset path widens toward the viewer; broken horizontal bands avoid a flat fill.
+    for (let y = horizon + 12; y < shore + 35; y += 4) {
+      const dy = (y - horizon) / (shore - horizon);
+      const width = 18 + dy * 65;
+      const wave = Math.sin(y * 0.28 + t * 0.7) * 7;
+      rect(
+        c,
+        sunX - width / 2 + wave,
+        y,
+        width,
+        1 + (y % 3 === 0 ? 1 : 0),
+        y % 12 === 0 ? "#ffd1b0" : "#edabb1",
+      );
+    }
+    for (let i = 0; i < 780; i++) {
+      const y = horizon + 12 + rng() * (H - horizon),
+        depth = (y - horizon) / (H - horizon),
+        len = 2 + rng() * (7 + depth * 27);
+      const x =
+        ((rng() * (W + 40) +
+          Math.sin(t * 0.55 + i) * 3 +
+          Math.sin(t * 0.17 + i) * depth * 9) %
+          (W + 40)) -
+        20;
+      const n = rng();
+      const color =
+        n > 0.88
+          ? "#eec0d0"
+          : n > 0.63
+            ? "#8ed9d1"
+            : n > 0.35
+              ? "#58b8ba"
+              : "#398aa3";
+      c.globalAlpha = 0.25 + depth * 0.35 + Math.sin(t * 0.65 + i) * 0.1;
+      rect(c, x, y, len, depth > 0.5 ? 2 : 1, color);
+    }
+    c.globalAlpha = 1;
+    for (let i = 0; i < 12; i++) {
+      const y = shore - 35 + i * 3;
+      c.globalAlpha = 0.1 + i * 0.025;
+      rect(
+        c,
+        points.bizzy.x - 18 + Math.sin(t + i) * 5,
+        y,
+        38 + Math.sin(i) * 12,
+        1,
+        i % 2 ? "#ff7eb5" : "#a9f7d7",
+      );
+    }
+    c.globalAlpha = 1;
+    // Squared skyscraper reflections soften into the ripples.
+    const rr = random(667);
+    for (let i = 0; i < 90; i++) {
+      const x = rr() * W,
+        y = horizon + 11 + rr() * 35;
+      rect(c, x + Math.sin(t + y) * 2, y, 2 + rr() * 9, 1, "#d9aac05c");
+    }
+  }
+  function grass(c, x, y, scale = 1, color = "#244a4b") {
+    line(c, x, y, x - 6 * scale, y - 9 * scale, color, 2);
+    line(c, x, y, x - 2 * scale, y - 14 * scale, color, 2);
+    line(c, x, y, x + 4 * scale, y - 12 * scale, color, 2);
+    line(c, x, y, x + 9 * scale, y - 6 * scale, color, 2);
+  }
+  function lamp(c, x, y, h = 35) {
+    ellipse(c, x, y - h + 1, 11, 11, "#ffe2a314");
+    ellipse(c, x, y - h + 1, 6, 6, "#ffddab20");
+    rect(c, x - 1, y - h, 2, h, "#313847");
+    rect(c, x - 4, y, 8, 2, "#2e3445");
+    rect(c, x - 4, y - h - 7, 8, 2, "#313847");
+    rect(c, x - 3, y - h - 5, 6, 7, "#ffcb95");
+    rect(c, x - 4, y - h + 2, 8, 2, "#493947");
+    rect(c, x - 1, y - h - 10, 2, 3, "#333647");
+  }
+  function rail(c, x, y, w) {
+    line(c, x, y, x + w, y + 2, "#e3b198", 2);
+    line(c, x, y + 8, x + w, y + 10, "#785667", 2);
+    for (let i = 0; i <= w; i += 23) {
+      rect(c, x + i, y, 3, 23, "#593d55");
+      rect(c, x + i, y, 1, 21, "#b7887b");
+    }
+  }
+  function venue(c, p) {
+    const x = p.x - 54,
+      y = p.y + 8;
+    ellipse(c, x + 56, y + 80, 78, 10, "#4e394e50");
+    poly(
+      c,
+      [
+        [x, y + 6],
+        [x + 90, y + 6],
+        [x + 103, y + 17],
+        [x + 103, y + 74],
+        [x, y + 74],
+      ],
+      "#514561",
+    );
+    rect(c, x + 4, y + 10, 85, 62, "#cd899b");
+    rect(c, x + 7, y + 16, 77, 50, "#99697f");
+    rect(c, x + 85, y + 14, 5, 58, "#ffc2ae");
+    rect(c, x - 5, y + 5, 99, 5, "#262943");
+    rect(c, x - 7, y + 2, 101, 3, "#ffa3cb");
+    rect(c, x - 5, y + 10, 99, 2, "#6ef0d2");
+    rect(c, x + 17, y - 16, 61, 19, "#362940");
+    rect(c, x + 15, y - 18, 65, 2, "#ff90b9");
+    rect(c, x + 15, y - 16, 2, 19, "#ff90b9");
+    rect(c, x + 78, y - 16, 2, 19, "#ff90b9");
+    letters(c, "BIZZY", x + 22, y - 12, "#fff0bc", 1.5);
+    rect(c, x + 13, y + 23, 24, 37, "#44354c");
+    rect(c, x + 43, y + 23, 24, 37, "#44354c");
+    for (const xx of [x + 13, x + 43]) {
+      rect(c, xx, y + 23, 24, 2, "#ffa9c5");
+      rect(c, xx + 2, y + 25, 20, 24, "#675578");
+      rect(c, xx + 5, y + 29, 2, 20, "#84f5d2");
+      rect(c, xx + 10, y + 27, 2, 22, "#c5c7c5");
+      rect(c, xx + 2, y + 50, 20, 2, "#fa8ec1");
+      rect(c, xx + 11, y + 54, 3, 1, "#ffdfad");
+    }
+    // Canopy, tiled patio, stools and string lights make this a place.
+    poly(
+      c,
+      [
+        [x - 4, y + 19],
+        [x + 91, y + 19],
+        [x + 98, y + 28],
+        [x - 10, y + 28],
+      ],
+      "#31394a",
+    );
+    for (let i = 0; i < 7; i++)
+      poly(
+        c,
+        [
+          [x - 4 + i * 14, y + 19],
+          [x + 3 + i * 14, y + 19],
+          [x + 5 + i * 14, y + 28],
+          [x - 3 + i * 14, y + 28],
+        ],
+        "#65c3b6",
+      );
+    rect(c, x - 10, y + 28, 108, 3, "#e8b7a5");
+    poly(
+      c,
+      [
+        [x - 9, y + 72],
+        [x + 103, y + 72],
+        [x + 115, y + 88],
+        [x - 21, y + 88],
+      ],
+      "#a77f83",
+    );
+    for (let i = 0; i < 5; i++)
+      line(c, x - 17, y + 74 + i * 3, x + 109, y + 74 + i * 3, "#6e536557");
+    for (let i = 0; i < 6; i++) {
+      const xx = x - 12 + i * 23;
+      line(c, xx, y + 76, xx + 5, y + 88, "#dfab9957");
+    }
+    for (const xx of [x - 15, x + 95]) {
+      rect(c, xx, y + 53, 3, 24, "#393342");
+      rect(c, xx - 7, y + 52, 17, 3, "#dd969e");
+      rect(c, xx - 8, y + 47, 19, 5, "#759593");
+      rect(c, xx - 6, y + 47, 2, 4, "#91d1b6");
+    }
+    for (let i = 0; i < 4; i++) {
+      const xx = x + 3 + i * 23;
+      rect(c, xx, y + 72, 7, 2, "#efaca7");
+      rect(c, xx + 1, y + 74, 2, 8, "#3c3549");
+      rect(c, xx + 5, y + 74, 2, 8, "#3c3549");
+    }
+    line(c, x - 11, y + 8, x - 11, y + 62, "#413645", 2);
+    line(c, x - 11, y + 10, x + 105, y + 16, "#473647");
+    for (let i = 0; i < 9; i++) {
+      let xx = x - 9 + i * 14,
+        yy = y + 11 + i * 0.7;
+      rect(c, xx, yy, 2, 3, i % 2 ? "#a2f4d4" : "#ffd8a7");
+    }
+  }
+  function booth(c, p) {
+    const x = p.x - 13,
+      y = p.y + 6;
+    ellipse(c, x + 15, y + 43, 22, 5, "#513c5150");
+    rect(c, x, y, 29, 37, "#bc7d96");
+    rect(c, x + 3, y + 5, 23, 14, "#3e3c55");
+    rect(c, x + 6, y + 8, 17, 1, "#9ee5cb");
+    rect(c, x + 6, y + 12, 8, 2, "#ffb99f");
+    rect(c, x - 2, y + 21, 33, 4, "#f0baa9");
+    rect(c, x + 3, y + 26, 23, 7, "#705372");
+    poly(
+      c,
+      [
+        [x - 5, y],
+        [x + 34, y],
+        [x + 29, y - 7],
+        [x, y - 7],
+      ],
+      "#ff95b7",
+    );
+    rect(c, x - 5, y, 39, 3, "#4b3b58");
+    letters(c, "B", x + 11, y + 26, "#ffd8b0");
+    rect(c, x + 3, y + 37, 3, 4, "#40354c");
+    rect(c, x + 24, y + 37, 3, 4, "#40354c");
+  }
+  function dock(c, p) {
+    const x = p.x,
+      y = p.y + 14;
+    poly(
+      c,
+      [
+        [x - 21, y - 22],
+        [x + 20, y - 22],
+        [x + 39, shore + 80],
+        [x - 48, shore + 80],
+      ],
+      "#393947",
+    );
+    poly(
+      c,
+      [
+        [x - 19, y - 23],
+        [x + 18, y - 23],
+        [x + 33, shore + 73],
+        [x - 43, shore + 73],
+      ],
+      "#a98482",
+    );
+    for (let yy = y - 21; yy < shore + 73; yy += 5) {
+      const f = (yy - y + 23) / (shore + 96 - y);
+      line(c, x - 20 - f * 23, yy, x + 19 + f * 14, yy, "#694f67", 1);
+    }
+    line(c, x - 5, y - 21, x - 15, shore + 73, "#cfa091");
+    line(c, x + 8, y - 21, x + 18, shore + 73, "#cfa091");
+    for (const [xx, yy] of [
+      [x - 23, y - 11],
+      [x + 23, y - 11],
+      [x - 32, y + 35],
+      [x + 28, y + 35],
+    ]) {
+      rect(c, xx, yy - 8, 4, 21, "#57425b");
+      rect(c, xx - 1, yy - 9, 6, 2, "#e7b398");
+    }
+    line(c, x - 23, y - 14, x - 32, y + 29, "#edbea0");
+    line(c, x + 23, y - 14, x + 28, y + 29, "#edbea0");
+    rect(c, x - 13, y - 9, 25, 3, "#e4b29b");
+    rect(c, x - 11, y - 6, 2, 9, "#533b50");
+    rect(c, x + 9, y - 6, 2, 9, "#533b50");
+    rect(c, x - 8, y - 22, 17, 12, "#302e48");
+    rect(c, x - 6, y - 20, 13, 8, "#7be7cb");
+    rect(c, x - 4, y - 18, 5, 1, "#307f83");
+    rect(c, x - 4, y - 16, 8, 1, "#307f83");
+    rect(c, x - 9, y - 10, 20, 2, "#dcc3ba");
+    lamp(c, x + 30, y + 51, 32);
+  }
+  function bookshop(c, p) {
+    const x = p.x - 30,
+      y = p.y + 8;
+    ellipse(c, x + 34, y + 64, 45, 7, "#4c3b5650");
+    rect(c, x, y, 65, 60, "#5d6176");
+    rect(c, x + 4, y + 3, 57, 54, "#87b4b2");
+    rect(c, x + 6, y + 8, 51, 29, "#394451");
+    for (let row = 0; row < 2; row++) {
+      for (let i = 0; i < 12; i++) {
+        rect(
+          c,
+          x + 9 + i * 4,
+          y + 12 + row * 13,
+          3,
+          8,
+          ["#e8b097", "#bea0bc", "#96cbbb", "#d78c9f"][i % 4],
+        );
+      }
+      rect(c, x + 6, y + 22 + row * 13, 51, 2, "#e5b6a0");
+    }
+    poly(
+      c,
+      [
+        [x - 6, y + 2],
+        [x + 70, y + 2],
+        [x + 64, y - 12],
+        [x, y - 12],
+      ],
+      "#45415c",
+    );
+    rect(c, x - 6, y + 2, 76, 3, "#eaaab2");
+    letters(c, "BOOKS", x + 14, y - 7, "#f6d5b7");
+    rect(c, x - 3, y + 40, 71, 4, "#f4c6a9");
+    rect(c, x + 9, y + 46, 40, 2, "#b0d9c2");
+    rect(c, x + 27, y + 45, 3, 12, "#608082");
+    rect(c, x + 4, y + 60, 4, 5, "#3c344c");
+    rect(c, x + 57, y + 60, 4, 5, "#3c344c");
+  }
+  function notice(c, p) {
+    const x = p.x - 13,
+      y = p.y + 4;
+    rect(c, x + 2, y + 4, 3, 34, "#48394c");
+    rect(c, x + 23, y + 4, 3, 34, "#48394c");
+    rect(c, x - 1, y - 1, 31, 27, "#65516b");
+    rect(c, x + 2, y + 2, 25, 21, "#d8a693");
+    rect(c, x + 6, y + 5, 13, 16, "#f6dcc1");
+    rect(c, x + 9, y + 8, 7, 2, "#7b7a84");
+    for (let i = 0; i < 3; i++)
+      rect(c, x + 9, y + 12 + i * 2, 7 - i, 1, "#b8a6a8");
+    rect(c, x - 3, y - 3, 35, 3, "#f5c3a5");
+  }
+  function mailbox(c, p) {
+    const x = p.x - 8,
+      y = p.y + 6;
+    rect(c, x + 6, y + 12, 4, 20, "#4c435a");
+    rect(c, x - 1, y, 21, 15, "#eb919d");
+    rect(c, x + 1, y - 3, 16, 3, "#f5b4aa");
+    rect(c, x + 1, y + 3, 12, 8, "#914d75");
+    rect(c, x + 3, y + 4, 8, 5, "#f4ddba");
+    line(c, x + 3, y + 4, x + 7, y + 7, "#c6959b");
+    line(c, x + 11, y + 4, x + 7, y + 7, "#c6959b");
+    rect(c, x + 18, y - 5, 2, 13, "#ffc5ae");
+    rect(c, x + 19, y - 5, 7, 5, "#98ecd0");
+    ellipse(c, x + 9, y + 33, 11, 2, "#4c3c5840");
+  }
+  function arcade(c, p) {
+    const x = p.x - 10,
+      y = p.y + 8;
+    poly(
+      c,
+      [
+        [x, y],
+        [x + 18, y],
+        [x + 21, y + 9],
+        [x + 18, y + 15],
+        [x + 21, y + 35],
+        [x - 2, y + 35],
+        [x + 1, y + 16],
+        [x - 3, y + 11],
+      ],
+      "#39344d",
+    );
+    rect(c, x, y + 2, 16, 4, "#f1a1be");
+    rect(c, x + 1, y + 8, 14, 11, "#84c7bb");
+    rect(c, x + 4, y + 11, 8, 2, "#375477");
+    rect(c, x + 9, y + 12, 2, 5, "#375477");
+    rect(c, x - 1, y + 21, 20, 3, "#ee93b5");
+    rect(c, x + 3, y + 18, 1, 3, "#ffdaa1");
+    rect(c, x + 11, y + 21, 3, 1, "#92edc5");
+    rect(c, x + 4, y + 26, 8, 5, "#a77c9d");
+  }
+  function bench(c, p) {
+    const x = p.x - 17,
+      y = p.y + 10;
+    rect(c, x, y, 36, 3, "#dfae90");
+    rect(c, x, y + 5, 36, 3, "#dfae90");
+    rect(c, x - 2, y + 12, 40, 4, "#bd8b81");
+    for (const xx of [x + 3, x + 30]) {
+      rect(c, xx, y + 3, 2, 19, "#444055");
+      rect(c, xx - 2, y + 21, 6, 2, "#444055");
+    }
+    poly(
+      c,
+      [
+        [x + 12, y + 10],
+        [x + 17, y + 9],
+        [x + 20, y + 11],
+        [x + 27, y + 9],
+        [x + 28, y + 15],
+        [x + 20, y + 16],
+        [x + 12, y + 15],
+      ],
+      "#f9dfb9",
+    );
+    line(c, x + 20, y + 11, x + 20, y + 15, "#ad878d");
+  }
+  function landLayer(c) {
+    const rng = random(214);
+    // Foreground shoreline curves into the bay, with foam and a shell-strewn beach.
+    const edge = [];
+    for (let x = 0; x <= W + 4; x += 4) {
+      const y =
+        shore +
+        Math.sin((x / W) * Math.PI * 2 - 0.9) * 13 +
+        Math.sin(x * 0.014) * 4;
+      edge.push([x, y]);
+    }
+    poly(c, [...edge, [W, H], [0, H]], "#dab09e");
+    for (let x = 0; x < W; x += 4) {
+      const y =
+        shore +
+        Math.sin((x / W) * Math.PI * 2 - 0.9) * 13 +
+        Math.sin(x * 0.014) * 4;
+      rect(c, x, y - 4, 4, 3, "#a4c4b9");
+      rect(c, x, y - 1, 4, 2, "#eac8b0");
+    }
+    poly(
+      c,
+      [
+        [0, shore + 55],
+        [W * 0.18, shore + 30],
+        [W * 0.35, shore + 65],
+        [W * 0.54, shore + 60],
+        [W * 0.71, shore + 38],
+        [W, shore + 59],
+        [W, H],
+        [0, H],
+      ],
+      "#c69f99",
+    );
+    for (let i = 0; i < 1700; i++) {
+      const x = rng() * W,
+        y = shore + rng() * (H - shore);
+      if (y > shore + 20) {
+        const n = rng();
+        rect(
+          c,
+          x,
+          y,
+          1 + rng() * 3,
+          1,
+          n > 0.6 ? "#e7bba2" : n > 0.2 ? "#bc9695" : "#ae8890",
+        );
+      }
+    }
+    const path = mobile.matches
+      ? [
+          [0, H * 0.79],
+          [W * 0.26, H * 0.76],
+          [W * 0.63, H * 0.9],
+          [W, H * 0.85],
+          [W, H],
+          [0, H],
+        ]
+      : [
+          [0, H * 0.84],
+          [W * 0.21, H * 0.88],
+          [W * 0.6, H * 0.91],
+          [W, H * 0.82],
+          [W, H],
+          [0, H],
+        ];
+    poly(c, path, "#977f88");
+    for (let i = 0; i < 200; i++) {
+      const x = rng() * W,
+        y = H * 0.89 + rng() * H * 0.11;
+      rect(c, x, y, 2 + rng() * 6, 1, "#c2a09555");
+    }
+    // Buildings are placed around actual anchor centers, including mobile layout.
+    dock(c, points.projects);
+    venue(c, points.bizzy);
+    booth(c, points.tickets);
+    bookshop(c, points.writing);
+    notice(c, points.resume);
+    mailbox(c, points.contact);
+    arcade(c, points.digits);
+    bench(c, points.paper);
+    if (!mobile.matches) {
+      rail(c, W * 0.025, shore - 4, W * 0.07);
+      rail(c, W * 0.86, shore + 4, W * 0.12);
+      lamp(c, W * 0.72, shore + 49, 45);
+    }
+    for (let i = 0; i < 30; i++) {
+      const x = rng() * W,
+        y = H * 0.9 + rng() * H * 0.12;
+      grass(
+        c,
+        x,
+        y,
+        0.4 + rng() * 0.8,
+        ["#3e625c", "#35535a", "#587569"][i % 3],
+      );
+    }
+    // Far corners have dark tropical groundcover, with pink rim light.
+    poly(
+      c,
+      [
+        [0, H - 36],
+        [22, H - 39],
+        [34, H - 22],
+        [61, H - 23],
+        [74, H - 9],
+        [115, H],
+        [0, H],
+      ],
+      "#263f47",
+    );
+    poly(
+      c,
+      [
+        [W - 130, H],
+        [W - 97, H - 16],
+        [W - 73, H - 17],
+        [W - 57, H - 37],
+        [W - 41, H - 29],
+        [W - 27, H - 48],
+        [W, H - 39],
+        [W, H],
+      ],
+      "#263f47",
+    );
+    for (let i = 0; i < 18; i++) {
+      let x = i < 9 ? i * 10 : W - (i - 9) * 11;
+      grass(c, x, H - 4 - rng() * 15, 0.9 + rng(), "#2c4d4e");
+    }
+  }
+  function boat(c, p, t) {
+    const x = p.x,
+      y = p.y + 9 + Math.sin(t * 1.1) * 2.4;
+    for (let i = 0; i < 3; i++)
+      rect(
+        c,
+        x - 30 - i * 3 + Math.sin(t + i) * 2,
+        y + 15 + i * 4,
+        59 + i * 5,
+        1,
+        "#96cccb60",
+      );
+    poly(
+      c,
+      [
+        [x - 27, y + 5],
+        [x + 31, y + 5],
+        [x + 22, y + 15],
+        [x - 18, y + 15],
+      ],
+      "#e9c0b7",
+    );
+    rect(c, x - 24, y + 6, 49, 2, "#749eb2");
+    rect(c, x - 8, y - 5, 26, 10, "#edd6c3");
+    rect(c, x - 5, y - 3, 8, 6, "#657494");
+    rect(c, x + 6, y - 3, 8, 6, "#657494");
+    rect(c, x - 11, y - 7, 31, 2, "#d39bab");
+    line(c, x + 5, y - 19, x + 5, y - 8, "#e8c2b8");
+    rect(c, x + 7, y - 18, 9, 5, "#7ee2cc");
+  }
+  function frond(c, x, y, angle, len, t, shade) {
+    const wind = Math.sin(t * 0.7 + x * 0.02) * 0.06;
+    const endX = x + Math.cos(angle + wind) * len,
+      endY = y + Math.sin(angle + wind) * len + len * 0.16;
+    for (let i = 0; i < 9; i++) {
+      const f = i / 9,
+        fx = x + (endX - x) * f,
+        fy = y + (endY - y) * f - Math.sin(f * Math.PI) * len * 0.18;
+      const nf = (i + 1) / 9,
+        nx = x + (endX - x) * nf,
+        ny = y + (endY - y) * nf - Math.sin(nf * Math.PI) * len * 0.18;
+      line(c, fx, fy, nx, ny, shade, 2);
+      const leaf = (1 - f) * len * 0.27 + 3,
+        side = Math.cos(angle) < 0 ? -1 : 1;
+      poly(
+        c,
+        [
+          [fx - 1, fy],
+          [fx + side * leaf * 0.24, fy + leaf * 0.18],
+          [fx + side * leaf * 0.42, fy + leaf],
+          [fx + side * leaf * 0.08, fy + leaf * 0.68],
+        ],
+        shade,
+      );
+      poly(
+        c,
+        [
+          [fx, fy],
+          [fx - side * leaf * 0.3, fy + leaf * 0.1],
+          [fx - side * leaf * 0.5, fy + leaf * 0.7],
+          [fx, fy + leaf * 0.4],
+        ],
+        shade,
+      );
+      line(c, fx, fy, fx + side * leaf * 0.35, fy + leaf, shade, 2);
+      line(
+        c,
+        fx + 1,
+        fy,
+        fx + side * leaf * 0.65,
+        fy + leaf * 0.67,
+        "#315853",
+        1,
+      );
+    }
+  }
+  function palm(c, x, base, height, lean, t, small = false) {
+    const tx = x + lean,
+      ty = base - height;
+    for (let i = 0; i < height; i++) {
+      const f = i / height,
+        xx = x + lean * f * f;
+      rect(
+        c,
+        xx,
+        base - i,
+        small ? 3 : 6,
+        1,
+        i % 8 < 2 ? "#b28c83" : "#6d5665",
+      );
+      rect(c, xx, base - i, 1, 1, "#c99688");
+    }
+    const len = Math.min(
+      mobile.matches ? 86 : 116,
+      height * (small ? 0.45 : 0.49),
+    );
+    for (let i = 0; i < 8; i++)
+      frond(
+        c,
+        tx + 2,
+        ty,
+        [-3, -2.6, -2.12, -1.4, -0.8, -0.26, 0.15, 3.12][i],
+        len * (0.76 + (i % 3) * 0.12),
+        t,
+        ["#24474a", "#30594f", "#376251"][i % 3],
+      );
+    rect(c, tx + 1, ty - 1, 5, 6, "#71604f");
+    rect(c, tx - 1, ty + 3, 3, 4, "#3d4545");
+  }
+  function render(t) {
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(sky, 0, 0);
+    const offset = drift * 2;
+    ctx.save();
+    ctx.translate(offset, 0);
+    cloud(
+      ctx,
+      ((W * 0.04 + t * 2.4) % (W + 200)) - 95,
+      H * 0.2,
+      mobile.matches ? 92 : 145,
+      "#bc83a0",
+    );
+    cloud(
+      ctx,
+      ((W * 0.65 + t * 0.9) % (W + 140)) - 70,
+      H * 0.13,
+      105,
+      "#97678b",
+    );
+    cloud(
+      ctx,
+      ((W * 0.79 + t * 1.7) % (W + 190)) - 20,
+      H * 0.33,
+      150,
+      "#ed9cae",
+    );
+    cloud(
+      ctx,
+      ((W * 0.25 + t * 0.65) % (W + 180)) - 40,
+      H * 0.39,
+      110,
+      "#e6a0b1",
+    );
+    ctx.restore();
+    water(ctx, t);
+    ctx.drawImage(city, 0, 0);
+    // Tiny migrating seabirds cross the last band of light.
+    for (let i = 0; i < 4; i++) {
+      const x = ((W * 0.33 + i * 16 + t * 2.5) % (W + 40)) - 20,
+        y = horizon - 28 + Math.sin(i * 2 + t * 0.5) * 3;
+      const wing = Math.sin(t * 2 + i) * 2;
+      line(ctx, x - 3, y + wing, x, y, "#916b8b");
+      line(ctx, x, y, x + 3, y + wing, "#916b8b");
+    }
+    boat(ctx, points.ecg, t);
+    ctx.drawImage(land, 0, 0);
+    const m = mobile.matches;
+    palm(
+      ctx,
+      m ? 18 : W * 0.055,
+      H * 0.89,
+      m ? H * 0.24 : H * 0.355,
+      m ? 10 : 20,
+      t,
+    );
+    palm(
+      ctx,
+      m ? W - 17 : W * 0.943,
+      H * 0.89,
+      m ? H * 0.27 : H * 0.395,
+      m ? -17 : -28,
+      t,
+    );
+    if (!m) {
+      palm(ctx, W * 0.018, H * 0.79, 126, 20, t, true);
+      palm(ctx, W * 0.98, H * 0.8, 129, -11, t, true);
+      palm(ctx, W * 0.697, H * 0.76, 65, -3, t, true);
+    }
+    // Shoreline foam gently advances and recedes independently of the art cache.
+    for (let i = 0; i < 35; i++) {
+      const x = (i * W) / 35,
+        y =
+          shore +
+          Math.sin((x / W) * Math.PI * 2 - 0.9) * 13 +
+          Math.sin(x * 0.014) * 4 -
+          6 +
+          Math.sin(t * 0.8 + i * 0.15) * 2;
+      ctx.globalAlpha = 0.25 + Math.sin(t + i * 0.3) * 0.12;
+      rect(ctx, x, y, 7 + (i % 9), 1, "#e9dfbf");
+    }
+    ctx.globalAlpha = 1;
+  }
+  function resize() {
+    const box = hero.getBoundingClientRect();
+    W = mobile.matches ? 480 : 960;
+    H = Math.round((box.height / box.width) * W);
+    canvas.width = W;
+    canvas.height = H;
+    horizon = H * (mobile.matches ? 0.465 : 0.52);
+    shore = H * (mobile.matches ? 0.66 : 0.728);
+    points = {};
+    document.querySelectorAll("[data-place]").forEach((a) => {
+      const style = getComputedStyle(a);
+      points[a.dataset.place] = {
+        x: (parseFloat(style.getPropertyValue("--x")) / 100) * W,
+        y: (parseFloat(style.getPropertyValue("--y")) / 100) * H,
+      };
+    });
+    sky = makeLayer(skyLayer);
+    city = makeLayer(cityLayer);
+    land = makeLayer(landLayer);
+    render(elapsed);
+  }
+  function tick(now) {
+    frame = 0;
+    if (paused || !visible || document.hidden) return;
+    if (!last) last = now;
+    if (now - last >= 1000 / 30) {
+      elapsed += Math.min(now - last, 80) / 1000;
+      last = now;
+      drift += (pointer - drift) * 0.04;
+      render(elapsed);
+    }
+    frame = requestAnimationFrame(tick);
+  }
+  function syncMotion() {
+    cancelAnimationFrame(frame);
+    frame = 0;
+    last = 0;
+    hero.classList.toggle("scene-paused", paused);
+    toggle.setAttribute("aria-pressed", String(paused));
+    toggle.setAttribute(
+      "aria-label",
+      paused ? "Play scene animation" : "Pause scene animation",
+    );
+    toggle.firstElementChild.textContent = paused ? "▷" : "Ⅱ";
+    if (!paused && visible && !document.hidden)
+      frame = requestAnimationFrame(tick);
+  }
+  toggle.hidden = false;
+  toggle.addEventListener("click", () => {
+    paused = !paused;
+    syncMotion();
+  });
+  reduced.addEventListener("change", (e) => {
+    paused = e.matches;
+    syncMotion();
+  });
+  document.addEventListener("visibilitychange", syncMotion);
+  const observer = new IntersectionObserver(
+    (entries) => {
+      visible = entries[0].isIntersecting;
+      syncMotion();
+    },
+    { threshold: 0 },
+  );
+  observer.observe(hero);
+  hero.addEventListener(
+    "pointermove",
+    (e) => {
+      if (e.pointerType === "mouse" && !paused)
+        pointer = (e.clientX / hero.clientWidth - 0.5) * 2;
+    },
+    { passive: true },
+  );
+  hero.addEventListener(
+    "pointerleave",
+    () => {
+      pointer = 0;
+    },
+    { passive: true },
+  );
+  let resizeFrame = 0;
+  new ResizeObserver(() => {
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(resize);
+  }).observe(hero);
+  resize();
+  syncMotion();
+})();

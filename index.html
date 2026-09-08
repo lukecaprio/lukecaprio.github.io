@@ -3,7 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Luke Caprio | Software Engineer</title>
+<title>Luke Caprio | Software Engineer · Miami</title>
+<meta name="description" content="Luke Caprio — software engineer in Miami. Explore projects, writing, and life building at Bizzy, from a little corner of Biscayne Bay.">
+<meta name="theme-color" content="#271b3e">
+<link rel="stylesheet" href="assets/miami-hero.css">
+<script src="assets/miami-scene.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
@@ -61,46 +65,45 @@
 <body>
 <div style="--bg:#0b0d10; --panel:#14181e; --panel2:#1b212a; --panelhov:#1c222b; --ink:#f3f4f6; --ink2:#9ba3ad; --ink3:#5c646e; --line:rgba(255,255,255,0.09); --line2:rgba(255,255,255,0.16); --blue:#7aa2ff; --bluedim:rgba(122,162,255,0.13); --serif:'Newsreader',Georgia,serif; --sans:'Hanken Grotesk',sans-serif; --mono:'JetBrains Mono',monospace; background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.6; overflow-x:hidden;">
 
-  <!-- ============ NAV ============ -->
-  <nav class="m-nav" style="position:fixed; top:0; left:0; right:0; z-index:1000; padding:18px 40px; background:rgba(11,13,16,0.78); backdrop-filter:blur(18px); border-bottom:1px solid var(--line);">
-    <div class="m-footer-inner" style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
-      <a href="#top" style="font-family:var(--serif); font-size:20px; font-weight:500; letter-spacing:0.3px; color:var(--ink); text-decoration:none;">Luke Caprio</a>
-      <div style="display:flex; align-items:center; gap:26px;">
-        <a href="#about" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" class="m-nav-link" style-hover="color:var(--ink)">About</a>
-        <a href="#experience" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" class="m-nav-link" style-hover="color:var(--ink)">Experience</a>
-        <a href="#projects" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" class="m-nav-link" style-hover="color:var(--ink)">Projects</a>
-        <a href="#writing" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" class="m-nav-link" style-hover="color:var(--ink)">Writing</a>
-        <a href="#contact" style="font-family:var(--mono); font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink2); text-decoration:none; transition:color .2s;" class="m-nav-link" style-hover="color:var(--ink)">Contact</a>
-        <a href="assets/LukeCaprioResume2026.pdf" target="_blank" style="display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11px; letter-spacing:0.5px; color:var(--blue); border:1px solid var(--bluedim); background:var(--bluedim); padding:6px 13px; border-radius:100px; text-decoration:none;"><span style="width:6px; height:6px; border-radius:50%; background:var(--blue); animation:lcblink 2.4s ease-in-out infinite;"></span>Available</a>
-      </div>
+  <a class="skip-link" href="#about">Skip the scene</a>
+  <section id="top" class="miami-hero" aria-labelledby="hero-title">
+    <canvas id="miami-scene" aria-hidden="true"></canvas>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <header class="hero-header">
+      <a class="home-mark" href="#top" aria-label="Luke Caprio home">lc<span>✦</span></a>
+      <nav class="island-nav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#projects">Work</a>
+        <a href="#writing">Writing</a>
+        <a href="assets/LukeCaprioResume2026.pdf" target="_blank" rel="noopener">Résumé<span class="sr-only"> (PDF, opens in a new tab)</span></a>
+        <a href="mailto:lukecaprio1@gmail.com">Contact <span aria-hidden="true">↗</span></a>
+      </nav>
+      <span class="header-coordinate">25.76° N<br>80.19° W</span>
+    </header>
+    <div class="hero-intro">
+      <p class="hero-eyebrow"><span aria-hidden="true"></span>A LITTLE CORNER OF THE INTERNET</p>
+      <h1 id="hero-title">Luke Caprio<span class="title-spark" aria-hidden="true">✦</span></h1>
+      <p class="hero-hook">Software Engineer <span>·</span> Miami</p>
+      <p class="hero-note">Building things. Chasing the sunset.</p>
     </div>
-  </nav>
-
-  <!-- ============ HERO ============ -->
-  <section id="top" class="m-hero" style="min-height:100vh; display:flex; align-items:center; padding:128px 40px 72px;">
-    <div class="m-hero-grid" style="max-width:1200px; margin:0 auto; width:100%; display:grid; grid-template-columns:1.12fr 0.88fr; gap:64px; align-items:center; animation:lcfade .8s ease both;">
-      <div style="display:flex; flex-direction:column;">
-        <div style="font-family:var(--mono); font-size:12px; letter-spacing:2.5px; text-transform:uppercase; color:var(--blue); margin-bottom:26px;">Software Engineer · Miami, FL</div>
-        <h1 style="font-family:var(--serif); font-weight:400; font-size:clamp(56px,7vw,92px); line-height:0.96; letter-spacing:-2px; margin-bottom:26px;">Luke<br><span style="font-style:italic; font-weight:300;">Caprio</span></h1>
-        <p style="font-size:18px; line-height:1.55; color:var(--ink2); max-width:440px; margin-bottom:32px;">Lead engineer at Bizzy, building full-stack products for web and mobile, from infrastructure to the app people actually tap through.</p>
-        <div style="display:flex; gap:14px; margin-bottom:36px;">
-          <a href="#projects" style="display:inline-flex; align-items:center; gap:8px; background:var(--blue); color:#0b0d10; padding:13px 22px; border-radius:100px; font-weight:600; font-size:14px; text-decoration:none; transition:transform .2s, box-shadow .2s;" style-hover="transform:translateY(-2px); box-shadow:0 10px 30px rgba(122,162,255,0.25)">View Projects →</a>
-          <a href="assets/LukeCaprioResume2026.pdf" target="_blank" style="display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line2); color:var(--ink); padding:13px 22px; border-radius:100px; font-weight:500; font-size:14px; text-decoration:none; transition:background .2s, border-color .2s;" style-hover="background:var(--panel); border-color:var(--ink3)">Résumé</a>
-        </div>
-        <div class="m-hero-stats" style="display:flex; gap:48px; border-top:1px solid var(--line); padding-top:22px;">
-          <div style="display:flex; align-items:center; gap:13px;"><img src="assets/bizzy.jpeg" alt="Bizzy" style="width:40px; height:40px; border-radius:9px; object-fit:cover; border:1px solid var(--line2); flex-shrink:0;"><div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:16px; font-weight:600;"><a href="https://bizzyu.com/" target="_blank" style="color:inherit; text-decoration:none; transition:color .2s;" style-hover="color:var(--blue)">Bizzy</a></span><span style="font-family:var(--mono); font-size:11px; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink3);">Lead Engineer</span></div></div>
-          <div style="display:flex; align-items:center; gap:13px;"><div style="width:40px; height:40px; border-radius:9px; background:#fff; border:1px solid var(--line2); display:flex; align-items:center; justify-content:center; padding:6px; flex-shrink:0;"><img src="assets/umiami.png" alt="University of Miami" style="width:100%; height:100%; object-fit:contain;"></div><div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:16px; font-weight:600;">Math + CS</span><span style="font-family:var(--mono); font-size:11px; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink3);">Univ. of Miami</span></div></div>
-        </div>
-      </div>
-      <div class="m-hero-photo" style="position:relative; height:520px; animation:lcfade .8s ease .15s both;">
-        <div style="position:absolute; inset:0; border-radius:8px; border:1px solid var(--line2); overflow:hidden; background:linear-gradient(160deg,var(--panel2),var(--panel));">
-          <div style="position:absolute; inset:0; background:repeating-linear-gradient(135deg,rgba(255,255,255,0.018) 0 2px,transparent 2px 14px);"></div>
-          <div style="position:absolute; top:-30%; right:-30%; width:80%; height:80%; background:radial-gradient(circle,var(--bluedim),transparent 70%); pointer-events:none;"></div>
-          <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;"><span style="font-family:var(--mono); font-size:12px; letter-spacing:1px; color:var(--ink3);">[ headshot.jpg ]</span></div>
-          <img src="assets/headshot.jpeg" alt="Luke Caprio" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%;">
-        </div>
-      </div>
+    <div class="world-hotspots" aria-label="Explore the bay">
+      <a class="hotspot featured" data-place="bizzy" href="https://bizzyu.com/" target="_blank" rel="noopener" aria-label="Bizzy waterfront venue — visit Bizzy (opens in a new tab)"><span class="hotspot-label">Bizzy <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
+      <a class="hotspot" data-place="tickets" href="https://bizzyu.com/" target="_blank" rel="noopener" aria-label="Bizzy ticket booth — visit Bizzy (opens in a new tab)"><span class="hotspot-label">Meet Bizzy <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
+      <a class="hotspot featured" data-place="projects" href="https://github.com/lukecaprio" target="_blank" rel="noopener" aria-label="Laptop on the dock — explore Luke’s projects on GitHub (opens in a new tab)"><span class="hotspot-label">Projects <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
+      <a class="hotspot featured" data-place="writing" href="#writing" aria-label="Bayside bookshop — explore writing"><span class="hotspot-label">Writing <span>↓</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
+      <a class="hotspot" data-place="resume" href="assets/LukeCaprioResume2026.pdf" target="_blank" rel="noopener" aria-label="Shore noticeboard — read Luke’s résumé (PDF, opens in a new tab)"><span class="hotspot-label">Résumé <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
+      <a class="hotspot featured" data-place="contact" href="mailto:lukecaprio1@gmail.com" aria-label="Beach mailbox — email Luke"><span class="hotspot-label">Say hello <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
+      <a class="hotspot" data-place="ecg" href="https://github.com/lukecaprio/Deep-Learning-Based-ECG-Signal-Classification" target="_blank" rel="noopener" aria-label="Bay research boat — ECG classification project on GitHub (opens in a new tab)"><span class="hotspot-label">ECG project <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
+      <a class="hotspot" data-place="metro" href="https://github.com/lukecaprio/metrohealth" target="_blank" rel="noopener" aria-label="City health tower — Metro Health project on GitHub (opens in a new tab)"><span class="hotspot-label">Metro Health <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
+      <a class="hotspot" data-place="digits" href="https://github.com/lukecaprio/Efficient-Digit-Recognition-Using-K-Means-Clustering-and-KNN" target="_blank" rel="noopener" aria-label="Beach arcade — digit recognition project on GitHub (opens in a new tab)"><span class="hotspot-label">Digit recognition <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
+      <a class="hotspot" data-place="paper" href="docs/KNNKMEANSFINALPAPER.pdf?v=20250126" target="_blank" rel="noopener" aria-label="Reading bench — read the K-means and KNN research paper (PDF, opens in a new tab)"><span class="hotspot-label">Read a paper <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
     </div>
+    <div class="hero-bottom">
+      <div class="place-caption"><span class="location-dot" aria-hidden="true"></span><span>BISCAYNE BAY<span class="place-subtitle">MIAMI, FLORIDA</span></span></div>
+      <a class="scroll-cue" href="#about"><span>A little more about me</span><span aria-hidden="true">↓</span></a>
+      <div class="scene-controls"><span class="explore-hint"><span aria-hidden="true">✦</span> Follow the sparks. Explore the bay.</span><button id="motion-toggle" type="button" aria-label="Pause scene animation" aria-pressed="false" hidden><span class="motion-icon" aria-hidden="true">Ⅱ</span></button></div>
+    </div>
+    <noscript><p class="scene-fallback">Explore the links around the bay, or use the navigation above. Enable JavaScript for the animated scene.</p></noscript>
   </section>
 
   <!-- ============ ABOUT ============ -->
