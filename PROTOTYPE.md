@@ -2,7 +2,7 @@
 
 Branch: `prototype/miami-pixel-hero`
 
-The original animated bay now opens a static, hash-routed app shell. The island nav stays in place while visitors enter About, Work, Writing, Bizzy, and Contact. The bay has exactly five large world doors, no per-project sparks, and one neon-green Bizzy entrance. Bizzy opens into an imaginative club/bar scene using the supplied pixel mark and a single `https://bizzyu.com/` CTA; the same green venue language is visible on the bay hub.
+The original animated bay now opens a static, hash-routed app shell. The island nav stays in place while visitors enter About, Work, Writing, Bizzy, and Contact. The bay has exactly five large world doors, no per-project sparks, and one neon-green Bizzy entrance. Bizzy opens into an imaginative club/bar scene with a clean lit facade and a single `https://bizzyu.com/` CTA; the same green venue language is visible on the bay hub.
 
 Hotspots use large transparent hit targets with accessible names and a restrained glow on the in-world canvas object; hover and focus no longer place floating label pills over the artwork. About opens directly as a complete standalone porch world with its own animated blue-hour canvas, supplied headshot, sharper current bio, education, experience, skills, and a quiet footer contact link. Scene keeps the profile integrated into the world; List presents the same full content as clean stacked sections. Island-nav hover/focus subtitles name each destination without adding hotspot overlays.
 

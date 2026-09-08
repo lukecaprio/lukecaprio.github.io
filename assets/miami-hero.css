@@ -315,26 +315,6 @@ h1:focus,
   margin-top: 8px;
   color: #b9ff74;
 }
-.bizzy-scene-sign {
-  position: absolute;
-  z-index: 1;
-  top: 48%;
-  left: 50%;
-  width: clamp(150px, 18vw, 220px);
-  transform: translateX(-50%);
-  pointer-events: none;
-  filter: drop-shadow(0 0 7px #32f27688);
-  padding: 4px;
-  border: 2px solid #1f9b52;
-  background: #020604;
-}
-.bizzy-scene-sign img {
-  display: block;
-  width: 100%;
-  height: auto;
-  image-rendering: pixelated;
-  mix-blend-mode: screen;
-}
 .bizzy-list-blurb {
   border-color: #6dff9d66;
   background: #10251bd9;
@@ -825,10 +805,6 @@ kbd {
   .bizzy-note {
     bottom: 12%;
     font-size: 14px;
-  }
-  .bizzy-scene-sign {
-    top: 49%;
-    width: min(175px, 54vw);
   }
   .world-list {
     top: 302px;

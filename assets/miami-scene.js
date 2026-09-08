@@ -561,13 +561,9 @@
     poly(c, [[x, y + 8], [x + 116, y + 8], [x + 127, y + 20], [x + 119, y + 87], [x - 8, y + 87], [x - 8, y + 21]], "#08120f");
     rect(c, x - 5, y + 20, 119, 65, "#10251b");
     rect(c, x - 2, y + 23, 113, 58, "#0a1712");
-    rect(c, x - 9, y + 8, 130, 6, "#08100d");
-    rect(c, x - 10, y + 5, 132, 3, "#74ff9a");
-    rect(c, x - 4, y + 15, 118, 3, "#18dc68");
+    rect(c, x - 5, y + 14, 119, 7, "#0b2618");
+    rect(c, x - 3, y + 14, 115, 3, "#74ff9a");
     rect(c, x + 3, y + 18, 105, 2, "#c2ff74");
-    rect(c, x + 10, y - 11, 92, 13, "#06110d");
-    rect(c, x + 10, y - 11, 92, 2, "#5eff8b");
-    letters(c, "BIZZY", x + 28, y - 8, "#b9ff74", 1.35);
     // Green window glow and a single open door keep it readable as a place.
     for (const xx of [x + 8, x + 39, x + 70]) {
       rect(c, xx, y + 28, 21, 30, "#07150f");
@@ -600,8 +596,6 @@
       rect(c, xx - 1, y + 11, 5, 5, "#5eff8b");
       c.globalAlpha = 1;
     }
-    rect(c, x + 27, y - 6, 62, 3, "#123520");
-    rect(c, x + 32, y - 3, 52, 2, "#63ff8d");
   }
   function dock(c, p) {
     const x = p.x,

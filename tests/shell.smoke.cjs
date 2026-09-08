@@ -140,16 +140,8 @@ async function shot(page, name) {
         (await page.locator("#route-title").count()) === 1,
         world + " has one page heading",
       );
-      if (world === "bizzy") {
-        check(
-          (await page.locator('.bizzy-scene-sign img[src="assets/bizzy-logo-pixel.png"]').count()) === 1,
-          "Bizzy scene uses supplied pixel mark",
-        );
-        check(
-          await page.locator('.hotspot[href="https://bizzyu.com/"]').count() === 1,
-          "Bizzy scene keeps one factual CTA",
-        );
-      }
+      if (world === "bizzy")
+        check(await page.locator('.hotspot[href="https://bizzyu.com/"]').count() === 1, "Bizzy scene keeps one factual CTA");
       const sceneLinks = await page
         .locator(".hotspot")
         .evaluateAll((els) =>
