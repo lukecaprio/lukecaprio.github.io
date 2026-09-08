@@ -306,6 +306,64 @@
     rect(c, x - 13, y + 9, w * 0.5, 1, tone);
     rect(c, x + w * 0.65, y + 8, w * 0.5, 2, tone);
   }
+  function aboutScene(c, t) {
+    // A separate porch at blue hour: darker, quieter, and built from its own layers.
+    const stops = [[0, "#172541"], [0.35, "#354b67"], [0.7, "#805475"], [1, "#c77b86"]];
+    for (let y = 0; y < H; y += 2) {
+      const p = y / H;
+      let i = 1;
+      while (i < stops.length - 1 && p > stops[i][0]) i++;
+      rect(c, 0, y, W, 2, mix(stops[i - 1][1], stops[i][1], (p - stops[i - 1][0]) / (stops[i][0] - stops[i - 1][0])));
+    }
+    const rng = random(712);
+    for (let i = 0; i < 100; i++) {
+      const x = rng() * W, y = rng() * H * 0.58;
+      c.globalAlpha = 0.18 + rng() * 0.48;
+      rect(c, x, y, i % 9 === 0 ? 2 : 1, i % 9 === 0 ? 2 : 1, "#d9e7d7");
+    }
+    c.globalAlpha = 1;
+    const moonX = W * 0.78, moonY = H * 0.23;
+    ellipse(c, moonX, moonY, mobile.matches ? 23 : 34, mobile.matches ? 23 : 34, "#ffd6c3");
+    ellipse(c, moonX - 7, moonY - 4, mobile.matches ? 20 : 30, mobile.matches ? 20 : 30, "#e7b0bb55");
+    const base = H * 0.66;
+    for (let x = 0; x < W; x += 28) {
+      const h = 18 + ((x * 17) % 43);
+      rect(c, x, base - h, 21, h, "#243449");
+      rect(c, x + 4, base - h + 8, 3, 2, "#d3a4ae88");
+      rect(c, x + 12, base - h + 17, 3, 2, "#d3a4ae55");
+    }
+    for (const px of [W * 0.08, W * 0.91]) {
+      const sway = Math.sin(t * 0.9 + px) * 4;
+      line(c, px, base + 20, px + sway, base - 105, "#1c3b49", 4);
+      for (let i = 0; i < 6; i++) {
+        const ang = -2.9 + i * 1.12 + Math.sin(t + i) * 0.025;
+        line(c, px + sway, base - 100, px + sway + Math.cos(ang) * 28, base - 100 + Math.sin(ang) * 21, "#22494d", 4);
+      }
+    }
+    poly(c, [[0, H * 0.73], [W, H * 0.69], [W, H], [0, H]], "#1c2837");
+    for (let y = H * 0.76; y < H; y += 13) line(c, 0, y, W, y - 5, "#344152", 2);
+    const railY = H * 0.78;
+    rect(c, 0, railY, W, 8, "#b27683");
+    rect(c, 0, railY + 8, W, 3, "#533c58");
+    for (let x = 24; x < W; x += mobile.matches ? 52 : 78) {
+      rect(c, x, railY - 4, 7, H * 0.22, "#68475d");
+      rect(c, x + 2, railY - 1, 3, H * 0.19, "#d08d92");
+    }
+    line(c, 0, H * 0.49, W, H * 0.46, "#3b3a55", 2);
+    for (let i = 0; i < 13; i++) {
+      const x = (i / 12) * W, y = H * 0.49 - (i / 12) * H * 0.03;
+      c.globalAlpha = 0.55 + Math.sin(t * 2 + i) * 0.25;
+      ellipse(c, x, y + 4, 4, 4, i % 3 ? "#ffbd9b" : "#9dffe0");
+    }
+    c.globalAlpha = 1;
+    for (let i = 0; i < 9; i++) {
+      const x = ((i * 137 + t * (8 + i)) % (W + 30)) - 15,
+        y = H * (0.42 + (i % 4) * 0.055) + Math.sin(t * 1.7 + i) * 7;
+      c.globalAlpha = 0.35 + Math.sin(t * 2.4 + i) * 0.18;
+      rect(c, x, y, 3, 3, "#b7ffcf");
+    }
+    c.globalAlpha = 1;
+  }
   function water(c, t) {
     for (let y = horizon; y < H; y += 3)
       rect(
@@ -1065,6 +1123,10 @@
   }
   function render(t) {
     ctx.imageSmoothingEnabled = false;
+    if (currentWorld === "about") {
+      aboutScene(ctx, t);
+      return;
+    }
     ctx.drawImage(sky, 0, 0);
     const offset = drift * 2;
     ctx.save();

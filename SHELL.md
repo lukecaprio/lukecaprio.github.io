@@ -11,7 +11,7 @@ The hub has **five doors**, one each for About, Work, Writing, Bizzy, and Contac
 | World | Primary objects | List content |
 | --- | --- | --- |
 | Bay | Work dock, bookshop, Bizzy venue, porch, mailbox | The same five worlds |
-| About | Complete embedded profile with the supplied headshot | Original biography, education, experience, skills; résumé, Contact, Bizzy, GitHub, LinkedIn links |
+| About | Dedicated animated blue-hour porch world with integrated headshot/profile | Clean stacked biography, education, experience, and skills; quiet contact footer |
 | Work | ECG boat/console, Metro tower, Digits arcade | The same three projects, with read/repository/PDF actions as available |
 | Writing | One book for each French piece | Both books; a clearly marked “also in Work” Digits-paper cross-link |
 | Bizzy | One neon-green nightclub/bar entrance with the supplied pixel mark | The same factual blurb and `bizzyu.com` CTA |
@@ -43,7 +43,7 @@ Normal internal anchor navigation uses browser hash history. Browser Back/Forwar
 
 Scene | List selection lasts while this page remains open and carries between worlds. On an item, choosing Scene or List returns to its home in that view. There is no storage or backend. Initial reduced-motion and compact-screen visits default to List; the visitor can still choose Scene.
 
-Hotspots use large transparent anchors with `aria-label` text and a subtle canvas-object glow. The shell does not render floating hover/focus pills or tooltip cards over the pixel artwork. About is a complete route on arrival; the same full profile content stays embedded when Scene/List is changed, with section-jump controls for Bio, Education, Experience, and Skills. Its lead copy states the May 2026 graduation and current end-to-end Bizzy role in a concise professional voice.
+Hotspots use large transparent anchors with `aria-label` text and a subtle canvas-object glow. The shell does not render floating hover/focus pills or tooltip cards over the pixel artwork. About is a complete route on arrival: Scene enters a separate animated blue-hour porch world with the full profile integrated into the architecture, while List presents the same information as clean stacked sections. Its lead copy states the May 2026 graduation and current end-to-end Bizzy role in a concise professional voice.
 
 Island nav links carry explicit accessible names plus a small Miami-pixel destination subtitle on hover and keyboard focus: Bay / Home, About, Work / Projects, Writing, Bizzy, Résumé (PDF), and Contact.
 
@@ -90,7 +90,7 @@ The test runner accepts:
 - `SHELL_BROWSER_CHANNEL=chrome` (use installed Chrome instead of Playwright Chromium)
 - `SHELL_QA_DIR` (optional directory for desktop/mobile review screenshots)
 
-The completed desktop/mobile Chrome run passed **191 checks**. Coverage includes normal Back/Forward, Escape, direct item URLs, all nav destinations, every hub door, scene/list parity, one-home rules, parent back links, correct local PDF responses, résumé focus, complete About content/headshot/link coverage, sharp current bio copy, no hotspot overlay chrome, object hover/focus behavior, visible island-nav destinations, the Bizzy pixel mark, factual list blurb, and single CTA, unknown/alias routes, rapid navigation, pause/reduced motion, large mobile targets, horizontal overflow, no-JavaScript fallback, and browser runtime errors.
+The completed desktop/mobile Chrome run passed **190 checks**. Coverage includes normal Back/Forward, Escape, direct item URLs, all nav destinations, every hub door, scene/list parity, one-home rules, parent back links, correct local PDF responses, résumé focus, complete About content/headshot/link coverage, sharp current bio copy, no hotspot overlay chrome, object hover/focus behavior, visible island-nav destinations, the Bizzy pixel mark, factual list blurb, and single CTA, standalone About Scene/List content, unknown/alias routes, rapid navigation, pause/reduced motion, large mobile targets, horizontal overflow, no-JavaScript fallback, and browser runtime errors.
 
 JavaScript syntax, Git whitespace, unchanged CNAME, and static asset serving are checked separately. Desktop and mobile screenshots are reviewed for the shell and representative worlds/items. These are browser viewport checks, not physical-device performance profiling.
 

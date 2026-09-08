@@ -155,6 +155,11 @@ async function shot(page, name) {
         .evaluateAll((els) =>
           els.map((e) => [e.dataset.object, e.getAttribute("href")]),
         );
+      if (world === "about") {
+        check(await page.locator("#scene-view.about-scene").isVisible(), "About Scene is its own porch world");
+        check(await page.locator(".about-sections").count() === 0, "About has no jump-link row");
+        check(await page.locator(".about-scene-document .about-portrait img").count() === 1, "About Scene includes headshot");
+      }
       await page.locator('button[data-view="list"]').click();
       if (world === "about") {
         check(await page.locator("#about-bio").isVisible(), "About is embedded in List");
@@ -271,33 +276,17 @@ async function shot(page, name) {
     await go(page, "/about");
     await shot(page, "about-desktop");
     check(await page.locator("[data-show-list], [data-focus-bio]").count() === 0, "About has no second-click gate");
-    check(await page.locator("#about-bio img").evaluate(img => img.complete && img.naturalWidth > 0 && img.getAttribute("src") === "assets/headshot.jpg"), "Provided headshot loads immediately");
-    check(await page.locator("#about-bio details").count() === 0, "Experience is expanded on arrival");
-    for (const name of ["bio", "education", "experience", "skills"]) {
-      check(await page.locator(`[data-about-anchor="${name}"]`).isVisible(), name + " is embedded without another view");
-    }
-    check(await page.locator("#about-bio .about-links").count() === 0, "About has no top link dump");
-    check(await page.locator('#about-bio .about-end a[href="#/contact"]').count() === 1, "About keeps one quiet contact link");
-    check(await page.locator("#about-bio").innerText().then((t) => t.includes("graduated from the University of Miami") && t.includes("May 2026") && t.includes("Retentive Labs") && t.includes("Outlier") && t.includes("piano") && t.includes("DJ") && t.includes("basketball")), "About uses the sharper current bio");
-    await page.locator('[data-about-section="skills"]').click();
-    check(await page.locator('[data-about-anchor="skills"]').evaluate(el => el === document.activeElement), "About section jump works without hash navigation");
-    check(page.url().endsWith("#/about"), "About section jumps preserve router URL");
-    check(
-      await page.locator("#about-bio").isVisible(),
-      "About immediately shows biography",
-    );
-    check(
-      await page
-        .locator("#about-bio")
-        .innerText()
-        .then(
-          (t) =>
-            t.includes("University of Miami") &&
-            t.includes("Retentive Labs") &&
-            t.includes("Python"),
-        ),
-      "Education, experience and skills migrated",
-    );
+    check(await page.locator(".about-scene-document .about-portrait img").evaluate(img => img.complete && img.naturalWidth > 0 && img.getAttribute("src") === "assets/headshot.jpg"), "Provided headshot loads immediately");
+    check(await page.locator(".about-scene-document details").count() === 0, "Experience is expanded on arrival");
+    check(await page.locator(".about-scene-document .about-section").count() === 4, "Bio, education, experience and skills are embedded");
+    check(await page.locator(".about-sections, .about-links").count() === 0, "About has no jump or link dump chrome");
+    check(await page.locator('.about-scene-document .about-end a[href="#/contact"]').count() === 1, "About keeps one quiet contact link");
+    check(await page.locator(".about-scene-document").innerText().then((t) => t.includes("graduated from the University of Miami") && t.includes("May 2026") && t.includes("Retentive Labs") && t.includes("Outlier") && t.includes("piano") && t.includes("DJ") && t.includes("basketball")), "About uses the sharper current bio");
+    await page.locator('button[data-view="list"]').click();
+    check(await page.locator("#about-bio").isVisible(), "About List immediately shows biography");
+    check(await page.locator(".about-list-document .about-section").count() === 4, "About List keeps every section");
+    check(await page.locator(".about-list-document").innerText().then((t) => t.includes("University of Miami") && t.includes("Retentive Labs") && t.includes("Python")), "Education, experience and skills migrated");
+    await page.locator('button[data-view="scene"]').click();
     // Safe unknown route, canonical aliases and rapid navigation during a transition.
     await go(page, "/missing");
     check(
@@ -374,11 +363,11 @@ async function shot(page, name) {
     await shot(page, "item-mobile");
     await go(page, "/about");
     await shot(page, "about-mobile");
-    check(await page.locator("#about-bio img").isVisible(), "Mobile About shows headshot on arrival");
-    check(await page.locator("#about-bio").evaluate(el => el.scrollWidth <= el.clientWidth), "Mobile About content fits its frame");
-    const aboutText = await page.locator("#about-bio").textContent();
+    check(await page.locator(".about-scene-document img").isVisible(), "Mobile About shows headshot on arrival");
+    check(await page.locator(".about-scene-document").evaluate(el => el.scrollWidth <= el.clientWidth), "Mobile About content fits its frame");
+    const aboutText = await page.locator(".about-scene-document").textContent();
     await page.locator('button[data-view="list"]').click();
-    check(await page.locator("#about-bio").textContent() === aboutText, "About List has the same complete content");
+    check(await page.locator(".about-list-document").textContent() === aboutText, "About List has the same complete content");
     await shot(page, "about-list-mobile");
     // Reduced motion starts in List and never zooms, including after explicit Scene choice.
     const quiet = await browser.newContext({

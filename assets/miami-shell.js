@@ -85,21 +85,26 @@
     return `<article class="list-card" data-list-object="${escape(o.id)}"><span class="card-kicker">${escape(item ? item.kind + " · " + item.language : worlds[route.world].caption)}</span><h2${item?.language === "FR" ? ' lang="fr"' : ""}>${heading}</h2><p>${escape(o.description)}</p>${item ? tags(item.tags) : ""}${item ? `<div class="card-actions">${anchor(o.href, "Read here →")}${item.pdf ? anchor(item.pdf, "Download PDF ↓", "download") : ""}${item.github ? anchor(item.github, "GitHub ↗") : ""}</div>` : ""}</article>`;
   }
 
-  function aboutContent() {
+  function aboutDocument(list = false) {
     const ed = biography.education;
-    return `<article id="about-bio" class="about-page" aria-labelledby="route-title" tabindex="-1">
+    const id = list ? ' id="about-bio"' : "";
+    const heading = list ? '<h1 id="about-name" class="about-name">Luke Caprio</h1>' : '<h1 id="route-title" tabindex="-1">Luke Caprio</h1>';
+    return `<article${id} class="about-page ${list ? "about-list-document" : "about-scene-document"}" aria-labelledby="${list ? "about-name" : "route-title"}" tabindex="-1">
       <div class="about-hero">
         <figure class="about-portrait"><img src="assets/headshot.jpg" alt="Luke Caprio" width="1280" height="1600" fetchpriority="high"><figcaption>MIAMI, FLORIDA</figcaption></figure>
-        <header class="about-identity"><p class="about-eyebrow">ABOUT / THE PORCH</p><h1 id="route-title" tabindex="-1">Luke Caprio</h1><p class="about-role">Software Engineer · Miami</p></header>
+        <header class="about-identity"><p class="about-eyebrow">ABOUT / THE PORCH</p>${heading}<p class="about-role">Software Engineer · Miami</p></header>
         <div class="about-lead"><p>${escape(biography.bio[0])}</p></div>
       </div>
-      <nav class="about-sections" aria-label="About sections">${["Bio","Education","Experience","Skills"].map(name=>`<button type="button" data-about-section="${name.toLowerCase()}">${name} <span aria-hidden="true">↓</span></button>`).join("")}</nav>
-      <section id="about-story" data-about-anchor="bio" tabindex="-1"><h2>A little about me</h2>${biography.bio.slice(1).map(p=>`<p>${escape(p)}</p>`).join("")}</section>
-      <section data-about-anchor="education" tabindex="-1"><h2>Education</h2><h3>${escape(ed.school)}</h3><p>${escape(ed.degree)}<br>${escape(ed.minor)}</p><p class="about-meta">${escape(ed.graduated)} · ${escape(ed.gpa)} GPA</p><ul>${ed.honors.map(h=>`<li>${escape(h)}</li>`).join("")}</ul></section>
-      <section data-about-anchor="experience" tabindex="-1"><h2>Experience</h2>${biography.experience.map(e=>`<section class="experience-entry"><header><h3>${escape(e.company)}</h3><p class="about-meta">${escape(e.dates)}</p></header><p class="experience-role">${escape(e.role)}</p><ul>${e.details.map(d=>`<li>${escape(d)}</li>`).join("")}</ul></section>`).join("")}</section>
-      <section data-about-anchor="skills" tabindex="-1"><h2>Skills</h2><div class="about-skills">${Object.entries(biography.skills).map(([group,skills])=>`<section><h3>${escape(group)}</h3><ul>${skills.map(skill=>`<li>${escape(skill)}</li>`).join("")}</ul></section>`).join("")}</div></section>
+      <section class="about-section"><h2>Bio</h2>${biography.bio.slice(1).map(p=>`<p>${escape(p)}</p>`).join("")}</section>
+      <section class="about-section"><h2>Education</h2><h3>${escape(ed.school)}</h3><p>${escape(ed.degree)}<br>${escape(ed.minor)}</p><p class="about-meta">${escape(ed.graduated)} · ${escape(ed.gpa)} GPA</p><ul>${ed.honors.map(h=>`<li>${escape(h)}</li>`).join("")}</ul></section>
+      <section class="about-section"><h2>Experience</h2>${biography.experience.map(e=>`<section class="experience-entry"><header><h3>${escape(e.company)}</h3><p class="about-meta">${escape(e.dates)}</p></header><p class="experience-role">${escape(e.role)}</p><ul>${e.details.map(d=>`<li>${escape(d)}</li>`).join("")}</ul></section>`).join("")}</section>
+      <section class="about-section"><h2>Skills</h2><div class="about-skills">${Object.entries(biography.skills).map(([group,skills])=>`<section><h3>${escape(group)}</h3><ul>${skills.map(skill=>`<li>${escape(skill)}</li>`).join("")}</ul></section>`).join("")}</div></section>
       <footer class="about-end"><span>SEE YOU AROUND THE BAY.</span>${anchor("#/contact","Say hello →")}</footer>
     </article>`;
+  }
+
+  function aboutContent() {
+    return `<section id="scene-view" class="about-scene" aria-label="The Porch animated scene">${aboutDocument()}</section><section id="list-view" class="world-list about-list" aria-label="About list" hidden>${aboutDocument(true)}</section>`;
   }
 
   function worldSupplement(world) {
@@ -290,12 +295,6 @@
           `${worlds[route.world].caption}, ${mode} view`;
         focusDiscoverable();
       }
-    }
-    const sectionButton = e.target.closest("[data-about-section]");
-    if (sectionButton) {
-      const section = content.querySelector(`[data-about-anchor="${sectionButton.dataset.aboutSection}"]`);
-      section?.focus({preventScroll:true});
-      section?.scrollIntoView({block:"start",behavior:"instant"});
     }
   });
   // Highlight the sprite itself, including when motion is paused. No tooltip chrome.
