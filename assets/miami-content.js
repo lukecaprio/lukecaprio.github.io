@@ -1,9 +1,9 @@
 // Facts migrated from the previous homepage; no new biography or claims.
 window.MiamiBiography = {
   bio: [
-    "I'm a software engineer, born and raised in Naples, Florida, who just graduated from the University of Miami with a degree in computer science and mathematics. Right now I lead engineering at Bizzy, where we help college students find local deals and give event organizers a clean way to sell tickets and get paid.",
-    "I like building things end to end, from the backend and infrastructure all the way to the app people actually tap through. Before Bizzy I built agentic AI and voice agents at Retentive Labs and trained AI models on code and math at Outlier.",
-    "My background is as much mathematics as it is software. I'm drawn to data science, statistics, and machine learning, and I like the moment where a messy dataset turns into something you can actually reason about. Outside of work you'll usually find me at a piano or DJing, with a basketball game on somewhere in the background.",
+    "I'm a software engineer in Miami, born and raised in Naples, Florida. I graduated from the University of Miami with a B.S. in Mathematics and Computer Science in May 2026. I lead engineering at Bizzy, building the campus deals and events marketplace students and organizers use every day.",
+    "I work end-to-end across backend, infrastructure, and the apps people actually tap. Previously, I worked on agentic and voice AI at Retentive Labs and trained AI models on code and math at Outlier.",
+    "I have a strong math and machine learning bent, with interests in data science, statistics, and deep learning. Outside work, I play piano, DJ, and follow basketball.",
   ],
   experience: [
     {

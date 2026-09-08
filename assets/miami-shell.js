@@ -91,7 +91,7 @@
       <div class="about-hero">
         <figure class="about-portrait"><img src="assets/headshot.jpg" alt="Luke Caprio" width="1280" height="1600" fetchpriority="high"><figcaption>MIAMI, FLORIDA</figcaption></figure>
         <header class="about-identity"><p class="about-eyebrow">ABOUT / THE PORCH</p><h1 id="route-title" tabindex="-1">Luke Caprio</h1><p class="about-role">Software Engineer · Miami</p></header>
-        <div class="about-lead"><p>${escape(biography.bio[0])}</p><nav class="about-links" aria-label="Luke’s links">${anchor(resume,"Résumé ↓","download")}${anchor("#/contact","Contact →")}${anchor("#/bizzy","Bizzy world →")}${anchor("https://bizzyu.com/","Bizzy ↗")}${anchor("https://github.com/lukecaprio","GitHub ↗")}${anchor("https://linkedin.com/in/lukecaprio","LinkedIn ↗")}</nav></div>
+        <div class="about-lead"><p>${escape(biography.bio[0])}</p></div>
       </div>
       <nav class="about-sections" aria-label="About sections">${["Bio","Education","Experience","Skills"].map(name=>`<button type="button" data-about-section="${name.toLowerCase()}">${name} <span aria-hidden="true">↓</span></button>`).join("")}</nav>
       <section id="about-story" data-about-anchor="bio" tabindex="-1"><h2>A little about me</h2>${biography.bio.slice(1).map(p=>`<p>${escape(p)}</p>`).join("")}</section>

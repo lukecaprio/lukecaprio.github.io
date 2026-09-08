@@ -70,6 +70,18 @@ async function shot(page, name) {
       (await page.locator(".hotspot").count()) === 5,
       "Bay has exactly five doors",
     );
+    const navDestinations = await page
+      .locator(".island-nav a[data-destination]")
+      .evaluateAll((els) => els.map((el) => [el.dataset.world, el.dataset.destination, el.getAttribute("aria-label")]));
+    check(
+      navDestinations.length === 7 && navDestinations.every(([, destination, label]) => destination && label),
+      "Island nav names every destination",
+    );
+    await page.locator('.island-nav a[data-world="work"]').hover();
+    check(
+      await page.locator('.island-nav a[data-world="work"]').evaluate((el) => getComputedStyle(el, "::after").content.includes("Work / Projects")),
+      "Island nav reveals Work destination on hover",
+    );
     check(
       (await page.locator('.hotspot[href^="#/work/"]').count()) === 0,
       "No project item clutter on Hub",
@@ -248,9 +260,9 @@ async function shot(page, name) {
     for (const name of ["bio", "education", "experience", "skills"]) {
       check(await page.locator(`[data-about-anchor="${name}"]`).isVisible(), name + " is embedded without another view");
     }
-    for (const href of ["assets/LukeCaprioResume2026.pdf", "#/contact", "#/bizzy", "https://bizzyu.com/", "https://github.com/lukecaprio", "https://linkedin.com/in/lukecaprio"]) {
-      check(await page.locator(`#about-bio a[href="${href}"]`).count() > 0, "About link " + href);
-    }
+    check(await page.locator("#about-bio .about-links").count() === 0, "About has no top link dump");
+    check(await page.locator('#about-bio .about-end a[href="#/contact"]').count() === 1, "About keeps one quiet contact link");
+    check(await page.locator("#about-bio").innerText().then((t) => t.includes("graduated from the University of Miami") && t.includes("May 2026") && t.includes("Retentive Labs") && t.includes("Outlier") && t.includes("piano") && t.includes("DJ") && t.includes("basketball")), "About uses the sharper current bio");
     await page.locator('[data-about-section="skills"]').click();
     check(await page.locator('[data-about-anchor="skills"]').evaluate(el => el === document.activeElement), "About section jump works without hash navigation");
     check(page.url().endsWith("#/about"), "About section jumps preserve router URL");
