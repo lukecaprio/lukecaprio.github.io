@@ -495,6 +495,53 @@
       rect(c, xx, yy, 2, 3, i % 2 ? "#a2f4d4" : "#ffd8a7");
     }
   }
+  function bizzyClub(c, p, t) {
+    const x = p.x - 62,
+      y = p.y + 6;
+    const pulse = 0.65 + Math.sin(t * 2.2) * 0.2;
+    ellipse(c, x + 63, y + 92, 86, 11, "#06110d80");
+    poly(c, [[x, y + 8], [x + 116, y + 8], [x + 127, y + 20], [x + 119, y + 87], [x - 8, y + 87], [x - 8, y + 21]], "#08120f");
+    rect(c, x - 5, y + 20, 119, 65, "#10251b");
+    rect(c, x - 2, y + 23, 113, 58, "#0a1712");
+    rect(c, x - 9, y + 8, 130, 6, "#08100d");
+    rect(c, x - 10, y + 5, 132, 3, "#74ff9a");
+    rect(c, x - 4, y + 15, 118, 3, "#18dc68");
+    rect(c, x + 3, y + 18, 105, 2, "#c2ff74");
+    // Green window glow and a single open door keep it readable as a place.
+    for (const xx of [x + 8, x + 39, x + 70]) {
+      rect(c, xx, y + 28, 21, 30, "#07150f");
+      rect(c, xx + 2, y + 30, 17, 25, "#16492e");
+      rect(c, xx + 4, y + 34, 3, 17, "#37f47a");
+      rect(c, xx + 10, y + 32, 2, 21, "#8bff9a");
+      rect(c, xx + 15, y + 36, 2, 15, "#22be62");
+    }
+    rect(c, x + 95, y + 44, 17, 37, "#020604");
+    rect(c, x + 98, y + 48, 2, 29, "#69ff8d");
+    rect(c, x + 104, y + 48, 2, 29, "#217a45");
+    // Awning, patio and stools give the club a low, inviting silhouette.
+    poly(c, [[x - 8, y + 58], [x + 111, y + 58], [x + 122, y + 69], [x - 17, y + 69]], "#0c2117");
+    for (let i = 0; i < 8; i++) {
+      rect(c, x - 10 + i * 17, y + 61, 10, 5, i % 2 ? "#1bd567" : "#67ff8e");
+      rect(c, x - 7 + i * 17, y + 66, 7, 2, "#0b5e35");
+    }
+    poly(c, [[x - 16, y + 83], [x + 116, y + 83], [x + 128, y + 94], [x - 27, y + 94]], "#102719");
+    for (let i = 0; i < 5; i++) line(c, x - 18, y + 85 + i * 2, x + 119, y + 86 + i * 2, "#27683e55");
+    for (const xx of [x + 4, x + 29, x + 54]) {
+      rect(c, xx, y + 73, 8, 2, "#b9ff74");
+      rect(c, xx + 1, y + 75, 2, 10, "#174a2a");
+      rect(c, xx + 5, y + 75, 2, 10, "#174a2a");
+    }
+    // A pulsing row of pixel lamps echoes the supplied mark's neon green.
+    for (let i = 0; i < 9; i++) {
+      const xx = x - 6 + i * 15;
+      rect(c, xx, y + 12, 3, 3, i % 2 ? "#b9ff74" : "#19df68");
+      c.globalAlpha = pulse;
+      rect(c, xx - 1, y + 11, 5, 5, "#5eff8b");
+      c.globalAlpha = 1;
+    }
+    rect(c, x + 27, y - 6, 62, 3, "#123520");
+    rect(c, x + 32, y - 3, 52, 2, "#63ff8d");
+  }
   function dock(c, p) {
     const x = p.x,
       y = p.y + 14;
@@ -751,6 +798,7 @@
     }
     const painters = {
       venue,
+      "bizzy-club": bizzyClub,
       bookshop,
       mailbox,
       notice,

@@ -140,6 +140,16 @@ async function shot(page, name) {
         (await page.locator("#route-title").count()) === 1,
         world + " has one page heading",
       );
+      if (world === "bizzy") {
+        check(
+          (await page.locator('.bizzy-scene-sign img[src="assets/bizzy-logo-pixel.png"]').count()) === 1,
+          "Bizzy scene uses supplied pixel mark",
+        );
+        check(
+          await page.locator('.bizzy-note a[href="https://bizzyu.com/"]').count() === 1,
+          "Bizzy scene keeps one factual CTA",
+        );
+      }
       const sceneLinks = await page
         .locator(".hotspot")
         .evaluateAll((els) =>
@@ -151,6 +161,12 @@ async function shot(page, name) {
       } else {
         check(await page.locator("#list-view").isVisible(), world + " list is visible");
         check(!(await page.locator("#scene-view").isVisible()), world + " scene is hidden in list mode");
+        if (world === "bizzy") {
+          check(
+            (await page.locator('[data-list-object="bizzy-club"] p').textContent()).includes("campus deals and events marketplace"),
+            "Bizzy list keeps the factual blurb",
+          );
+        }
       }
       check(await page.locator(".hotspot-label, .door-glow, [role=tooltip]").count() === 0, world + " has no hotspot overlay chrome");
       check(await page.locator(".hotspot").evaluateAll(els => els.every(el => el.getAttribute("aria-label")?.trim())), world + " hotspots have accessible names");

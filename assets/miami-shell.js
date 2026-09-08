@@ -114,9 +114,12 @@
     if (world === "about") return aboutContent();
     const w = worlds[world];
     const aside = world === "bizzy"
-          ? `<aside class="scene-note bizzy-note"><p>Helping college students find local deals and event organizers sell tickets and get paid.</p></aside>`
-          : "";
-    return `<header class="world-intro"><p class="hero-eyebrow">${escape(w.eyebrow)}</p><h1 id="route-title" tabindex="-1">${escape(w.title)}${world === "bay" ? '<span class="title-spark" aria-hidden="true">✦</span>' : ""}</h1><p class="hero-hook">${escape(w.description)}</p><p class="hero-note">${escape(w.note)}</p></header><section id="scene-view" aria-label="${escape(w.caption)} scene"><div class="world-hotspots">${w.objects.map(hotspot).join("")}</div>${aside}</section><section id="list-view" class="panel world-list" aria-label="${escape(w.title)} list" hidden><div class="list-grid">${w.objects.map(listCard).join("")}</div>${worldSupplement(world)}</section>`;
+      ? `<aside class="scene-note bizzy-note"><p>A campus deals and events marketplace for students and organizers.</p><a class="text-link" href="https://bizzyu.com/">Visit Bizzy ↗</a></aside>`
+      : "";
+    const sign = world === "bizzy"
+      ? `<div class="bizzy-scene-sign" aria-hidden="true"><img src="assets/bizzy-logo-pixel.png" alt="" /></div>`
+      : "";
+    return `<header class="world-intro"><p class="hero-eyebrow">${escape(w.eyebrow)}</p><h1 id="route-title" tabindex="-1">${escape(w.title)}${world === "bay" ? '<span class="title-spark" aria-hidden="true">✦</span>' : ""}</h1><p class="hero-hook">${escape(w.description)}</p><p class="hero-note">${escape(w.note)}</p></header><section id="scene-view" aria-label="${escape(w.caption)} scene">${sign}<div class="world-hotspots">${w.objects.map(hotspot).join("")}</div>${aside}</section><section id="list-view" class="panel world-list" aria-label="${escape(w.title)} list" hidden><div class="list-grid">${w.objects.map(listCard).join("")}</div>${worldSupplement(world)}</section>`;
   }
 
   function itemMarkup(item) {

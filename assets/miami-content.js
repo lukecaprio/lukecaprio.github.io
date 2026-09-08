@@ -295,22 +295,22 @@ window.MiamiMap = (() => {
     },
     bizzy: {
       title: "Bizzy",
-      caption: "The Waterfront Venue",
-      eyebrow: "04 / THE WATERFRONT VENUE",
-      description: "Lead engineer at Bizzy.",
-      note: "A little nightlife by the water.",
+      caption: "The Green Room",
+      eyebrow: "04 / THE GREEN ROOM",
+      description: "A neon-green night by the bay.",
+      note: "Live College For Less.",
       objects: [
         object(
-          "venue",
+          "bizzy-club",
           "Visit Bizzy ↗",
-          "venue",
+          "bizzy-club",
           "https://bizzyu.com/",
           [50, 62],
           [50, 57],
           {
             scale: 2,
             description:
-              "Helping college students find local deals and event organizers sell tickets and get paid.",
+              "A campus deals and events marketplace for students and organizers.",
           },
         ),
       ],

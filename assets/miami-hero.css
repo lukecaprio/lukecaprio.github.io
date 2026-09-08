@@ -307,6 +307,41 @@ h1:focus,
   padding: 14px 22px;
   font-size: 15px;
 }
+.bizzy-note p {
+  margin: 0;
+}
+.bizzy-note .text-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #b9ff74;
+}
+.bizzy-scene-sign {
+  position: absolute;
+  z-index: 1;
+  top: 42%;
+  left: 50%;
+  width: clamp(170px, 22vw, 250px);
+  transform: translateX(-50%);
+  pointer-events: none;
+  filter: drop-shadow(0 0 7px #32f27666);
+}
+.bizzy-scene-sign img {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+.miami-hero[data-world="bizzy"] .world-intro h1 {
+  color: #b9ff74;
+  text-shadow: 0 4px #0a3d2a;
+}
+.miami-hero[data-world="bizzy"] .hero-eyebrow,
+.miami-hero[data-world="bizzy"] .hero-note {
+  color: #b9ff74;
+}
+.miami-hero[data-world="bizzy"] .hero-hook {
+  color: #e5ffe0;
+}
 .card-kicker {
   font-family: "JetBrains Mono", monospace;
   font-size: 10px;
@@ -778,6 +813,10 @@ kbd {
   .bizzy-note {
     bottom: 12%;
     font-size: 14px;
+  }
+  .bizzy-scene-sign {
+    top: 43%;
+    width: min(190px, 54vw);
   }
   .world-list {
     top: 302px;
