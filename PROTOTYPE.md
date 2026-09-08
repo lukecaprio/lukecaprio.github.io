@@ -39,4 +39,6 @@ Open <http://127.0.0.1:3000/#/bay>. The existing `npm start` also works. No buil
 
 The existing `CNAME` and Pages configuration are unchanged. The old dark scroll layout and its `.m-*` styles/hover script have been removed. About’s List holds the migrated biography, education, skills, and experience. Existing assets and PDFs are retained.
 
+Hub polish keeps the Bizzy bar green and readable with a nearest-neighbor pixel mark, moves the About sign clear of the roof, and adds a small idle Luke sprite beside the house. The sprite is decorative; the house remains the `#/about` target.
+
 See [SHELL.md](SHELL.md) for routes, destination URLs, architectural decisions, verification, and extension points. [WORLD-MAP-SPEC.md](WORLD-MAP-SPEC.md) remains the world-map source of truth; the explicit shell-only brief defers its final readers and custom item interfaces.

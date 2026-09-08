@@ -19,6 +19,8 @@ The hub has **five doors**, one each for About, Work, Writing, Bizzy, and Contac
 
 Bizzy art is an imaginative green room/nightclub place on the Bay hub, not a claim that Bizzy owns a physical Miami venue. The hub object and island-nav item open `https://bizzyu.com/` directly in a new tab; the legacy `#/bizzy` stub remains available only for old links.
 
+The Bay hub’s green Bizzy bar carries a processed nearest-neighbor pixel mark at hub scale. The About house is enlarged and labeled `ABOUT`, with a small idle Luke sprite beside the porch; the house remains the sole About hit target.
+
 ## Routes
 
 | Route | Result / home |
@@ -90,7 +92,7 @@ The test runner accepts:
 - `SHELL_BROWSER_CHANNEL=chrome` (use installed Chrome instead of Playwright Chromium)
 - `SHELL_QA_DIR` (optional directory for desktop/mobile review screenshots)
 
-The completed desktop/mobile Chrome run passed **194 checks**. Coverage includes normal Back/Forward, Escape, direct item URLs, all internal nav destinations, direct external Bizzy nav and hub links, every hub door, scene/list parity, one-home rules, parent back links, correct local PDF responses, résumé focus, complete About content/headshot/link coverage, sharp current bio copy, no hotspot overlay chrome, object hover/focus behavior, visible island-nav destinations, the green Bizzy hub venue and lit facade, factual list blurb, standalone About Scene/List content and scroll columns, unknown/alias routes, rapid navigation, pause/reduced motion, large mobile targets, horizontal overflow, no-JavaScript fallback, and browser runtime errors.
+The completed desktop/mobile Chrome run passed **194 checks**. Coverage includes normal Back/Forward, Escape, direct item URLs, all internal nav destinations, direct external Bizzy nav and hub links, every hub door, scene/list parity, one-home rules, parent back links, correct local PDF responses, résumé focus, complete About content/headshot/link coverage, sharp current bio copy, no hotspot overlay chrome, object hover/focus behavior, visible island-nav destinations, the green Bizzy hub venue and lit facade, its processed pixel mark, the unclipped About sign and Luke sprite, factual list blurb, standalone About Scene/List content and scroll columns, unknown/alias routes, rapid navigation, pause/reduced motion, large mobile targets, horizontal overflow, no-JavaScript fallback, and browser runtime errors.
 
 JavaScript syntax, Git whitespace, unchanged CNAME, and static asset serving are checked separately. Desktop and mobile screenshots are reviewed for the shell and representative worlds/items. These are browser viewport checks, not physical-device performance profiling.
 

@@ -29,6 +29,24 @@
     mode = "scene";
   let pointer = 0,
     drift = 0;
+  let bizzyLogoCanvas = null;
+  const bizzyLogoImage = new Image();
+  bizzyLogoImage.onload = () => {
+    const logo = document.createElement("canvas");
+    logo.width = bizzyLogoImage.naturalWidth;
+    logo.height = bizzyLogoImage.naturalHeight;
+    const brush = logo.getContext("2d");
+    brush.drawImage(bizzyLogoImage, 0, 0);
+    const pixels = brush.getImageData(0, 0, logo.width, logo.height);
+    for (let i = 0; i < pixels.data.length; i += 4) {
+      const r = pixels.data[i], g = pixels.data[i + 1], b = pixels.data[i + 2];
+      if (r < 52 && g < 52 && b < 52) pixels.data[i + 3] = 0;
+    }
+    brush.putImageData(pixels, 0, 0);
+    bizzyLogoCanvas = logo;
+    if (W) resize();
+  };
+  bizzyLogoImage.src = "assets/bizzy-logo-pixel.png";
   const random = (seed) => {
     let n = seed;
     return () => {
@@ -138,6 +156,13 @@
       );
       x += (rows[0].length + 1) * size;
     }
+  }
+  function drawBizzyLogo(c, x, y, w, h) {
+    if (!bizzyLogoCanvas) return;
+    c.save();
+    c.imageSmoothingEnabled = false;
+    c.drawImage(bizzyLogoCanvas, x, y, w, h);
+    c.restore();
   }
   function skyLayer(c) {
     const stops = [
@@ -581,6 +606,9 @@
       rect(c, x - 10 + i * 17, y + 61, 10, 5, i % 2 ? "#1bd567" : "#67ff8e");
       rect(c, x - 7 + i * 17, y + 66, 7, 2, "#0b5e35");
     }
+    rect(c, x + 13, y + 22, 86, 47, "#06110d");
+    rect(c, x + 13, y + 22, 86, 2, "#42f278");
+    drawBizzyLogo(c, x + 17, y + 23, 78, 48);
     poly(c, [[x - 16, y + 83], [x + 116, y + 83], [x + 128, y + 94], [x - 27, y + 94]], "#102719");
     for (let i = 0; i < 5; i++) line(c, x - 18, y + 85 + i * 2, x + 119, y + 86 + i * 2, "#27683e55");
     for (const xx of [x + 4, x + 29, x + 54]) {
@@ -764,9 +792,9 @@
       ],
       "#343747",
     );
-    rect(c, x + 13, y - 23, 78, 16, "#30263f");
-    rect(c, x + 13, y - 23, 78, 2, "#ffb5c0");
-    letters(c, "ABOUT", x + 19, y - 19, "#ffe4b9", 1.45);
+    rect(c, x + 3, y - 43, 98, 18, "#30263f");
+    rect(c, x + 3, y - 43, 98, 2, "#ffb5c0");
+    letters(c, "ABOUT", x + 13, y - 39, "#ffe4b9", 1.15);
     line(c, x - 13, y + 4, x + 52, y - 28, "#ffbcc0", 2);
     line(c, x + 52, y - 28, x + 116, y + 4, "#ffbcc0", 2);
     rect(c, x + 46, y + 16, 25, 47, "#50435e");
@@ -795,6 +823,23 @@
     ellipse(c, x + 110, y + 72, 13, 13, "#ffe2b433");
     c.globalAlpha = 1;
     lamp(c, x + 110, y + 72, 37);
+  }
+  function lukeSprite(c, x, y, s, t) {
+    const bob = Math.sin(t * 2.2) * s;
+    y += bob;
+    ellipse(c, x, y + 3 * s, 10 * s, 3 * s, "#2d30465c");
+    // Small 4-bit portrait cue: curly dark hair, warm skin, teal shirt, simple trousers.
+    rect(c, x - 4 * s, y - 28 * s, 8 * s, 9 * s, "#f0bc9e");
+    rect(c, x - 6 * s, y - 31 * s, 12 * s, 5 * s, "#1d2130");
+    rect(c, x - 7 * s, y - 28 * s, 3 * s, 4 * s, "#282b3b");
+    rect(c, x + 4 * s, y - 29 * s, 3 * s, 5 * s, "#282b3b");
+    rect(c, x - 6 * s, y - 20 * s, 12 * s, 14 * s, "#4bb8ad");
+    rect(c, x - 9 * s, y - 18 * s, 3 * s, 10 * s, "#f0bc9e");
+    rect(c, x + 6 * s, y - 18 * s, 3 * s, 10 * s, "#f0bc9e");
+    rect(c, x - 5 * s, y - 6 * s, 4 * s, 9 * s, "#30364c");
+    rect(c, x + 1 * s, y - 6 * s, 4 * s, 9 * s, "#30364c");
+    rect(c, x - 6 * s, y + 2 * s, 6 * s, 2 * s, "#161d2d");
+    rect(c, x + 1 * s, y + 2 * s, 6 * s, 2 * s, "#161d2d");
   }
   function tower(c, p) {
     const x = p.x - 24,
@@ -1174,15 +1219,24 @@
       line(ctx, x, y, x + 3, y + wing, "#916b8b");
     }
     ctx.drawImage(land, 0, 0);
+    const m = mobile.matches;
     for (const object of window.MiamiMap.worlds[currentWorld].objects) {
       if (object.prop === "boat") drawObject(ctx, object, t);
+    }
+    if (currentWorld === "bay" && points.about) {
+      lukeSprite(
+        ctx,
+        points.about.x + (m ? 58 : 72),
+        points.about.y + (m ? 49 : 64),
+        m ? 1.4 : 1.8,
+        t,
+      );
     }
     if (highlightLayer && mode === "scene") {
       if (window.MiamiMap.worlds[currentWorld].objects.find(o => o.id === highlighted)?.prop === "boat") updateHighlight(t);
       ctx.save();ctx.shadowColor = "#b9ffe1";ctx.shadowBlur = 7;
       ctx.drawImage(highlightLayer, 0, 0);ctx.restore();
     }
-    const m = mobile.matches;
     palm(
       ctx,
       m ? 18 : W * 0.055,
