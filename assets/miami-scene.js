@@ -24,6 +24,7 @@
     visible = true,
     elapsed = 0,
     last = 0;
+  let highlighted = null, highlightLayer = null;
   let currentWorld = "bay",
     mode = "scene";
   let pointer = 0,
@@ -1003,6 +1004,17 @@
     rect(c, tx + 1, ty - 1, 5, 6, "#71604f");
     rect(c, tx - 1, ty + 3, 3, 4, "#3d4545");
   }
+  function updateHighlight(t) {
+    const object = window.MiamiMap.worlds[currentWorld].objects.find(o => o.id === highlighted);
+    if (!object) { highlightLayer = null; return; }
+    if (!highlightLayer || highlightLayer.width !== W || highlightLayer.height !== H) {
+      highlightLayer = document.createElement("canvas");
+      highlightLayer.width = W; highlightLayer.height = H;
+    }
+    const brush = highlightLayer.getContext("2d");
+    brush.clearRect(0, 0, W, H);
+    drawObject(brush, object, t);
+  }
   function render(t) {
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(sky, 0, 0);
@@ -1051,6 +1063,11 @@
     ctx.drawImage(land, 0, 0);
     for (const object of window.MiamiMap.worlds[currentWorld].objects) {
       if (object.prop === "boat") drawObject(ctx, object, t);
+    }
+    if (highlightLayer && mode === "scene") {
+      if (window.MiamiMap.worlds[currentWorld].objects.find(o => o.id === highlighted)?.prop === "boat") updateHighlight(t);
+      ctx.save();ctx.shadowColor = "#b9ffe1";ctx.shadowBlur = 7;
+      ctx.drawImage(highlightLayer, 0, 0);ctx.restore();
     }
     const m = mobile.matches;
     palm(
@@ -1107,6 +1124,7 @@
     sky = makeLayer(skyLayer);
     city = makeLayer(cityLayer);
     land = makeLayer(landLayer);
+    updateHighlight(elapsed);
     render(elapsed);
   }
   function tick(now) {
@@ -1174,13 +1192,21 @@
     resizeFrame = requestAnimationFrame(resize);
   }).observe(hero);
   window.MiamiScene = {
+    highlight(id) {
+      if (highlighted === id) return;
+      highlighted = id;
+      updateHighlight(elapsed);
+      render(elapsed);
+    },
     setWorld(world) {
       if (!window.MiamiMap.worlds[world]) return;
       currentWorld = world;
+      highlighted = null; highlightLayer = null;
       resize();
     },
     setMode(nextMode) {
       mode = nextMode;
+      if (mode !== "scene") { highlighted = null; highlightLayer = null; render(elapsed); }
       syncMotion();
     },
   };

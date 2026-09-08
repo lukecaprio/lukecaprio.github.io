@@ -242,52 +242,10 @@ h1:focus,
   text-decoration: none;
   color: var(--miami-cream);
 }
-.hotspot-label {
-  position: absolute;
-  left: 50%;
-  bottom: 100%;
-  transform: translateX(-50%);
-  margin-bottom: 7px;
-  min-width: 110px;
-  padding: 10px 13px;
-  border-radius: 9px;
-  border: 1px solid #ffdce775;
-  background: #2a2244f2;
-  box-shadow: 0 5px 18px #22163326;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.3;
-  white-space: nowrap;
-  text-align: center;
-  transition:
-    border-color 0.15s,
-    background 0.15s;
-}
-.hotspot-label > span {
-  color: #a7f5dc;
-  margin-left: 13px;
-}
-.door-glow {
-  position: absolute;
-  inset: 0;
-  border: 2px solid transparent;
-  border-radius: 20px;
-  transition:
-    background 0.15s,
-    border-color 0.15s;
-}
-.hotspot:hover .door-glow,
-.hotspot:focus-visible .door-glow,
-.hotspot.is-highlighted .door-glow {
-  border-color: #baf6db99;
-  background: #baf6db12;
-  box-shadow: 0 0 25px #99ffda35;
-}
-.hotspot:hover .hotspot-label,
-.hotspot:focus-visible .hotspot-label,
-.hotspot.is-highlighted .hotspot-label {
-  background: #354c53;
-  border-color: #c5ffe8;
+.hotspot { cursor: pointer; }
+.hotspot:focus-visible { outline: none; }
+@media (forced-colors: active) {
+  .hotspot:focus-visible { outline: 2px solid Highlight; }
 }
 .miami-hero:not([data-world="bay"]) .hotspot {
   width: 220px;
@@ -429,47 +387,6 @@ h1:focus,
 }
 .list-footnote {
   margin: 20px 0 0;
-}
-.about-copy {
-  max-width: 790px;
-  margin: 30px auto 10px;
-  font-size: 17px;
-  line-height: 1.75;
-}
-.about-copy h2 {
-  font-family: "Newsreader", serif;
-  font-size: 32px;
-  font-weight: 400;
-  margin: 32px 0 16px;
-}
-.about-copy p {
-  margin: 0 0 18px;
-  color: #f2d8d7;
-}
-.about-copy ul {
-  padding-left: 22px;
-  margin: 15px 0;
-}
-.about-copy h3 {
-  font-size: 16px;
-  font-weight: 500;
-  margin: 20px 0 8px;
-}
-.about-copy details {
-  padding: 16px 0;
-  border-top: 1px solid #ffddcc35;
-}
-.about-copy summary {
-  cursor: pointer;
-  font-size: 19px;
-}
-.about-copy summary > span {
-  font-size: 14px;
-  color: #e6c3ce;
-  margin-left: 12px;
-}
-.about-copy details .card-kicker {
-  margin-top: 16px;
 }
 .text-link {
   border: 0;
@@ -814,16 +731,6 @@ kbd {
     width: 130px;
     height: 102px;
   }
-  .hotspot-label {
-    font-size: 12px;
-    padding: 10px 12px;
-    min-width: 104px;
-    max-width: 170px;
-    white-space: normal;
-  }
-  .hotspot-label > span {
-    margin-left: 8px;
-  }
   .miami-hero:not([data-world="bay"]) .hotspot {
     width: 145px;
     height: 145px;
@@ -865,13 +772,6 @@ kbd {
   }
   .list-card p {
     font-size: 15px;
-  }
-  .about-copy {
-    font-size: 16px;
-  }
-  .about-copy summary > span {
-    display: block;
-    margin: 5px 0;
   }
   .cross-list h2 {
     font-size: 23px;
@@ -988,3 +888,48 @@ kbd {
     animation: none !important;
   }
 }
+
+/* About is one complete embedded document in both views, never a scene gate. */
+.about-page {
+  position:absolute;top:165px;bottom:var(--shell-bottom);left:50%;transform:translateX(-50%);
+  width:min(1120px,calc(100% - 80px));overflow:auto;overscroll-behavior:contain;
+  padding:40px 46px;color:#3c2d46;background:#f5e2d5f7;
+  border:3px solid #cc94ac;box-shadow:7px 7px 0 #4e325d80;
+  scrollbar-color:#93627e #efdbd1;scrollbar-width:thin;font-size:17px;line-height:1.75;
+}
+.about-hero{display:grid;grid-template-columns:280px 1fr;column-gap:40px;row-gap:16px;align-items:start}
+.about-portrait{grid-row:1 / span 2;padding:6px;background:#45334f;box-shadow:6px 6px 0 #df95b4;margin:0 6px 12px 0}
+.about-portrait img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+.about-portrait figcaption{font:10px 'JetBrains Mono',monospace;letter-spacing:2px;padding:11px 7px 6px;color:#b2efd9}
+.about-eyebrow{font:10px 'JetBrains Mono',monospace;letter-spacing:2px;color:#8b4169;margin:4px 0 12px}
+.about-identity h1{font-size:clamp(40px,4.4vw,64px);letter-spacing:-2.5px;line-height:1.07;font-weight:700}
+.about-role{margin-top:14px;color:#73475f;font-size:17px}
+.about-lead p{margin:0}.about-links{display:flex;flex-wrap:wrap;gap:9px 22px;margin-top:22px}
+.about-links a{font-size:14px;min-height:36px;display:inline-flex;align-items:center;color:#674165;text-decoration-thickness:1px}
+.about-links a:hover,.about-end a:hover{color:#176f68}
+.about-sections{display:flex;flex-wrap:wrap;gap:10px 27px;padding:20px 0;margin:29px 0 5px;border-block:1px solid #b99ca9}
+.about-sections button{background:none;border:0;color:#684567;font-size:14px;min-height:38px;padding:0 5px;text-align:left}
+.about-sections button:hover{text-decoration:underline;text-underline-offset:5px}.about-sections span{margin-left:10px;color:#287a70}
+.about-page>[data-about-anchor]{padding-top:28px;scroll-margin-top:20px;outline:none}
+.about-page h2{font:400 36px/1.2 'Newsreader',serif;color:#673e63;margin:0 0 21px}
+.about-page h3{font-size:19px;font-weight:600;line-height:1.45;margin-bottom:7px}
+.about-page section p{margin:0 0 18px}.about-page ul{padding-left:22px;margin:12px 0 18px}.about-page li{margin:5px 0}
+.about-meta{font:12px/1.7 'JetBrains Mono',monospace;color:#83566f}.experience-entry{border-top:1px solid #ceb4bf;padding:22px 0 8px}
+.experience-entry header{display:flex;align-items:baseline;justify-content:space-between;gap:15px}.experience-entry .experience-role{color:#75546d;font-size:16px}
+.about-skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 36px}.about-skills ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:0 17px}.about-skills li{font-size:15px}
+.about-end{display:flex;justify-content:space-between;gap:20px;border-top:1px solid #b99ca9;padding-top:22px;margin-top:24px;font:11px/1.8 'JetBrains Mono',monospace;letter-spacing:1px}
+.about-page :is(a,button):focus-visible{outline-color:#257c70}
+[data-world="about"][data-view="list"] .about-page{width:min(930px,calc(100% - 80px));background:#f7e7dc;box-shadow:none;border:1px solid #c3a2b0}
+[data-world="about"][data-view="list"] .about-hero{grid-template-columns:200px 1fr;gap:16px 32px}
+[data-world="about"][data-view="list"] .about-skills{grid-template-columns:1fr}
+@media(max-width:900px){.about-page{width:calc(100% - 48px);padding:30px}.about-hero{grid-template-columns:210px 1fr;column-gap:28px}.about-identity h1{font-size:46px}}
+@media(max-width:600px){
+  .about-page,[data-world="about"][data-view="list"] .about-page{top:174px;width:calc(100% - 28px);padding:23px 20px;font-size:16px}
+  .about-hero,[data-world="about"][data-view="list"] .about-hero{grid-template-columns:112px 1fr;gap:25px 20px;align-items:center}
+  .about-portrait{grid-row:1;padding:4px;margin:0}.about-portrait figcaption{font-size:7px;letter-spacing:1px;padding:8px 3px 4px}
+  .about-identity h1{font-size:36px;letter-spacing:-1.5px}.about-eyebrow{font-size:8px;letter-spacing:1px;line-height:1.7}.about-role{font-size:13px;margin-top:10px}
+  .about-lead{grid-column:1/-1}.about-links{gap:5px 18px;margin-top:16px}.about-links a{font-size:13px;min-height:40px}
+  .about-sections{gap:0 15px;margin-top:22px;padding:14px 0}.about-sections button{font-size:13px}.about-page h2{font-size:31px}.about-page h3{font-size:18px}
+  .experience-entry header{display:block}.about-skills{grid-template-columns:1fr;gap:14px}.about-end{font-size:9px}
+}
+@media(max-width:350px){.about-page{padding:20px 15px}.about-hero,[data-world="about"][data-view="list"] .about-hero{grid-template-columns:96px 1fr;gap:20px 15px}.about-identity h1{font-size:30px}}

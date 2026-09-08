@@ -11,7 +11,7 @@ The hub has **five doors**, one each for About, Work, Writing, Bizzy, and Contac
 | World | Primary objects | List content |
 | --- | --- | --- |
 | Bay | Work dock, bookshop, Bizzy venue, porch, mailbox | The same five worlds |
-| About | Porch opens the biography list | Original biography, education, experience, skills; résumé, Bizzy, LinkedIn links |
+| About | Complete embedded profile with the supplied headshot | Original biography, education, experience, skills; résumé, Contact, Bizzy, GitHub, LinkedIn links |
 | Work | ECG boat/console, Metro tower, Digits arcade | The same three projects, with read/repository/PDF actions as available |
 | Writing | One book for each French piece | Both books; a clearly marked “also in Work” Digits-paper cross-link |
 | Bizzy | One venue entrance with the `bizzyu.com` CTA | The same CTA and existing-site description |
@@ -42,6 +42,8 @@ Empty hash, `#/`, `#bay`, and old bare world hashes normalize without adding his
 Normal internal anchor navigation uses browser hash history. Browser Back/Forward traverses world/item routes; item back links always return to the correct home, even on a direct deep link. Escape pushes a return to Bay. A navigation generation counter cancels superseded transitions, so rapid navigation cannot mount a stale destination.
 
 Scene | List selection lasts while this page remains open and carries between worlds. On an item, choosing Scene or List returns to its home in that view. There is no storage or backend. Initial reduced-motion and compact-screen visits default to List; the visitor can still choose Scene.
+
+Hotspots use large transparent anchors with `aria-label` text and a subtle canvas-object glow. The shell does not render floating hover/focus pills or tooltip cards over the pixel artwork. About is a complete route on arrival; the same full profile content stays embedded when Scene/List is changed, with section-jump controls for Bio, Education, Experience, and Skills.
 
 ## Known item actions
 
@@ -86,7 +88,7 @@ The test runner accepts:
 - `SHELL_BROWSER_CHANNEL=chrome` (use installed Chrome instead of Playwright Chromium)
 - `SHELL_QA_DIR` (optional directory for desktop/mobile review screenshots)
 
-The completed desktop/mobile Chrome run passed **151 checks**. Coverage includes normal Back/Forward, Escape, direct item URLs, all nav destinations, every hub door, scene/list parity, one-home rules, parent back links, correct local PDF responses, résumé focus in both views, About content migration, unknown/alias routes, rapid navigation, pause/reduced motion, large mobile targets, horizontal overflow, no-JavaScript fallback, and browser runtime errors.
+The completed desktop/mobile Chrome run passed **189 checks**. Coverage includes normal Back/Forward, Escape, direct item URLs, all nav destinations, every hub door, scene/list parity, one-home rules, parent back links, correct local PDF responses, résumé focus, complete About content/headshot/link coverage, no hotspot overlay chrome, object hover/focus behavior, unknown/alias routes, rapid navigation, pause/reduced motion, large mobile targets, horizontal overflow, no-JavaScript fallback, and browser runtime errors.
 
 JavaScript syntax, Git whitespace, unchanged CNAME, and static asset serving are checked separately. Desktop and mobile screenshots are reviewed for the shell and representative worlds/items. These are browser viewport checks, not physical-device performance profiling.
 

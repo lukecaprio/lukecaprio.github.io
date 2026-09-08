@@ -291,13 +291,7 @@ window.MiamiMap = (() => {
       eyebrow: "03 / THE PORCH",
       description: "Miami now. Naples roots.",
       note: "Engineering, mathematics, and a little music.",
-      objects: [
-        object("porch", "Meet Luke", "porch", null, [32, 63], [50, 56], {
-          scale: 1.55,
-          action: "list",
-          description: "Read my story, education, experience, and skills.",
-        }),
-      ],
+      objects: [],
     },
     bizzy: {
       title: "Bizzy",

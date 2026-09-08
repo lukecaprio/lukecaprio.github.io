@@ -74,48 +74,46 @@
   }
 
   function hotspot(o) {
-    const common = `class="hotspot" data-object="${escape(o.id)}" data-place="${escape(o.id)}" data-prop="${escape(o.prop)}" data-scale="${o.scale || 1}" style="--x:${o.position[0]}%;--y:${o.position[1]}%;--mobile-x:${o.mobile[0]}%;--mobile-y:${o.mobile[1]}%"`;
-    const inside = `<span class="hotspot-label">${escape(o.label.replace(/ [↗↓]$/, ""))}<span aria-hidden="true">${o.pdf ? "↓" : o.action ? "≡" : o.href.startsWith("#") ? "→" : "↗"}</span></span><span class="door-glow" aria-hidden="true"></span>`;
-    return o.action
-      ? `<button type="button" ${common} data-show-list>${inside}</button>`
-      : `<a ${common} href="${escape(o.href)}"${external(o.href)}${o.pdf ? " download" : ""}>${inside}</a>`;
+    const label = o.label.replace(/ [↗↓]$/, "") + (o.pdf ? " — download PDF" : /^https?:/.test(o.href) ? " (opens in a new tab)" : "");
+    return `<a class="hotspot" aria-label="${escape(label)}" data-object="${escape(o.id)}" data-place="${escape(o.id)}" data-prop="${escape(o.prop)}" data-scale="${o.scale || 1}" style="--x:${o.position[0]}%;--y:${o.position[1]}%;--mobile-x:${o.mobile[0]}%;--mobile-y:${o.mobile[1]}%" href="${escape(o.href)}"${external(o.href)}${o.pdf ? " download" : ""}></a>`;
   }
 
   function listCard(o) {
     const item = o.item && items[o.item];
     const title = item?.title || o.label.replace(/ [↗↓]$/, "");
-    const heading = o.action
-      ? `<button type="button" class="text-link" data-focus-bio>${escape(title)} ↓</button>`
-      : anchor(o.href, title, o.pdf ? "download" : "");
+    const heading = anchor(o.href, title, o.pdf ? "download" : "");
     return `<article class="list-card" data-list-object="${escape(o.id)}"><span class="card-kicker">${escape(item ? item.kind + " · " + item.language : worlds[route.world].caption)}</span><h2${item?.language === "FR" ? ' lang="fr"' : ""}>${heading}</h2><p>${escape(o.description)}</p>${item ? tags(item.tags) : ""}${item ? `<div class="card-actions">${anchor(o.href, "Read here →")}${item.pdf ? anchor(item.pdf, "Download PDF ↓", "download") : ""}${item.github ? anchor(item.github, "GitHub ↗") : ""}</div>` : ""}</article>`;
   }
 
   function aboutContent() {
     const ed = biography.education;
-    return `<article id="about-bio" class="about-copy" tabindex="-1"><h2>A little about me</h2>${biography.bio.map((p) => `<p>${escape(p)}</p>`).join("")}<h2>Education</h2><p><strong>${escape(ed.school)}</strong><br>${escape(ed.degree)} · ${escape(ed.minor)}<br>${escape(ed.graduated)} · ${escape(ed.gpa)} GPA</p><ul>${ed.honors.map((h) => `<li>${escape(h)}</li>`).join("")}</ul><h2>Experience</h2>${biography.experience.map((e) => `<details><summary>${escape(e.company)} <span>${escape(e.role)}</span></summary><p class="card-kicker">${escape(e.dates)}</p><ul>${e.details.map((d) => `<li>${escape(d)}</li>`).join("")}</ul></details>`).join("")}<h2>Skills</h2>${Object.entries(
-      biography.skills,
-    )
-      .map(([group, skills]) => `<h3>${escape(group)}</h3>${tags(skills)}`)
-      .join(
-        "",
-      )}<p class="card-actions">${anchor("#/bizzy", "Visit the Bizzy world →")}${anchor(resume, "Download résumé ↓", "download")}${anchor("https://linkedin.com/in/lukecaprio", "LinkedIn ↗")}</p></article>`;
+    return `<article id="about-bio" class="about-page" aria-labelledby="route-title" tabindex="-1">
+      <div class="about-hero">
+        <figure class="about-portrait"><img src="assets/headshot.jpg" alt="Luke Caprio" width="1280" height="1600" fetchpriority="high"><figcaption>MIAMI, FLORIDA</figcaption></figure>
+        <header class="about-identity"><p class="about-eyebrow">ABOUT / THE PORCH</p><h1 id="route-title" tabindex="-1">Luke Caprio</h1><p class="about-role">Software Engineer · Miami</p></header>
+        <div class="about-lead"><p>${escape(biography.bio[0])}</p><nav class="about-links" aria-label="Luke’s links">${anchor(resume,"Résumé ↓","download")}${anchor("#/contact","Contact →")}${anchor("#/bizzy","Bizzy world →")}${anchor("https://bizzyu.com/","Bizzy ↗")}${anchor("https://github.com/lukecaprio","GitHub ↗")}${anchor("https://linkedin.com/in/lukecaprio","LinkedIn ↗")}</nav></div>
+      </div>
+      <nav class="about-sections" aria-label="About sections">${["Bio","Education","Experience","Skills"].map(name=>`<button type="button" data-about-section="${name.toLowerCase()}">${name} <span aria-hidden="true">↓</span></button>`).join("")}</nav>
+      <section id="about-story" data-about-anchor="bio" tabindex="-1"><h2>A little about me</h2>${biography.bio.slice(1).map(p=>`<p>${escape(p)}</p>`).join("")}</section>
+      <section data-about-anchor="education" tabindex="-1"><h2>Education</h2><h3>${escape(ed.school)}</h3><p>${escape(ed.degree)}<br>${escape(ed.minor)}</p><p class="about-meta">${escape(ed.graduated)} · ${escape(ed.gpa)} GPA</p><ul>${ed.honors.map(h=>`<li>${escape(h)}</li>`).join("")}</ul></section>
+      <section data-about-anchor="experience" tabindex="-1"><h2>Experience</h2>${biography.experience.map(e=>`<section class="experience-entry"><header><h3>${escape(e.company)}</h3><p class="about-meta">${escape(e.dates)}</p></header><p class="experience-role">${escape(e.role)}</p><ul>${e.details.map(d=>`<li>${escape(d)}</li>`).join("")}</ul></section>`).join("")}</section>
+      <section data-about-anchor="skills" tabindex="-1"><h2>Skills</h2><div class="about-skills">${Object.entries(biography.skills).map(([group,skills])=>`<section><h3>${escape(group)}</h3><ul>${skills.map(skill=>`<li>${escape(skill)}</li>`).join("")}</ul></section>`).join("")}</div></section>
+      <footer class="about-end"><span>SEE YOU AROUND THE BAY.</span>${anchor("#/contact","Say hello →")}</footer>
+    </article>`;
   }
 
   function worldSupplement(world) {
     if (world === "writing")
       return `<aside class="cross-list"><span class="card-kicker">ALSO IN WORK · 2024 · EN</span><h2>${anchor("#/writing/digits", items["/writing/digits"].title)}</h2><p>The Digits project and its paper share one home at the research dock.</p><div class="card-actions">${anchor("#/writing/digits", "Read here →")}${anchor(items["/writing/digits"].pdf, "Download PDF ↓", "download")}${anchor(items["/writing/digits"].github, "GitHub ↗")}</div></aside>`;
-    if (world === "about") return aboutContent();
     if (world === "contact")
       return `<p class="list-footnote">You can also find me on ${anchor("https://linkedin.com/in/lukecaprio", "LinkedIn ↗")}.</p>`;
     return "";
   }
 
   function worldMarkup(world) {
+    if (world === "about") return aboutContent();
     const w = worlds[world];
-    const aside =
-      world === "about"
-        ? `<aside class="scene-note"><span class="card-kicker">CURRENTLY</span><p>Lead engineer at Bizzy.<br>Building products for web and mobile.</p><button type="button" class="text-link" data-show-list>Read my story →</button></aside>`
-        : world === "bizzy"
+    const aside = world === "bizzy"
           ? `<aside class="scene-note bizzy-note"><p>Helping college students find local deals and event organizers sell tickets and get paid.</p></aside>`
           : "";
     return `<header class="world-intro"><p class="hero-eyebrow">${escape(w.eyebrow)}</p><h1 id="route-title" tabindex="-1">${escape(w.title)}${world === "bay" ? '<span class="title-spark" aria-hidden="true">✦</span>' : ""}</h1><p class="hero-hook">${escape(w.description)}</p><p class="hero-note">${escape(w.note)}</p></header><section id="scene-view" aria-label="${escape(w.caption)} scene"><div class="world-hotspots">${w.objects.map(hotspot).join("")}</div>${aside}</section><section id="list-view" class="panel world-list" aria-label="${escape(w.title)} list" hidden><div class="list-grid">${w.objects.map(listCard).join("")}</div>${worldSupplement(world)}</section>`;
@@ -142,7 +140,7 @@
       .querySelector("#list-view")
       ?.toggleAttribute("hidden", mode !== "list");
     document
-      .querySelectorAll("[data-view]")
+      .querySelectorAll("button[data-view]")
       .forEach((b) =>
         b.setAttribute(
           "aria-pressed",
@@ -152,6 +150,8 @@
     window.MiamiScene?.setMode(isItem ? "reader" : mode);
     document.getElementById("scene-hint").innerHTML = isItem
       ? "A place for this story. <kbd>Esc</kbd> returns to the bay."
+      : route.world === "about"
+        ? "Make yourself at home. <kbd>Esc</kbd> returns to the bay."
       : mode === "list"
         ? "Same destinations, at a glance. <kbd>Esc</kbd> returns to the bay."
         : "Choose a place to explore. <kbd>Esc</kbd> returns to the bay.";
@@ -166,7 +166,8 @@
       (el) => (el.dataset.object || el.dataset.listObject) === route.focus,
     );
     if (!target) return false;
-    target.classList.add("is-highlighted");
+    if (mode === "list") target.classList.add("is-highlighted");
+    else window.MiamiScene?.highlight(route.focus);
     const focusable = target.matches("a,button")
       ? target
       : target.querySelector("a,button");
@@ -275,7 +276,7 @@
       e.preventDefault();
       content.focus({ preventScroll: true });
     }
-    const view = e.target.closest("[data-view]");
+    const view = e.target.closest("button[data-view]");
     if (view) {
       mode = view.dataset.view;
       if (route.item || route.missing) {
@@ -287,13 +288,27 @@
         focusDiscoverable();
       }
     }
-    if (e.target.closest("[data-show-list]")) {
-      mode = "list";
-      applyView({ focus: true });
+    const sectionButton = e.target.closest("[data-about-section]");
+    if (sectionButton) {
+      const section = content.querySelector(`[data-about-anchor="${sectionButton.dataset.aboutSection}"]`);
+      section?.focus({preventScroll:true});
+      section?.scrollIntoView({block:"start",behavior:"instant"});
     }
-    if (e.target.closest("[data-focus-bio]")) {
-      document.getElementById("about-bio")?.focus();
+  });
+  // Highlight the sprite itself, including when motion is paused. No tooltip chrome.
+  content.addEventListener("pointerover", e => {
+    const object = e.target.closest(".hotspot");
+    if (object) window.MiamiScene?.highlight(object.dataset.object);
+  });
+  content.addEventListener("pointerout", e => {
+    if (e.target.closest(".hotspot") && !e.relatedTarget?.closest?.(".hotspot")) {
+      window.MiamiScene?.highlight(document.activeElement?.dataset.object || null);
     }
+  });
+  content.addEventListener("focusin", e => window.MiamiScene?.highlight(e.target.closest(".hotspot")?.dataset.object || null));
+  content.addEventListener("focusout", e => {
+    const hovered = content.querySelector(".hotspot:hover");
+    window.MiamiScene?.highlight(e.relatedTarget?.dataset.object || hovered?.dataset.object || null);
   });
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !e.isComposing) {
