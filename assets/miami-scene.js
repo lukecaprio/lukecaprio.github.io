@@ -565,6 +565,9 @@
     rect(c, x - 10, y + 5, 132, 3, "#74ff9a");
     rect(c, x - 4, y + 15, 118, 3, "#18dc68");
     rect(c, x + 3, y + 18, 105, 2, "#c2ff74");
+    rect(c, x + 10, y - 11, 92, 13, "#06110d");
+    rect(c, x + 10, y - 11, 92, 2, "#5eff8b");
+    letters(c, "BIZZY", x + 28, y - 8, "#b9ff74", 1.35);
     // Green window glow and a single open door keep it readable as a place.
     for (const xx of [x + 8, x + 39, x + 70]) {
       rect(c, xx, y + 28, 21, 30, "#07150f");

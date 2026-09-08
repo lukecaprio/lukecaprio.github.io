@@ -181,7 +181,7 @@ window.MiamiMap = (() => {
           [78, 65],
           { description: "Research, essays, and the bayside bookshop." },
         ),
-        object("bizzy", "Bizzy", "venue", "#/bizzy", [17, 66], [22, 65], {
+        object("bizzy", "Bizzy", "bizzy-club", "#/bizzy", [17, 66], [22, 65], {
           description: "The waterfront venue.",
         }),
         object("about", "About", "porch", "#/about", [33, 83], [24, 83], {

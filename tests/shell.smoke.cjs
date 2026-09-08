@@ -146,7 +146,7 @@ async function shot(page, name) {
           "Bizzy scene uses supplied pixel mark",
         );
         check(
-          await page.locator('.bizzy-note a[href="https://bizzyu.com/"]').count() === 1,
+          await page.locator('.hotspot[href="https://bizzyu.com/"]').count() === 1,
           "Bizzy scene keeps one factual CTA",
         );
       }
@@ -171,6 +171,7 @@ async function shot(page, name) {
             (await page.locator('[data-list-object="bizzy-club"] p').textContent()).includes("campus deals and events marketplace"),
             "Bizzy list keeps the factual blurb",
           );
+          check(await page.locator('.bizzy-list-blurb a[href="https://bizzyu.com/"]').count() === 1, "Bizzy list keeps its CTA");
         }
       }
       check(await page.locator(".hotspot-label, .door-glow, [role=tooltip]").count() === 0, world + " has no hotspot overlay chrome");

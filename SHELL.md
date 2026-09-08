@@ -10,7 +10,7 @@ The hub has **five doors**, one each for About, Work, Writing, Bizzy, and Contac
 
 | World | Primary objects | List content |
 | --- | --- | --- |
-| Bay | Work dock, bookshop, Bizzy venue, porch, mailbox | The same five worlds |
+| Bay | Work dock, bookshop, neon-green Bizzy venue, porch, mailbox | The same five worlds |
 | About | Dedicated animated blue-hour porch world with integrated headshot/profile | Clean stacked biography, education, experience, and skills; quiet contact footer |
 | Work | ECG boat/console, Metro tower, Digits arcade | The same three projects, with read/repository/PDF actions as available |
 | Writing | One book for each French piece | Both books; a clearly marked “also in Work” Digits-paper cross-link |
@@ -90,7 +90,7 @@ The test runner accepts:
 - `SHELL_BROWSER_CHANNEL=chrome` (use installed Chrome instead of Playwright Chromium)
 - `SHELL_QA_DIR` (optional directory for desktop/mobile review screenshots)
 
-The completed desktop/mobile Chrome run passed **190 checks**. Coverage includes normal Back/Forward, Escape, direct item URLs, all nav destinations, every hub door, scene/list parity, one-home rules, parent back links, correct local PDF responses, résumé focus, complete About content/headshot/link coverage, sharp current bio copy, no hotspot overlay chrome, object hover/focus behavior, visible island-nav destinations, the Bizzy pixel mark, factual list blurb, and single CTA, standalone About Scene/List content, unknown/alias routes, rapid navigation, pause/reduced motion, large mobile targets, horizontal overflow, no-JavaScript fallback, and browser runtime errors.
+The completed desktop/mobile Chrome run passed **191 checks**. Coverage includes normal Back/Forward, Escape, direct item URLs, all nav destinations, every hub door, scene/list parity, one-home rules, parent back links, correct local PDF responses, résumé focus, complete About content/headshot/link coverage, sharp current bio copy, no hotspot overlay chrome, object hover/focus behavior, visible island-nav destinations, the green Bizzy hub venue and pixel mark, factual list blurb, and single CTA, standalone About Scene/List content, unknown/alias routes, rapid navigation, pause/reduced motion, large mobile targets, horizontal overflow, no-JavaScript fallback, and browser runtime errors.
 
 JavaScript syntax, Git whitespace, unchanged CNAME, and static asset serving are checked separately. Desktop and mobile screenshots are reviewed for the shell and representative worlds/items. These are browser viewport checks, not physical-device performance profiling.
 
