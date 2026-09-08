@@ -1,6 +1,6 @@
 /* An original, procedural pixel scene. No renderer, image downloads, or build step.
  * Art is cached in layers; only water, clouds, boats and fronds redraw at 30 fps.
- * CSS owns hotspot coordinates, which the artwork reads to stay aligned. */
+ * MiamiMap owns world objects and coordinates for both artwork and HTML links. */
 (() => {
   "use strict";
   const canvas = document.getElementById("miami-scene");
@@ -24,14 +24,10 @@
     visible = true,
     elapsed = 0,
     last = 0;
+  let currentWorld = "bay",
+    mode = "scene";
   let pointer = 0,
     drift = 0;
-  const palettes = {
-    teal: "#64dbcb",
-    cream: "#ffe4b2",
-    pink: "#ff99b7",
-    night: "#29223d",
-  };
   const random = (seed) => {
     let n = seed;
     return () => {
@@ -266,8 +262,8 @@
       x += w + 14 + rng() * 30;
     }
     // Brickell-style glass crown and illuminated vertical edges.
-    const x = points.metro.x - 13,
-      y = points.metro.y - 15,
+    const x = W * 0.8 - 13,
+      y = horizon - 80,
       b = base + 6;
     rect(c, x, y, 27, b - y, "#424560");
     rect(c, x + 4, y - 8, 19, 8, "#605773");
@@ -276,8 +272,7 @@
       rect(c, x + i, y + 3, 1, b - y - 3, "#a0c6ca");
       for (let j = y + 7; j < b; j += 8) rect(c, x + i + 1, j, 2, 2, "#d8aabd");
     }
-    rect(c, x + 11, y + 7, 6, 2, "#a4ffdf");
-    rect(c, x + 13, y + 5, 2, 6, "#a4ffdf");
+
     rect(c, 0, base + 5, W, 3, "#474968");
     rect(c, 0, base + 8, W, 2, "#b58baf");
     for (let xx = 0; xx < W; xx += 13) {
@@ -364,7 +359,7 @@
       c.globalAlpha = 0.1 + i * 0.025;
       rect(
         c,
-        points.bizzy.x - 18 + Math.sin(t + i) * 5,
+        (points.bizzy?.x || W * 0.17) - 18 + Math.sin(t + i) * 5,
         y,
         38 + Math.sin(i) * 12,
         1,
@@ -498,31 +493,6 @@
         yy = y + 11 + i * 0.7;
       rect(c, xx, yy, 2, 3, i % 2 ? "#a2f4d4" : "#ffd8a7");
     }
-  }
-  function booth(c, p) {
-    const x = p.x - 13,
-      y = p.y + 6;
-    ellipse(c, x + 15, y + 43, 22, 5, "#513c5150");
-    rect(c, x, y, 29, 37, "#bc7d96");
-    rect(c, x + 3, y + 5, 23, 14, "#3e3c55");
-    rect(c, x + 6, y + 8, 17, 1, "#9ee5cb");
-    rect(c, x + 6, y + 12, 8, 2, "#ffb99f");
-    rect(c, x - 2, y + 21, 33, 4, "#f0baa9");
-    rect(c, x + 3, y + 26, 23, 7, "#705372");
-    poly(
-      c,
-      [
-        [x - 5, y],
-        [x + 34, y],
-        [x + 29, y - 7],
-        [x, y - 7],
-      ],
-      "#ff95b7",
-    );
-    rect(c, x - 5, y, 39, 3, "#4b3b58");
-    letters(c, "B", x + 11, y + 26, "#ffd8b0");
-    rect(c, x + 3, y + 37, 3, 4, "#40354c");
-    rect(c, x + 24, y + 37, 3, 4, "#40354c");
   }
   function dock(c, p) {
     const x = p.x,
@@ -665,30 +635,139 @@
     rect(c, x + 11, y + 21, 3, 1, "#92edc5");
     rect(c, x + 4, y + 26, 8, 5, "#a77c9d");
   }
-  function bench(c, p) {
-    const x = p.x - 17,
-      y = p.y + 10;
-    rect(c, x, y, 36, 3, "#dfae90");
-    rect(c, x, y + 5, 36, 3, "#dfae90");
-    rect(c, x - 2, y + 12, 40, 4, "#bd8b81");
-    for (const xx of [x + 3, x + 30]) {
-      rect(c, xx, y + 3, 2, 19, "#444055");
-      rect(c, xx - 2, y + 21, 6, 2, "#444055");
-    }
+  function porch(c, p) {
+    const x = p.x - 52,
+      y = p.y + 2;
     poly(
       c,
       [
-        [x + 12, y + 10],
-        [x + 17, y + 9],
-        [x + 20, y + 11],
-        [x + 27, y + 9],
-        [x + 28, y + 15],
-        [x + 20, y + 16],
-        [x + 12, y + 15],
+        [x - 10, y + 60],
+        [x + 104, y + 60],
+        [x + 118, y + 83],
+        [x - 23, y + 83],
       ],
-      "#f9dfb9",
+      "#b98d91",
     );
-    line(c, x + 20, y + 11, x + 20, y + 15, "#ad878d");
+    for (let yy = y + 64; yy < y + 83; yy += 5)
+      line(c, x - 20, yy, x + 113, yy, "#795e76");
+    rect(c, x, y, 104, 63, "#b28da0");
+    rect(c, x + 5, y + 5, 94, 55, "#996d87");
+    poly(
+      c,
+      [
+        [x - 13, y + 4],
+        [x + 52, y - 28],
+        [x + 116, y + 4],
+      ],
+      "#343747",
+    );
+    line(c, x - 13, y + 4, x + 52, y - 28, "#ffbcc0", 2);
+    line(c, x + 52, y - 28, x + 116, y + 4, "#ffbcc0", 2);
+    rect(c, x + 46, y + 16, 25, 47, "#50435e");
+    rect(c, x + 49, y + 20, 19, 36, "#78b3b0");
+    rect(c, x + 64, y + 41, 2, 2, "#ffe2b4");
+    rect(c, x + 12, y + 18, 23, 22, "#383b50");
+    rect(c, x + 14, y + 20, 19, 18, "#dcaaa7");
+    line(c, x + 23, y + 20, x + 23, y + 38, "#715675", 2);
+    rect(c, x + 8, y + 51, 28, 13, "#322e45");
+    rect(c, x + 9, y + 52, 26, 5, "#f3dac1");
+    for (let i = 0; i < 6; i++)
+      rect(c, x + 11 + i * 4, y + 52, 2, 3, "#38314b");
+    rect(c, x + 8, y + 3, 4, 66, "#ffc6b0");
+    rect(c, x + 95, y + 3, 4, 66, "#ffc6b0");
+    poly(
+      c,
+      [
+        [x + 77, y + 13],
+        [x + 93, y + 13],
+        [x + 77, y + 28],
+      ],
+      "#62c1a4",
+    );
+    rect(c, x + 83, y + 16, 2, 5, "#ffd0a7");
+    lamp(c, x + 110, y + 72, 37);
+  }
+  function tower(c, p) {
+    const x = p.x - 24,
+      y = p.y + 5;
+    rect(c, x, y, 48, 73, "#565576");
+    rect(c, x + 5, y - 6, 38, 6, "#8d7c96");
+    rect(c, x + 10, y - 12, 28, 6, "#ae8eab");
+    for (let i = 0; i < 6; i++) {
+      rect(c, x + 4 + i * 7, y + 4, 2, 56, "#89cfc8");
+      for (let j = 0; j < 6; j++)
+        rect(c, x + 7 + i * 7, y + 8 + j * 8, 2, 3, "#d5aacb");
+    }
+    rect(c, x + 19, y + 58, 13, 20, "#cdb3b0");
+    rect(c, x + 25, y + 59, 1, 18, "#76617e");
+    rect(c, x + 18, y + 18, 13, 4, "#c6ffdf");
+    rect(c, x + 23, y + 13, 4, 14, "#c6ffdf");
+    rect(c, x - 4, y + 78, 56, 4, "#b295a5");
+  }
+  function book(c, p) {
+    const x = p.x - 20,
+      y = p.y + 5;
+    poly(
+      c,
+      [
+        [x, y],
+        [x + 35, y],
+        [x + 41, y + 5],
+        [x + 41, y + 56],
+        [x + 4, y + 56],
+        [x, y + 51],
+      ],
+      "#48394f",
+    );
+    rect(c, x + 3, y + 3, 35, 49, "#e2b3a6");
+    rect(c, x + 6, y + 5, 30, 43, "#a26891");
+    rect(c, x + 6, y + 5, 3, 43, "#81527e");
+    rect(c, x + 12, y + 13, 18, 2, "#f7d1b2");
+    rect(c, x + 12, y + 18, 13, 1, "#f7d1b2");
+    rect(c, x + 16, y + 28, 10, 10, "#83c4b2");
+    rect(c, x + 19, y + 25, 4, 16, "#a5ebca");
+    for (let yy = y + 50; yy < y + 56; yy += 2)
+      rect(c, x + 5, yy, 34, 1, "#fae3c5");
+    rect(c, x - 4, y + 59, 49, 3, "#ca9c8f");
+    rect(c, x + 1, y + 62, 3, 6, "#625166");
+    rect(c, x + 37, y + 62, 3, 6, "#625166");
+  }
+  function sign(c, p) {
+    const x = p.x - 19,
+      y = p.y + 8;
+    rect(c, x + 17, y + 22, 4, 27, "#68516d");
+    rect(c, x - 2, y - 2, 42, 28, "#9a839b");
+    rect(c, x, y, 38, 24, "#39465a");
+    letters(c, "CODE", x + 6, y + 5, "#a8edcf");
+    rect(c, x + 8, y + 16, 22, 2, "#eaa9c1");
+    rect(c, x + 12, y + 49, 14, 2, "#b39699");
+  }
+  function drawObject(c, object, t) {
+    const point = points[object.id];
+    if (object.prop === "dock") {
+      dock(c, point);
+      return;
+    }
+    const painters = {
+      venue,
+      bookshop,
+      mailbox,
+      notice,
+      arcade,
+      boat,
+      porch,
+      tower,
+      book,
+      sign,
+    };
+    const paint = painters[object.prop];
+    if (!paint) return;
+    c.save();
+    c.translate(Math.round(point.x), Math.round(point.y));
+    const scale = object.scale || 1;
+    c.scale(scale, scale);
+    paint(c, { x: 0, y: 0 }, t);
+    c.restore();
   }
   function landLayer(c) {
     const rng = random(214);
@@ -762,15 +841,10 @@
         y = H * 0.89 + rng() * H * 0.11;
       rect(c, x, y, 2 + rng() * 6, 1, "#c2a09555");
     }
-    // Buildings are placed around actual anchor centers, including mobile layout.
-    dock(c, points.projects);
-    venue(c, points.bizzy);
-    booth(c, points.tickets);
-    bookshop(c, points.writing);
-    notice(c, points.resume);
-    mailbox(c, points.contact);
-    arcade(c, points.digits);
-    bench(c, points.paper);
+    // The same world inventory supplies exactly one drawing and target per object.
+    for (const object of window.MiamiMap.worlds[currentWorld].objects) {
+      if (object.prop !== "boat") drawObject(c, object, 0);
+    }
     if (!mobile.matches) {
       rail(c, W * 0.025, shore - 4, W * 0.07);
       rail(c, W * 0.86, shore + 4, W * 0.12);
@@ -974,8 +1048,10 @@
       line(ctx, x - 3, y + wing, x, y, "#916b8b");
       line(ctx, x, y, x + 3, y + wing, "#916b8b");
     }
-    boat(ctx, points.ecg, t);
     ctx.drawImage(land, 0, 0);
+    for (const object of window.MiamiMap.worlds[currentWorld].objects) {
+      if (object.prop === "boat") drawObject(ctx, object, t);
+    }
     const m = mobile.matches;
     palm(
       ctx,
@@ -1021,13 +1097,13 @@
     horizon = H * (mobile.matches ? 0.465 : 0.52);
     shore = H * (mobile.matches ? 0.66 : 0.728);
     points = {};
-    document.querySelectorAll("[data-place]").forEach((a) => {
-      const style = getComputedStyle(a);
-      points[a.dataset.place] = {
-        x: (parseFloat(style.getPropertyValue("--x")) / 100) * W,
-        y: (parseFloat(style.getPropertyValue("--y")) / 100) * H,
+    for (const object of window.MiamiMap.worlds[currentWorld].objects) {
+      const position = mobile.matches ? object.mobile : object.position;
+      points[object.id] = {
+        x: (position[0] / 100) * W,
+        y: (position[1] / 100) * H,
       };
-    });
+    }
     sky = makeLayer(skyLayer);
     city = makeLayer(cityLayer);
     land = makeLayer(landLayer);
@@ -1035,7 +1111,7 @@
   }
   function tick(now) {
     frame = 0;
-    if (paused || !visible || document.hidden) return;
+    if (paused || !visible || document.hidden || mode !== "scene") return;
     if (!last) last = now;
     if (now - last >= 1000 / 30) {
       elapsed += Math.min(now - last, 80) / 1000;
@@ -1056,7 +1132,7 @@
       paused ? "Play scene animation" : "Pause scene animation",
     );
     toggle.firstElementChild.textContent = paused ? "▷" : "Ⅱ";
-    if (!paused && visible && !document.hidden)
+    if (!paused && visible && !document.hidden && mode === "scene")
       frame = requestAnimationFrame(tick);
   }
   toggle.hidden = false;
@@ -1097,6 +1173,17 @@
     cancelAnimationFrame(resizeFrame);
     resizeFrame = requestAnimationFrame(resize);
   }).observe(hero);
+  window.MiamiScene = {
+    setWorld(world) {
+      if (!window.MiamiMap.worlds[world]) return;
+      currentWorld = world;
+      resize();
+    },
+    setMode(nextMode) {
+      mode = nextMode;
+      syncMotion();
+    },
+  };
   resize();
   syncMotion();
 })();

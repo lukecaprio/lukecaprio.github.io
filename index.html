@@ -1,503 +1,133 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Luke Caprio | Software Engineer · Miami</title>
-<meta name="description" content="Luke Caprio — software engineer in Miami. Explore projects, writing, and life building at Bizzy, from a little corner of Biscayne Bay.">
-<meta name="theme-color" content="#271b3e">
-<link rel="stylesheet" href="assets/miami-hero.css">
-<script src="assets/miami-scene.js" defer></script>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    html{scroll-behavior:smooth;}
-    body{background:#0b0d10;}
-    ::selection{background:rgba(122,162,255,0.25);}
-    ::-webkit-scrollbar{width:9px;}
-    ::-webkit-scrollbar-track{background:#0b0d10;}
-    ::-webkit-scrollbar-thumb{background:#222831;border-radius:5px;}
-    ::-webkit-scrollbar-thumb:hover{background:#333b46;}
-    @keyframes lcblink{0%,100%{opacity:1}50%{opacity:.35}}
-    @keyframes lcfade{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-
-    @media(max-width:768px){
-      /* Nav */
-      .m-nav{padding:14px 20px !important;}
-      .m-nav-link{display:none !important;}
-
-      /* Hero */
-      .m-hero{padding:90px 20px 56px !important;}
-      .m-hero-grid{grid-template-columns:1fr !important; gap:36px !important;}
-      .m-hero-photo{height:300px !important; position:relative !important;}
-      .m-hero-stats{gap:20px !important; flex-wrap:wrap !important;}
-
-      /* Sections */
-      .m-section{padding:64px 20px !important;}
-
-      /* About */
-      .m-about-grid{grid-template-columns:1fr !important; gap:36px !important;}
-
-      /* Experience */
-      .m-exp-card{grid-template-columns:1fr !important;}
-      .m-exp-date{text-align:left !important; white-space:normal !important; margin-top:4px !important;}
-
-      /* Education */
-      .m-edu-grid{grid-template-columns:auto 1fr !important; gap:20px !important;}
-      .m-edu-stats{grid-column:1 / -1 !important; text-align:left !important; display:flex !important; align-items:center !important; gap:20px !important;}
-      .m-edu-stats>div:first-child{font-size:32px !important;}
-
-      /* Contact */
-      .m-contact-grid{grid-template-columns:1fr !important; gap:32px !important;}
-
-      /* Footer */
-      .m-footer{padding:28px 20px !important;}
-      .m-footer-inner{flex-direction:column !important; gap:14px !important; align-items:center !important;}
-    }
-
-    @media(max-width:480px){
-      .m-hero h1{font-size:52px !important;}
-      .m-section{padding:52px 16px !important;}
-      .m-nav{padding:12px 16px !important;}
-    }
-  </style>
-</head>
-<body>
-<div style="--bg:#0b0d10; --panel:#14181e; --panel2:#1b212a; --panelhov:#1c222b; --ink:#f3f4f6; --ink2:#9ba3ad; --ink3:#5c646e; --line:rgba(255,255,255,0.09); --line2:rgba(255,255,255,0.16); --blue:#7aa2ff; --bluedim:rgba(122,162,255,0.13); --serif:'Newsreader',Georgia,serif; --sans:'Hanken Grotesk',sans-serif; --mono:'JetBrains Mono',monospace; background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.6; overflow-x:hidden;">
-
-  <a class="skip-link" href="#about">Skip the scene</a>
-  <section id="top" class="miami-hero" aria-labelledby="hero-title">
-    <canvas id="miami-scene" aria-hidden="true"></canvas>
-    <div class="hero-shade" aria-hidden="true"></div>
-    <header class="hero-header">
-      <a class="home-mark" href="#top" aria-label="Luke Caprio home">lc<span>✦</span></a>
-      <nav class="island-nav" aria-label="Main navigation">
-        <a href="#about">About</a>
-        <a href="#projects">Work</a>
-        <a href="#writing">Writing</a>
-        <a href="assets/LukeCaprioResume2026.pdf" target="_blank" rel="noopener">Résumé<span class="sr-only"> (PDF, opens in a new tab)</span></a>
-        <a href="mailto:lukecaprio1@gmail.com">Contact <span aria-hidden="true">↗</span></a>
-      </nav>
-      <span class="header-coordinate">25.76° N<br>80.19° W</span>
-    </header>
-    <div class="hero-intro">
-      <p class="hero-eyebrow"><span aria-hidden="true"></span>A LITTLE CORNER OF THE INTERNET</p>
-      <h1 id="hero-title">Luke Caprio<span class="title-spark" aria-hidden="true">✦</span></h1>
-      <p class="hero-hook">Software Engineer <span>·</span> Miami</p>
-      <p class="hero-note">Building things. Chasing the sunset.</p>
-    </div>
-    <div class="world-hotspots" aria-label="Explore the bay">
-      <a class="hotspot featured" data-place="bizzy" href="https://bizzyu.com/" target="_blank" rel="noopener" aria-label="Bizzy waterfront venue — visit Bizzy (opens in a new tab)"><span class="hotspot-label">Bizzy <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
-      <a class="hotspot" data-place="tickets" href="https://bizzyu.com/" target="_blank" rel="noopener" aria-label="Bizzy ticket booth — visit Bizzy (opens in a new tab)"><span class="hotspot-label">Meet Bizzy <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
-      <a class="hotspot featured" data-place="projects" href="https://github.com/lukecaprio" target="_blank" rel="noopener" aria-label="Laptop on the dock — explore Luke’s projects on GitHub (opens in a new tab)"><span class="hotspot-label">Projects <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
-      <a class="hotspot featured" data-place="writing" href="#writing" aria-label="Bayside bookshop — explore writing"><span class="hotspot-label">Writing <span>↓</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
-      <a class="hotspot" data-place="resume" href="assets/LukeCaprioResume2026.pdf" target="_blank" rel="noopener" aria-label="Shore noticeboard — read Luke’s résumé (PDF, opens in a new tab)"><span class="hotspot-label">Résumé <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
-      <a class="hotspot featured" data-place="contact" href="mailto:lukecaprio1@gmail.com" aria-label="Beach mailbox — email Luke"><span class="hotspot-label">Say hello <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
-      <a class="hotspot" data-place="ecg" href="https://github.com/lukecaprio/Deep-Learning-Based-ECG-Signal-Classification" target="_blank" rel="noopener" aria-label="Bay research boat — ECG classification project on GitHub (opens in a new tab)"><span class="hotspot-label">ECG project <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
-      <a class="hotspot" data-place="metro" href="https://github.com/lukecaprio/metrohealth" target="_blank" rel="noopener" aria-label="City health tower — Metro Health project on GitHub (opens in a new tab)"><span class="hotspot-label">Metro Health <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
-      <a class="hotspot" data-place="digits" href="https://github.com/lukecaprio/Efficient-Digit-Recognition-Using-K-Means-Clustering-and-KNN" target="_blank" rel="noopener" aria-label="Beach arcade — digit recognition project on GitHub (opens in a new tab)"><span class="hotspot-label">Digit recognition <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
-      <a class="hotspot" data-place="paper" href="docs/KNNKMEANSFINALPAPER.pdf?v=20250126" target="_blank" rel="noopener" aria-label="Reading bench — read the K-means and KNN research paper (PDF, opens in a new tab)"><span class="hotspot-label">Read a paper <span>↗</span></span><span class="hotspot-pin" aria-hidden="true">✦</span></a>
-    </div>
-    <div class="hero-bottom">
-      <div class="place-caption"><span class="location-dot" aria-hidden="true"></span><span>BISCAYNE BAY<span class="place-subtitle">MIAMI, FLORIDA</span></span></div>
-      <a class="scroll-cue" href="#about"><span>A little more about me</span><span aria-hidden="true">↓</span></a>
-      <div class="scene-controls"><span class="explore-hint"><span aria-hidden="true">✦</span> Follow the sparks. Explore the bay.</span><button id="motion-toggle" type="button" aria-label="Pause scene animation" aria-pressed="false" hidden><span class="motion-icon" aria-hidden="true">Ⅱ</span></button></div>
-    </div>
-    <noscript><p class="scene-fallback">Explore the links around the bay, or use the navigation above. Enable JavaScript for the animated scene.</p></noscript>
-  </section>
-
-  <!-- ============ ABOUT ============ -->
-  <section id="about" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
-    <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
-      <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">01</span>
-      <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">About</h2>
-    </div>
-    <div class="m-about-grid" style="display:grid; grid-template-columns:1.55fr 1fr; gap:64px; align-items:start;">
-      <div style="font-size:19px; line-height:1.65; color:var(--ink2);">
-        <p style="margin-bottom:22px;">I'm a software engineer, born and raised in Naples, Florida, who just graduated from the University of Miami with a degree in computer science and mathematics. Right now I lead engineering at Bizzy, where we help college students find local deals and give event organizers a clean way to sell tickets and get paid.</p>
-        <p style="margin-bottom:22px;">I like building things end to end, from the backend and infrastructure all the way to the app people actually tap through. Before Bizzy I built agentic AI and voice agents at Retentive Labs and trained AI models on code and math at Outlier.</p>
-        <p>My background is as much mathematics as it is software. I'm drawn to data science, statistics, and machine learning, and I like the moment where a messy dataset turns into something you can actually reason about. Outside of work you'll usually find me at a piano or DJing, with a basketball game on somewhere in the background.</p>
-      </div>
-      <div style="display:flex; flex-direction:column; gap:14px;">
-        <div style="background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:22px; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
-          <div style="font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--blue); margin-bottom:14px;">Scholarship</div>
-          <div style="display:flex; align-items:center; gap:13px;">
-            <div style="width:40px; height:40px; border:1px solid var(--line2); border-radius:10px; background:#fff; display:flex; align-items:center; justify-content:center; padding:7px; flex-shrink:0;"><img src="assets/umiami.png" alt="University of Miami" style="width:100%; height:100%; object-fit:contain;"></div>
-            <div>
-              <p style="font-weight:600; font-size:16px; margin-bottom:2px;">Presidential Scholar</p>
-              <p style="color:var(--ink2); font-size:14px;">$15,000/semester merit award</p>
-            </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Luke Caprio | Software Engineer · Miami</title>
+    <meta
+      name="description"
+      content="Luke Caprio — software engineer in Miami. Explore projects, writing, and Bizzy from a little corner of Biscayne Bay."
+    />
+    <meta name="theme-color" content="#271b3e" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/miami-hero.css" />
+    <script src="assets/miami-content.js" defer></script>
+    <script src="assets/miami-scene.js" defer></script>
+    <script src="assets/miami-shell.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#world-content">Skip to world content</a>
+    <div class="app-shell">
+      <header class="shell-header">
+        <nav class="island-nav" aria-label="Main navigation">
+          <a class="bay-link" href="#/bay" data-world="bay"
+            ><span aria-hidden="true">lc✦</span> Bay</a
+          >
+          <a href="#/about" data-world="about">About</a>
+          <a href="#/work" data-world="work">Work</a>
+          <a href="#/writing" data-world="writing">Writing</a>
+          <a href="#/bizzy" data-world="bizzy">Bizzy</a>
+          <a href="#/contact?focus=resume" data-world="resume">Résumé</a>
+          <a href="#/contact" data-world="contact">Contact</a>
+        </nav>
+        <div class="shell-toolbar">
+          <a id="back-to-bay" href="#/bay"
+            ><span aria-hidden="true">←</span> Back to bay</a
+          >
+          <div
+            id="view-switch"
+            class="view-switch"
+            role="group"
+            aria-label="World view"
+          >
+            <button type="button" data-view="scene" aria-pressed="true">
+              Scene
+            </button>
+            <button type="button" data-view="list" aria-pressed="false">
+              List
+            </button>
           </div>
         </div>
-        <div style="background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:22px; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
-          <div style="font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--blue); margin-bottom:14px;">Honors</div>
-          <div style="display:flex; align-items:center; gap:13px;">
-            <div style="width:40px; height:40px; border:1px solid var(--line2); border-radius:10px; background:#fff; display:flex; align-items:center; justify-content:center; padding:7px; flex-shrink:0;"><img src="assets/umiami.png" alt="University of Miami" style="width:100%; height:100%; object-fit:contain;"></div>
-            <div>
-              <p style="font-weight:600; font-size:16px; margin-bottom:2px;">6× Provost's Honor Roll</p>
-              <p style="color:var(--ink2); font-size:14px;">Consistent academic excellence</p>
-            </div>
-          </div>
+      </header>
+      <main id="scene-stage" class="miami-hero" data-world="bay">
+        <canvas id="miami-scene" aria-hidden="true"></canvas>
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div id="world-content" tabindex="-1">
+          <noscript>
+            <section class="no-script panel">
+              <h1>Luke Caprio</h1>
+              <p>Software Engineer · Miami</p>
+              <p>
+                The world map needs JavaScript. These destinations are always
+                open:
+              </p>
+              <ul>
+                <li>
+                  <a
+                    href="https://github.com/lukecaprio/Deep-Learning-Based-ECG-Signal-Classification"
+                    >ECG classification — GitHub</a
+                  >
+                </li>
+                <li>
+                  <a href="https://github.com/lukecaprio/metrohealth"
+                    >Metro Health — GitHub</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/lukecaprio/Efficient-Digit-Recognition-Using-K-Means-Clustering-and-KNN"
+                    >Digit recognition — GitHub</a
+                  >
+                </li>
+                <li>
+                  <a href="docs/KNNKMEANSFINALPAPER.pdf?v=20250126"
+                    >Digit recognition paper (PDF)</a
+                  >
+                </li>
+                <li>
+                  <a href="papers/Le%20Bourgeois%20gentilhomme.pdf"
+                    >Le faux noble (PDF)</a
+                  >
+                </li>
+                <li>
+                  <a href="papers/La%20ville%20intelligent.pdf"
+                    >La ville intelligente (PDF)</a
+                  >
+                </li>
+                <li><a href="https://bizzyu.com/">Bizzy</a></li>
+                <li>
+                  <a href="assets/LukeCaprioResume2026.pdf">Résumé (PDF)</a>
+                </li>
+                <li><a href="mailto:lukecaprio1@gmail.com">Email Luke</a></li>
+              </ul>
+            </section>
+          </noscript>
         </div>
-        <div style="background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:22px; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
-          <div style="font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--blue); margin-bottom:14px;">Currently</div>
-          <div style="display:flex; align-items:center; gap:13px;">
-            <img src="assets/bizzy.jpeg" alt="Bizzy" style="width:40px; height:40px; border-radius:10px; object-fit:cover; border:1px solid var(--line2); flex-shrink:0;">
-            <div>
-              <p style="font-weight:600; font-size:16px; margin-bottom:2px;"><a href="https://bizzyu.com/" target="_blank" style="color:inherit; text-decoration:none; transition:color .2s;" style-hover="color:var(--blue)">Bizzy</a></p>
-      </div>
+      </main>
+      <footer class="shell-footer">
+        <span class="place-caption"
+          ><span aria-hidden="true">✦</span>
+          <span id="place-name">Biscayne Bay</span
+          ><small>MIAMI, FLORIDA</small></span
+        >
+        <span id="scene-hint"
+          >Choose a place to explore. <kbd>Esc</kbd> returns to the bay.</span
+        >
+        <button
+          id="motion-toggle"
+          type="button"
+          aria-label="Pause scene animation"
+          aria-pressed="false"
+          hidden
+        >
+          <span aria-hidden="true">Ⅱ</span
+          ><span class="motion-label">Motion</span>
+        </button>
+      </footer>
+      <p id="route-status" class="sr-only" role="status" aria-live="polite"></p>
     </div>
-  </div></div></div></section>
-
-  <!-- ============ EXPERIENCE ============ -->
-  <section id="experience" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
-    <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
-      <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">02</span>
-      <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">Experience</h2>
-    </div>
-    <div style="display:flex; flex-direction:column; gap:16px;">
-
-      <div class="m-exp-card" style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:32px; display:grid; grid-template-columns:1fr auto; gap:24px; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
-        <div>
-          <div style="display:flex; align-items:center; gap:16px; margin-bottom:14px;">
-            <img src="assets/bizzy.jpeg" alt="Bizzy" style="width:52px; height:52px; border-radius:12px; object-fit:cover; border:1px solid var(--line2); flex-shrink:0;">
-            <div>
-              <h3 style="font-family:var(--serif); font-size:26px; font-weight:500; line-height:1.1;"><a href="https://bizzyu.com/" target="_blank" style="color:inherit; text-decoration:none; transition:color .2s;" style-hover="color:var(--blue)">Bizzy</a></h3>
-              <p style="color:var(--blue); font-weight:500; font-size:15px;">Lead Software Engineer</p>
-              <div style="font-family:var(--mono); font-size:12px; letter-spacing:0.5px; color:var(--ink3); margin-top:3px;">Miami, FL</div>
-            </div>
-          </div>
-          <ul style="color:var(--ink2); font-size:15px; line-height:1.6; padding-left:18px; display:flex; flex-direction:column; gap:7px;">
-            <li>Lead full-stack engineering for a campus deals and events marketplace connecting college students with local promotions and giving organizers tools to sell tickets, manage promoters, and process payouts</li>
-            <li>Build and maintain backend, web, and mobile across TypeScript/Node.js, Laravel, Flutter, Next.js, and SQL, deployed on Vercel and AWS ECS with Redis caching</li>
-            <li>Engineered end-to-end Stripe Connect integration handling ticket sales, promoter payouts, and marketplace payments</li>
-            <li>Shipped 3 major releases to the ticketing platform</li>
-            <li>Driving expansion to new campuses and scaling infrastructure to support that growth</li>
-          </ul>
-          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:20px;">
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">TypeScript</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Node.js</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Laravel</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Flutter</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Next.js</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Redis</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">AWS ECS</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Stripe Connect</span>
-          </div>
-        </div>
-        <div class="m-exp-date" style="font-family:var(--mono); font-size:12.5px; letter-spacing:0.5px; color:var(--ink3); text-align:right; white-space:nowrap;">Apr 2026 – Present</div>
-      </div>
-
-      <div class="m-exp-card" style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:32px; display:grid; grid-template-columns:1fr auto; gap:24px; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
-        <div>
-          <div style="display:flex; align-items:center; gap:16px; margin-bottom:14px;">
-            <img src="assets/retentive.png" alt="Retentive Labs" style="width:52px; height:52px; border-radius:12px; object-fit:cover; border:1px solid var(--line2); flex-shrink:0;">
-            <div>
-              <h3 style="font-family:var(--serif); font-size:26px; font-weight:500; line-height:1.1;">Retentive Labs</h3>
-              <p style="color:var(--blue); font-weight:500; font-size:15px;">AI Software Engineering Intern</p>
-              <div style="font-family:var(--mono); font-size:12px; letter-spacing:0.5px; color:var(--ink3); margin-top:3px;">Remote</div>
-            </div>
-          </div>
-          <ul style="color:var(--ink2); font-size:15px; line-height:1.6; padding-left:18px; display:flex; flex-direction:column; gap:7px;">
-            <li>Built agentic AI tools for multimodal and voice-based workflows, including voice-agent systems deployed for Fortune 500 clients</li>
-            <li>Designed and refined Retell AI call flows to improve autonomous voice-agent reliability and behavior</li>
-            <li>Contributed full-stack work across frontend interfaces and system-level workflow logic</li>
-            <li>Created reusable internal scripts and templates that accelerated agentic feature development</li>
-          </ul>
-          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:20px;">
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">JavaScript</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Python</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">AWS</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">SQL</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Agentic AI</span>
-          </div>
-        </div>
-        <div class="m-exp-date" style="font-family:var(--mono); font-size:12.5px; letter-spacing:0.5px; color:var(--ink3); text-align:right; white-space:nowrap;">May 2025 – Aug 2025</div>
-      </div>
-
-      <div class="m-exp-card" style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:32px; display:grid; grid-template-columns:1fr auto; gap:24px; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
-        <div>
-          <div style="display:flex; align-items:center; gap:16px; margin-bottom:14px;">
-            <div style="width:52px; height:52px; border-radius:12px; background:#fff; border:1px solid var(--line2); display:flex; align-items:center; justify-content:center; padding:7px; flex-shrink:0;"><img src="assets/outlier.png" alt="Outlier" style="width:100%; height:100%; object-fit:contain;"></div>
-            <div>
-              <h3 style="font-family:var(--serif); font-size:26px; font-weight:500; line-height:1.1;">Outlier</h3>
-              <p style="color:var(--blue); font-weight:500; font-size:15px;">Freelance AI Trainer</p>
-              <div style="font-family:var(--mono); font-size:12px; letter-spacing:0.5px; color:var(--ink3); margin-top:3px;">Remote</div>
-            </div>
-          </div>
-          <ul style="color:var(--ink2); font-size:15px; line-height:1.6; padding-left:18px; display:flex; flex-direction:column; gap:7px;">
-            <li>Trained generative AI models on coding and mathematics, refining outputs to improve accuracy and reasoning</li>
-            <li>Evaluated and optimized AI-generated code in Java, Python, and C, and debugged high-level mathematical problems</li>
-            <li>Wrote test cases and detailed feedback to support model learning</li>
-          </ul>
-          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:20px;">
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Python</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Java</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">JavaScript</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">C</span>
-            <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">LLM Training</span>
-          </div>
-        </div>
-        <div class="m-exp-date" style="font-family:var(--mono); font-size:12.5px; letter-spacing:0.5px; color:var(--ink3); text-align:right; white-space:nowrap;">Jun 2024 – May 2025</div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ============ PROJECTS ============ -->
-  <section id="projects" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
-    <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
-      <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">03</span>
-      <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">Projects</h2>
-    </div>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:16px;">
-
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:28px; display:flex; flex-direction:column; transition:background .2s, border-color .2s, transform .2s;" style-hover="background:var(--panelhov); border-color:var(--line2); transform:translateY(-3px)">
-        <img src="assets/ECG.png" alt="" style="width:calc(100% + 56px); height:160px; object-fit:contain; background:#fff; padding:14px; margin:-28px -28px 22px; border-radius:14px 14px 0 0; border-bottom:1px solid var(--line);">
-        <h3 style="font-family:var(--serif); font-size:21px; font-weight:500; margin-bottom:10px; line-height:1.2;">Deep Learning ECG Classification</h3>
-        <p style="color:var(--ink2); font-size:15px; line-height:1.55; margin-bottom:18px; flex-grow:1;">Research project implementing and comparing MLP and CNN architectures for classifying cardiac abnormalities from ECG signals using the MIT-BIH Arrhythmia Database.</p>
-        <div style="display:flex; gap:24px; padding:16px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-bottom:18px;">
-          <div style="display:flex; flex-direction:column; gap:3px;"><span style="font-family:var(--mono); font-weight:600; font-size:16px; color:var(--blue);">91.4%</span><span style="font-family:var(--mono); font-size:10px; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink3);">CNN Acc.</span></div>
-          <div style="display:flex; flex-direction:column; gap:3px;"><span style="font-family:var(--mono); font-weight:600; font-size:16px; color:var(--blue);">3,842</span><span style="font-family:var(--mono); font-size:10px; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink3);">Samples</span></div>
-          <div style="display:flex; flex-direction:column; gap:3px;"><span style="font-family:var(--mono); font-weight:600; font-size:16px; color:var(--blue);">5</span><span style="font-family:var(--mono); font-size:10px; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink3);">Classes</span></div>
-        </div>
-        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px;">
-          <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">PyTorch</span>
-          <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">CNN</span>
-          <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">MLP</span>
-          <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">NumPy</span>
-        </div>
-        <a href="https://github.com/lukecaprio/Deep-Learning-Based-ECG-Signal-Classification" target="_blank" style="display:inline-flex; align-items:center; gap:8px; color:var(--ink); text-decoration:none; font-weight:500; font-size:14px; transition:color .2s;" style-hover="color:var(--blue)">View on GitHub ↗</a>
-      </div>
-
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:28px; display:flex; flex-direction:column; transition:background .2s, border-color .2s, transform .2s;" style-hover="background:var(--panelhov); border-color:var(--line2); transform:translateY(-3px)">
-        <img src="assets/Health.jpg" alt="" style="width:calc(100% + 56px); height:160px; object-fit:contain; background:#fff; padding:18px; margin:-28px -28px 22px; border-radius:14px 14px 0 0; border-bottom:1px solid var(--line);">
-        <h3 style="font-family:var(--serif); font-size:21px; font-weight:500; margin-bottom:10px; line-height:1.2;">Metro Health Patient Care System</h3>
-        <p style="color:var(--ink2); font-size:15px; line-height:1.55; margin-bottom:18px; flex-grow:1;">Full-stack hospital management system built entirely through AI-driven prompt-based development. Patient portals, staff workflows, real-time alerts, and HIPAA-compliant architecture.</p>
-        <div style="display:flex; gap:24px; padding:16px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-bottom:18px;">
-          <div style="display:flex; flex-direction:column; gap:3px;"><span style="font-family:var(--mono); font-weight:600; font-size:16px; color:var(--blue);">10K+</span><span style="font-family:var(--mono); font-size:10px; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink3);">Lines</span></div>
-          <div style="display:flex; flex-direction:column; gap:3px;"><span style="font-family:var(--mono); font-weight:600; font-size:16px; color:var(--blue);">100+</span><span style="font-family:var(--mono); font-size:10px; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink3);">Files</span></div>
-        </div>
-        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px;">
-          <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">React</span>
-          <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">NestJS</span>
-          <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">PostgreSQL</span>
-          <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">Prisma</span>
-        </div>
-        <div style="display:flex; gap:20px;">
-          <a href="https://github.com/lukecaprio/metrohealth" target="_blank" style="display:inline-flex; align-items:center; gap:8px; color:var(--ink); text-decoration:none; font-weight:500; font-size:14px; transition:color .2s;" style-hover="color:var(--blue)">GitHub ↗</a>
-          <a href="https://youtu.be/a2-lpVSoVdc" target="_blank" style="display:inline-flex; align-items:center; gap:8px; color:var(--ink); text-decoration:none; font-weight:500; font-size:14px; transition:color .2s;" style-hover="color:var(--blue)">Watch Demo ▸</a>
-        </div>
-      </div>
-
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:28px; display:flex; flex-direction:column; transition:background .2s, border-color .2s, transform .2s;" style-hover="background:var(--panelhov); border-color:var(--line2); transform:translateY(-3px)">
-        <img src="assets/KNN.png" alt="" style="width:calc(100% + 56px); height:160px; object-fit:cover; margin:-28px -28px 22px; border-radius:14px 14px 0 0; border-bottom:1px solid var(--line);">
-        <h3 style="font-family:var(--serif); font-size:21px; font-weight:500; margin-bottom:10px; line-height:1.2;">K-Means + KNN Digit Recognition</h3>
-        <p style="color:var(--ink2); font-size:15px; line-height:1.55; margin-bottom:18px; flex-grow:1;">Research project exploring handwritten digit classification using K-Means clustering to enhance KNN performance. Includes a comprehensive 12-page research paper.</p>
-        <div style="display:flex; gap:24px; padding:16px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-bottom:18px;">
-          <div style="display:flex; flex-direction:column; gap:3px;"><span style="font-family:var(--mono); font-weight:600; font-size:16px; color:var(--blue);">~98%</span><span style="font-family:var(--mono); font-size:10px; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink3);">Accuracy</span></div>
-          <div style="display:flex; flex-direction:column; gap:3px;"><span style="font-family:var(--mono); font-weight:600; font-size:16px; color:var(--blue);">MNIST</span><span style="font-family:var(--mono); font-size:10px; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink3);">Dataset</span></div>
-          <div style="display:flex; flex-direction:column; gap:3px;"><span style="font-family:var(--mono); font-weight:600; font-size:16px; color:var(--blue);">12pg</span><span style="font-family:var(--mono); font-size:10px; letter-spacing:0.5px; text-transform:uppercase; color:var(--ink3);">Paper</span></div>
-        </div>
-        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px;">
-          <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">scikit-learn</span>
-          <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">K-Means</span>
-          <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">KNN</span>
-          <span style="padding:5px 12px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:11.5px; color:var(--ink2); font-family:var(--mono);">TensorFlow</span>
-        </div>
-        <div style="display:flex; gap:20px;">
-          <a href="https://github.com/lukecaprio/Efficient-Digit-Recognition-Using-K-Means-Clustering-and-KNN" target="_blank" style="display:inline-flex; align-items:center; gap:8px; color:var(--ink); text-decoration:none; font-weight:500; font-size:14px; transition:color .2s;" style-hover="color:var(--blue)">GitHub ↗</a>
-          <a href="docs/KNNKMEANSFINALPAPER.pdf?v=20250126" target="_blank" style="display:inline-flex; align-items:center; gap:8px; color:var(--ink); text-decoration:none; font-weight:500; font-size:14px; transition:color .2s;" style-hover="color:var(--blue)">Read Paper ↗</a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ============ WRITING ============ -->
-  <section id="writing" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
-    <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
-      <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">04</span>
-      <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">Writing</h2>
-    </div>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px;">
-
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:28px; display:flex; flex-direction:column; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
-        <img src="assets/KNN.png" alt="" style="width:calc(100% + 56px); height:150px; object-fit:cover; margin:-28px -28px 22px; border-radius:14px 14px 0 0; border-bottom:1px solid var(--line);">
-        <div style="font-family:var(--mono); font-size:11px; letter-spacing:1px; color:var(--ink3); margin-bottom:16px;">2024</div>
-        <h3 style="font-family:var(--serif); font-size:19px; font-weight:500; line-height:1.25; margin-bottom:12px;">Efficient Digit Recognition Using K-Means Clustering and K-Nearest Neighbors</h3>
-        <p style="color:var(--ink2); font-size:14.5px; line-height:1.55; margin-bottom:20px; flex-grow:1;">A hybrid ML model achieving 98% faster classification speed while maintaining 92% accuracy on MNIST handwritten digits.</p>
-        <a href="docs/KNNKMEANSFINALPAPER.pdf?v=20250126" target="_blank" style="display:inline-flex; align-items:center; gap:8px; color:var(--ink); text-decoration:none; font-weight:500; font-size:14px; transition:color .2s; border-top:1px solid var(--line); padding-top:18px;" style-hover="color:var(--blue)">Read Paper ↗</a>
-      </div>
-
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:28px; display:flex; flex-direction:column; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
-        <img src="assets/BourgeoisGentilhomme1688.jpg" alt="" style="width:calc(100% + 56px); height:150px; object-fit:cover; object-position:left center; margin:-28px -28px 22px; border-radius:14px 14px 0 0; border-bottom:1px solid var(--line);">
-        <div style="font-family:var(--mono); font-size:11px; letter-spacing:1px; color:var(--ink3); margin-bottom:16px;">2025 · FR</div>
-        <h3 style="font-family:var(--serif); font-size:19px; font-weight:500; line-height:1.25; margin-bottom:12px;">Le faux noble et le vrai bonheur dans Le Bourgeois gentilhomme</h3>
-        <p style="color:var(--ink2); font-size:14.5px; line-height:1.55; margin-bottom:20px; flex-grow:1;">A literary analysis of Molière's comedy exploring how the pursuit of social status leads to absurdity, while true happiness comes from honesty and love.</p>
-        <a href="papers/Le Bourgeois gentilhomme.pdf" target="_blank" style="display:inline-flex; align-items:center; gap:8px; color:var(--ink); text-decoration:none; font-weight:500; font-size:14px; transition:color .2s; border-top:1px solid var(--line); padding-top:18px;" style-hover="color:var(--blue)">Read Essay ↗</a>
-      </div>
-
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:28px; display:flex; flex-direction:column; transition:background .2s, border-color .2s;" style-hover="background:var(--panelhov); border-color:var(--line2)">
-        <img src="assets/Paris.webp" alt="" style="width:calc(100% + 56px); height:150px; object-fit:cover; margin:-28px -28px 22px; border-radius:14px 14px 0 0; border-bottom:1px solid var(--line);">
-        <div style="font-family:var(--mono); font-size:11px; letter-spacing:1px; color:var(--ink3); margin-bottom:16px;">2025 · FR</div>
-        <h3 style="font-family:var(--serif); font-size:19px; font-weight:500; line-height:1.25; margin-bottom:12px;">La ville intelligente et IA à Paris : innovation ou précipitation ?</h3>
-        <p style="color:var(--ink2); font-size:14.5px; line-height:1.55; margin-bottom:20px; flex-grow:1;">A research-based analysis of how AI is shaping Paris as a "smart city," weighing innovation against ethical concerns like algorithmic surveillance and limited citizen participation.</p>
-        <a href="papers/La ville intelligent.pdf" target="_blank" style="display:inline-flex; align-items:center; gap:8px; color:var(--ink); text-decoration:none; font-weight:500; font-size:14px; transition:color .2s; border-top:1px solid var(--line); padding-top:18px;" style-hover="color:var(--blue)">Read Paper ↗</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ============ SKILLS ============ -->
-  <section id="skills" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
-    <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
-      <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">05</span>
-      <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">Skills</h2>
-    </div>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;">
-
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px;">
-        <h3 style="font-family:var(--mono); font-size:11px; font-weight:500; color:var(--ink3); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:18px;">Languages</h3>
-        <div style="display:flex; flex-wrap:wrap; gap:9px;">
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Python</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">TypeScript</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">JavaScript</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Java</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">C</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">SQL</span>
-        </div>
-      </div>
-
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px;">
-        <h3 style="font-family:var(--mono); font-size:11px; font-weight:500; color:var(--ink3); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:18px;">Frameworks &amp; Tools</h3>
-        <div style="display:flex; flex-wrap:wrap; gap:9px;">
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Node.js</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Next.js</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Laravel</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Flutter</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Redis</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Stripe Connect</span>
-        </div>
-      </div>
-
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px;">
-        <h3 style="font-family:var(--mono); font-size:11px; font-weight:500; color:var(--ink3); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:18px;">Cloud &amp; Infra</h3>
-        <div style="display:flex; flex-wrap:wrap; gap:9px;">
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">AWS (ECS)</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Vercel</span>
-        </div>
-      </div>
-
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px;">
-        <h3 style="font-family:var(--mono); font-size:11px; font-weight:500; color:var(--ink3); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:18px;">AI / ML</h3>
-        <div style="display:flex; flex-wrap:wrap; gap:9px;">
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Agentic AI</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Machine Learning</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Deep Neural Networks</span>
-        </div>
-      </div>
-
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px;">
-        <h3 style="font-family:var(--mono); font-size:11px; font-weight:500; color:var(--ink3); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:18px;">Data</h3>
-        <div style="display:flex; flex-wrap:wrap; gap:9px;">
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Data Science</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">Multivariate Statistics</span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">MATLAB</span>
-        </div>
-      </div>
-
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px;">
-        <h3 style="font-family:var(--mono); font-size:11px; font-weight:500; color:var(--ink3); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:18px;">Human Languages</h3>
-        <div style="display:flex; flex-wrap:wrap; gap:9px;">
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">English <span style="color:var(--ink3); font-size:11.5px; margin-left:4px;">Fluent</span></span>
-          <span style="padding:7px 14px; background:var(--bg); border:1px solid var(--line); border-radius:100px; font-size:13px; color:var(--ink2); transition:border-color .2s, color .2s;" style-hover="border-color:var(--blue); color:var(--ink)">French <span style="color:var(--ink3); font-size:11.5px; margin-left:4px;">Intermediate</span></span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ============ EDUCATION ============ -->
-  <section id="education" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
-    <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
-      <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">06</span>
-      <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">Education</h2>
-    </div>
-    <div class="m-edu-grid" style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:40px; display:grid; grid-template-columns:auto 1fr auto; gap:36px; align-items:start;">
-      <div style="width:64px; height:64px; border:1px solid var(--line2); border-radius:12px; background:#fff; display:flex; align-items:center; justify-content:center; padding:11px; flex-shrink:0;"><img src="assets/umiami.png" alt="University of Miami" style="width:100%; height:100%; object-fit:contain;"></div>
-      <div>
-        <h3 style="font-family:var(--serif); font-size:28px; font-weight:500; margin-bottom:6px;">University of Miami</h3>
-        <p style="color:var(--blue); font-weight:500; font-size:15px; margin-bottom:3px;">B.S. Mathematics and Computer Science</p>
-        <p style="color:var(--ink2); font-size:15px; margin-bottom:22px;">Minor in French</p>
-        <div style="display:flex; flex-direction:column; gap:11px;">
-          <div style="display:flex; align-items:center; gap:11px; color:var(--ink2); font-size:14.5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--blue); flex-shrink:0;"></span>Presidential Scholarship ($15,000/semester)</div>
-          <div style="display:flex; align-items:center; gap:11px; color:var(--ink2); font-size:14.5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--blue); flex-shrink:0;"></span>6× Provost's Honor Roll</div>
-          <div style="display:flex; align-items:center; gap:11px; color:var(--ink2); font-size:14.5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--blue); flex-shrink:0;"></span>Florida Bright Futures Scholarship</div>
-          <div style="display:flex; align-items:center; gap:11px; color:var(--ink2); font-size:14.5px;"><span style="width:5px; height:5px; border-radius:50%; background:var(--blue); flex-shrink:0;"></span>Phi Delta Theta, FL Delta Chapter</div>
-        </div>
-      </div>
-      <div class="m-edu-stats" style="text-align:right;">
-        <div style="font-family:var(--mono); font-size:44px; font-weight:600; line-height:1; color:var(--ink); margin-bottom:8px;">3.81</div>
-        <div style="font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink3); margin-bottom:18px;">Cumulative GPA</div>
-        <p style="font-size:14px; color:var(--ink2);">May 2026</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CONTACT ============ -->
-  <section id="contact" class="m-section" style="max-width:1200px; margin:0 auto; padding:96px 40px; scroll-margin-top:88px;">
-    <div style="display:flex; align-items:baseline; gap:18px; margin-bottom:48px;">
-      <span style="font-family:var(--mono); font-size:13px; letter-spacing:1px; color:var(--blue);">07</span>
-      <h2 style="font-family:var(--serif); font-weight:400; font-size:clamp(32px,4vw,48px); letter-spacing:-1px;">Contact</h2>
-    </div>
-    <div class="m-contact-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
-      <div>
-        <h3 style="font-family:var(--serif); font-size:26px; font-weight:500; margin-bottom:14px;">Want to chat?</h3>
-        <p style="color:var(--ink2); font-size:16px; line-height:1.6; margin-bottom:30px; max-width:440px;">Feel free to reach out, whether you have a question, want to talk about something I'm building, or just want to say hi.</p>
-        <div style="display:flex; flex-direction:column; gap:12px;">
-          <a href="mailto:lukecaprio1@gmail.com" style="display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--panel); border:1px solid var(--line); border-radius:12px; text-decoration:none; color:var(--ink); transition:background .2s, border-color .2s, transform .2s;" style-hover="background:var(--panelhov); border-color:var(--line2); transform:translateX(4px)">
-            <span style="font-family:var(--mono); font-size:13px; color:var(--blue); width:22px;">@</span>
-            <div style="display:flex; flex-direction:column;"><span style="font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink3);">Email</span><span style="font-weight:500; font-size:15px;">lukecaprio1@gmail.com</span></div>
-          </a>
-          <a href="https://linkedin.com/in/lukecaprio" target="_blank" style="display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--panel); border:1px solid var(--line); border-radius:12px; text-decoration:none; color:var(--ink); transition:background .2s, border-color .2s, transform .2s;" style-hover="background:var(--panelhov); border-color:var(--line2); transform:translateX(4px)">
-            <span style="display:flex; align-items:center; justify-content:center; width:22px; color:var(--blue); flex-shrink:0;"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.8 0 0 .78 0 1.73v20.53C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.74V1.73C24 .78 23.2 0 22.22 0Z"></path></svg></span><div style="display:flex; flex-direction:column;"><span style="font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink3);">LinkedIn</span><span style="font-weight:500; font-size:15px;">linkedin.com/in/lukecaprio</span></div>
-          </a>
-          <a href="https://github.com/lukecaprio" target="_blank" style="display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--panel); border:1px solid var(--line); border-radius:12px; text-decoration:none; color:var(--ink); transition:background .2s, border-color .2s, transform .2s;" style-hover="background:var(--panelhov); border-color:var(--line2); transform:translateX(4px)">
-            <span style="display:flex; align-items:center; justify-content:center; width:22px; color:var(--blue); flex-shrink:0;"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 8.84 21.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5A10 10 0 0 0 12 2Z"></path></svg></span><div style="display:flex; flex-direction:column;"><span style="font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink3);">GitHub</span><span style="font-weight:500; font-size:15px;">github.com/lukecaprio</span></div>
-          </a>
-        </div>
-      </div>
-      <div style="background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:40px; display:flex; flex-direction:column; justify-content:center;">
-        <h3 style="font-family:var(--serif); font-size:24px; font-weight:500; margin-bottom:14px;">Say hello</h3>
-        <p style="color:var(--ink2); font-size:15.5px; line-height:1.6; margin-bottom:26px;">Always happy to connect with other builders. Drop me a line anytime.</p>
-        <a href="mailto:lukecaprio1@gmail.com" style="display:inline-flex; align-items:center; gap:8px; background:var(--blue); color:#0b0d10; padding:13px 22px; border-radius:100px; font-weight:600; font-size:14px; text-decoration:none; align-self:flex-start; transition:transform .2s, box-shadow .2s;" style-hover="transform:translateY(-2px); box-shadow:0 10px 30px rgba(122,162,255,0.25)">Send me an email →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ FOOTER ============ -->
-  <footer class="m-footer" style="border-top:1px solid var(--line); padding:36px 40px;">
-    <div class="m-footer-inner" style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
-      <p style="font-family:var(--mono); font-size:12px; letter-spacing:0.5px; color:var(--ink3);">© 2026 Luke Caprio</p>
-      <div style="display:flex; gap:22px;">
-        <a href="https://github.com/lukecaprio" target="_blank" style="font-family:var(--mono); font-size:12px; letter-spacing:0.5px; color:var(--ink3); text-decoration:none; transition:color .2s;" style-hover="color:var(--ink)">GitHub</a>
-        <a href="https://linkedin.com/in/lukecaprio" target="_blank" style="font-family:var(--mono); font-size:12px; letter-spacing:0.5px; color:var(--ink3); text-decoration:none; transition:color .2s;" style-hover="color:var(--ink)">LinkedIn</a>
-        <a href="mailto:lukecaprio1@gmail.com" style="font-family:var(--mono); font-size:12px; letter-spacing:0.5px; color:var(--ink3); text-decoration:none; transition:color .2s;" style-hover="color:var(--ink)">Email</a>
-      </div>
-    </div>
-  </footer>
-
-</div>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('[style-hover]').forEach(function(el) {
-    var orig = el.getAttribute('style') || '';
-    var hover = el.getAttribute('style-hover');
-    el.addEventListener('mouseenter', function() { el.setAttribute('style', orig + ';' + hover); });
-    el.addEventListener('mouseleave', function() { el.setAttribute('style', orig); });
-  });
-});
-</script>
-</body>
+  </body>
 </html>
