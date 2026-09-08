@@ -2,9 +2,9 @@
 
 Branch: `prototype/miami-pixel-hero`
 
-The original animated bay now opens a static, hash-routed app shell. The island nav stays in place while visitors enter About, Work, Writing, Bizzy, and Contact. The bay has exactly five large world doors, no per-project sparks, and one neon-green Bizzy entrance. Bizzy opens into an imaginative club/bar scene with a clean lit facade and a single `https://bizzyu.com/` CTA; the same green venue language is visible on the bay hub.
+The original animated bay now opens a static, hash-routed app shell. The island nav stays in place while visitors enter About, Work, Writing, and Contact; Bizzy is a direct external destination. The bay has exactly five large world doors, no per-project sparks, and a neon-green Bizzy entrance. Bizzy art is an imaginative club/bar facade on the hub, while its object and nav item open `https://bizzyu.com/` directly.
 
-Hotspots use large transparent hit targets with accessible names and a restrained glow on the in-world canvas object; hover and focus no longer place floating label pills over the artwork. About opens directly as a complete standalone porch world with its own animated blue-hour canvas, supplied headshot, sharper current bio, education, experience, skills, and a quiet footer contact link. Scene keeps the profile integrated into the world; List presents the same full content as clean stacked sections. Island-nav hover/focus subtitles name each destination without adding hotspot overlays.
+Hotspots use large transparent hit targets with accessible names and a restrained glow on the in-world canvas object; hover and focus no longer place floating label pills over the artwork. About opens directly as a complete standalone porch world with its own animated blue-hour canvas, supplied headshot, sharper current bio, education, experience, skills, and a quiet footer contact link. Scene keeps the profile integrated into the world; List presents the same full content as clean stacked sections, each using a single natural scroll container. Island-nav hover/focus subtitles name each destination without adding hotspot overlays.
 
 This phase is **shell only**: every known project and paper has an on-site stub marked “Custom UI coming.” Existing PDFs, repositories, the Metro demo, résumé, and contact destinations remain available. Final item art and PDF-to-HTML reading experiences come later.
 
@@ -33,7 +33,7 @@ Open <http://127.0.0.1:3000/#/bay>. The existing `npm start` also works. No buil
 | --- | --- |
 | Project dock | `#/work` |
 | Bayside bookshop | `#/writing` |
-| Bizzy venue | `#/bizzy` |
+| Bizzy venue | `https://bizzyu.com/` (opens externally) |
 | About porch | `#/about` |
 | Mailbox | `#/contact` |
 

@@ -738,7 +738,7 @@
     rect(c, x + 11, y + 21, 3, 1, "#92edc5");
     rect(c, x + 4, y + 26, 8, 5, "#a77c9d");
   }
-  function porch(c, p) {
+  function porch(c, p, t) {
     const x = p.x - 52,
       y = p.y + 2;
     poly(
@@ -764,6 +764,9 @@
       ],
       "#343747",
     );
+    rect(c, x + 13, y - 23, 78, 16, "#30263f");
+    rect(c, x + 13, y - 23, 78, 2, "#ffb5c0");
+    letters(c, "ABOUT", x + 19, y - 19, "#ffe4b9", 1.45);
     line(c, x - 13, y + 4, x + 52, y - 28, "#ffbcc0", 2);
     line(c, x + 52, y - 28, x + 116, y + 4, "#ffbcc0", 2);
     rect(c, x + 46, y + 16, 25, 47, "#50435e");
@@ -788,6 +791,9 @@
       "#62c1a4",
     );
     rect(c, x + 83, y + 16, 2, 5, "#ffd0a7");
+    c.globalAlpha = 0.45 + Math.sin(t * 2) * 0.2;
+    ellipse(c, x + 110, y + 72, 13, 13, "#ffe2b433");
+    c.globalAlpha = 1;
     lamp(c, x + 110, y + 72, 37);
   }
   function tower(c, p) {

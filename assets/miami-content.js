@@ -1,9 +1,9 @@
 // Facts migrated from the previous homepage; no new biography or claims.
 window.MiamiBiography = {
   bio: [
-    "I'm a software engineer in Miami, born and raised in Naples, Florida. I graduated from the University of Miami with a B.S. in Mathematics and Computer Science in May 2026. I lead engineering at Bizzy, building the campus deals and events marketplace students and organizers use every day.",
-    "I work end-to-end across backend, infrastructure, and the apps people actually tap. Previously, I worked on agentic and voice AI at Retentive Labs and trained AI models on code and math at Outlier.",
-    "I have a strong math and machine learning bent, with interests in data science, statistics, and deep learning. Outside work, I play piano, DJ, and follow basketball.",
+    "I'm a software engineer based in Miami, originally from Naples, Florida. I earned a B.S. in Mathematics and Computer Science from the University of Miami in May 2026, and I lead engineering at Bizzy, a campus deals and events marketplace for students and organizers.",
+    "I like owning products end to end: APIs and infrastructure through the interfaces people actually use. Before Bizzy, I built agentic and voice-AI systems at Retentive Labs and trained models on code and mathematics at Outlier.",
+    "Math is still half of how I think. Data science, statistics, and machine learning show up in a lot of what I build. Away from the keyboard you'll usually find me at a piano, behind DJ decks, or watching basketball.",
   ],
   experience: [
     {
@@ -181,11 +181,11 @@ window.MiamiMap = (() => {
           [78, 65],
           { description: "Research, essays, and the bayside bookshop." },
         ),
-        object("bizzy", "Bizzy", "bizzy-club", "#/bizzy", [17, 66], [22, 65], {
-          description: "The waterfront venue.",
+        object("bizzy", "Bizzy", "bizzy-club", "https://bizzyu.com/", [17, 66], [22, 65], {
+          description: "The green room for Bizzy.",
         }),
-        object("about", "About", "porch", "#/about", [33, 83], [24, 83], {
-          scale: 0.65,
+        object("about", "About me", "porch", "#/about", [34, 76], [24, 79], {
+          scale: 1.05,
           description: "A little about me, on the porch.",
         }),
         object(

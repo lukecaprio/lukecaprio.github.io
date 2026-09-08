@@ -77,6 +77,10 @@ async function shot(page, name) {
       navDestinations.length === 7 && navDestinations.every(([, destination, label]) => destination && label),
       "Island nav names every destination",
     );
+    check(
+      await page.locator('.island-nav [data-world="bizzy"]').evaluate((el) => el.href === "https://bizzyu.com/" && el.target === "_blank" && el.rel.includes("noopener")),
+      "Island nav Bizzy opens the external site",
+    );
     await page.locator('.island-nav a[data-world="work"]').hover();
     check(
       await page.locator('.island-nav a[data-world="work"]').evaluate((el) => getComputedStyle(el, "::after").content.includes("Work / Projects")),
@@ -87,7 +91,7 @@ async function shot(page, name) {
       "No project item clutter on Hub",
     );
     check(
-      (await page.locator('.hotspot[href="#/bizzy"]').count()) === 1,
+      (await page.locator('.hotspot[href="https://bizzyu.com/"]').count()) === 1,
       "One Bizzy door",
     );
     await shot(page, "bay-desktop");
@@ -130,7 +134,8 @@ async function shot(page, name) {
     await workDoor.focus();
     check(frozen !== await page.locator("canvas").evaluate(c => c.toDataURL()), "Keyboard focus highlights the object");
     for (const world of worlds) {
-      await page.locator(`.island-nav [data-world="${world}"]`).click();
+      if (world === "bizzy") await go(page, "/bizzy");
+      else await page.locator(`.island-nav [data-world="${world}"]`).click();
       await ready(page, "/" + world);
       check(
         (await page.locator(".hotspot").count()) === expected[world],
@@ -180,12 +185,17 @@ async function shot(page, name) {
       await page.locator('button[data-view="scene"]').click();
     }
     // Every door really enters its world.
-    for (const world of worlds.filter((w) => w !== "bay")) {
+    for (const world of worlds.filter((w) => w !== "bay" && w !== "bizzy")) {
       await go(page, "/bay");
       await page.locator('.hotspot[href="#/' + world + '"]').click();
       await ready(page, "/" + world);
       check(true, "Hub door → " + world);
     }
+    await go(page, "/bay");
+    check(
+      await page.locator('.hotspot[data-object="bizzy"]').evaluate((el) => el.href === "https://bizzyu.com/" && el.target === "_blank" && el.rel.includes("noopener")),
+      "Hub Bizzy door opens the external site",
+    );
     for (const route of routes) {
       await go(page, route);
       check(
@@ -274,7 +284,7 @@ async function shot(page, name) {
     check(await page.locator(".about-scene-document .about-section").count() === 4, "Bio, education, experience and skills are embedded");
     check(await page.locator(".about-sections, .about-links").count() === 0, "About has no jump or link dump chrome");
     check(await page.locator('.about-scene-document .about-end a[href="#/contact"]').count() === 1, "About keeps one quiet contact link");
-    check(await page.locator(".about-scene-document").innerText().then((t) => t.includes("graduated from the University of Miami") && t.includes("May 2026") && t.includes("Retentive Labs") && t.includes("Outlier") && t.includes("piano") && t.includes("DJ") && t.includes("basketball")), "About uses the sharper current bio");
+    check(await page.locator(".about-scene-document").innerText().then((t) => t.includes("University of Miami") && t.includes("May 2026") && t.includes("Retentive Labs") && t.includes("Outlier") && t.includes("piano") && t.includes("DJ") && t.includes("basketball")), "About uses the sharper current bio");
     await page.locator('button[data-view="list"]').click();
     check(await page.locator("#about-bio").isVisible(), "About List immediately shows biography");
     check(await page.locator(".about-list-document .about-section").count() === 4, "About List keeps every section");
@@ -358,9 +368,12 @@ async function shot(page, name) {
     await shot(page, "about-mobile");
     check(await page.locator(".about-scene-document img").isVisible(), "Mobile About shows headshot on arrival");
     check(await page.locator(".about-scene-document").evaluate(el => el.scrollWidth <= el.clientWidth), "Mobile About content fits its frame");
+    check(await page.locator(".about-scene").evaluate(el => el.scrollHeight > el.clientHeight), "Mobile About Scene has a natural scroll column");
+    check(await page.locator(".about-scene").evaluate(el => { el.scrollTop = 260; return el.scrollTop > 0; }), "Mobile About Scene scrolls inside the world");
     const aboutText = await page.locator(".about-scene-document").textContent();
     await page.locator('button[data-view="list"]').click();
     check(await page.locator(".about-list-document").textContent() === aboutText, "About List has the same complete content");
+    check(await page.locator(".about-list").evaluate(el => el.scrollHeight > el.clientHeight), "Mobile About List has a natural scroll column");
     await shot(page, "about-list-mobile");
     // Reduced motion starts in List and never zooms, including after explicit Scene choice.
     const quiet = await browser.newContext({
