@@ -198,24 +198,31 @@ async function shot(page, name) {
     );
     for (const route of routes) {
       await go(page, route);
-      check(
-        (await page.locator(".stub-badge").textContent()) ===
-          "Custom UI coming",
-        route + " is explicitly a stub",
-      );
-      check(
-        (await page.locator(".reader-placeholder h2").innerText()) ===
-          "Read here",
-        route + " on-site read placeholder",
-      );
-      await page.locator(".item-description").click();
+      const digits = route === "/work/digits" || route === "/writing/digits";
+      if (digits) {
+        check(await page.locator(".digits-item").count() === 2, route + " has Scene and List documents");
+        check(await page.locator(".stub-badge, .reader-placeholder").count() === 0, route + " is no longer a placeholder");
+        check(await page.locator(".digits-section").count() >= (route === "/writing/digits" ? 10 : 4), route + " has full themed content");
+      } else {
+        check(
+          (await page.locator(".stub-badge").textContent()) ===
+            "Custom UI coming",
+          route + " is explicitly a stub",
+        );
+        check(
+          (await page.locator(".reader-placeholder h2").innerText()) ===
+            "Read here",
+          route + " on-site read placeholder",
+        );
+      }
+      await page.locator(".item-description:visible").click();
       check(await page.locator("#scene-stage").getAttribute("data-route") === route, "Ordinary item content clicks do not switch world views");
       const parent =
         route === "/writing/digits" || route.startsWith("/work/")
           ? "work"
           : "writing";
       check(
-        (await page.locator(".item-back").getAttribute("href")).startsWith(
+        (await page.locator(".item-back:visible").getAttribute("href")).startsWith(
           "#/" + parent,
         ),
         route + " has correct home",
@@ -227,7 +234,8 @@ async function shot(page, name) {
         );
       else {
         const pdf = await page
-          .locator(".item-actions a[download]")
+          .locator(".item-actions a[download]:visible")
+          .first()
           .getAttribute("href");
         const response = await page.request.get(new URL(pdf, base).href);
         check(response.ok(), route + " PDF returns 200");
@@ -238,13 +246,21 @@ async function shot(page, name) {
       }
       if (route.startsWith("/work/") || route === "/writing/digits")
         check(
-          (await page
-            .locator('.item-actions a[href*="github.com"]')
-            .count()) === 1,
+            (await page
+            .locator('.item-actions a[href*="github.com"]:visible')
+            .count()) >= 1,
           route + " GitHub exists",
         );
-      await page.locator(".item-back").click();
-      await ready(page, "/" + parent);
+      if (digits) {
+        check(await page.locator('.digits-actions a[href="#/writing/digits"], .digits-actions a[href="#/work/digits"]').count() >= 1, route + " has internal cross-link");
+        await page.locator('button[data-view="scene"]').click();
+        check(await page.locator("#scene-view").evaluate((el) => el.scrollHeight > el.clientHeight), route + " Scene scrolls");
+        await page.locator('button[data-view="list"]').click();
+        check(await page.locator("#list-view").isVisible(), route + " List view is available");
+        check(await page.locator("#list-view").evaluate((el) => el.scrollHeight > el.clientHeight), route + " List scrolls");
+      }
+      await page.locator(".item-back:visible").click();
+      await ready(page, route === "/writing/digits" ? "/work/digits" : "/" + parent);
     }
     await go(page, "/writing");
     check(
@@ -375,6 +391,13 @@ async function shot(page, name) {
     check(await page.locator(".about-list-document").textContent() === aboutText, "About List has the same complete content");
     check(await page.locator(".about-list").evaluate(el => el.scrollHeight > el.clientHeight), "Mobile About List has a natural scroll column");
     await shot(page, "about-list-mobile");
+    await go(page, "/work/digits");
+    await page.locator('button[data-view="scene"]').click();
+    check(await page.locator(".digits-scene").evaluate(el => el.scrollHeight > el.clientHeight), "Mobile Digits Scene scrolls inside the world");
+    check(await page.locator(".digits-scene-document").evaluate(el => el.scrollWidth <= el.clientWidth), "Mobile Digits Scene fits its frame");
+    await page.locator('button[data-view="list"]').click();
+    check(await page.locator(".digits-list").evaluate(el => el.scrollHeight > el.clientHeight), "Mobile Digits List scrolls inside the world");
+    check(await page.locator(".digits-list-document").evaluate(el => el.scrollWidth <= el.clientWidth), "Mobile Digits List fits its frame");
     // Reduced motion starts in List and never zooms, including after explicit Scene choice.
     const quiet = await browser.newContext({
       viewport: { width: 320, height: 568 },

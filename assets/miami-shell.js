@@ -73,6 +73,54 @@
     return `<div class="item-actions"><span class="read-mode">Read here</span>${pdf}${item.github ? anchor(item.github, "GitHub ↗", 'class="action"') : ""}${item.demo ? anchor(item.demo, "Watch demo ↗", 'class="action"') : ""}${item.paper ? anchor("#" + item.paper, "Read the paper →", 'class="action"') : ""}</div>`;
   }
 
+  function digitsActions(item, paper = false) {
+    const links = [];
+    if (!paper) links.push(anchor("#/writing/digits", "Read the paper →", 'class="action"'));
+    if (item.pdf) links.push(anchor(item.pdf, "Download PDF ↓", 'class="action" download'));
+    if (item.github) links.push(anchor(item.github, "GitHub ↗", 'class="action"'));
+    if (paper) links.push(anchor("#/work/digits", "Back to project →", 'class="action"'));
+    return `<div class="item-actions digits-actions">${links.join("")}</div>`;
+  }
+
+  const digitsPaperSections = [
+    ["Abstract", "This study combines K-Means clustering and a K-Nearest Neighbors classifier to recognize handwritten digits efficiently. Clustering creates a compact set of representative images before classification, reducing the amount of data KNN must compare while preserving useful accuracy."],
+    ["Introduction", "The project focuses on classifying handwritten digits from 0–9, with efficiency treated as a first-class constraint. K-Means provides an unsupervised way to organize similar examples, while KNN uses labeled examples and proximity to make the final classification."],
+    ["Method", "The model uses the MNIST database: 60,000 grayscale training images and 10,000 test images. Images are normalized to a 0–1 scale and reshaped for the algorithms. The training images are separated by digit, then each group is clustered into nine centroids. Across ten digit groups this produces 90 approximate training images. A 1-nearest-neighbor model then compares each test image with that compact set. The implementation uses Scikit-learn and TensorFlow."],
+    ["Results", "The compact model classified the 10,000-image test set in 0.72 seconds, compared with 38.27 seconds for a standard KNN model using the full training set. Its test accuracy was 92.33%, compared with 96.91% for the standard model. The paper describes this as a 98.12% speed improvement alongside a 4.58 percentage-point accuracy decrease: a deliberate tradeoff between speed and detail."],
+    ["Conclusion", "K-Means and KNN together produced an efficient handwritten-digit classifier while retaining practical accuracy. The paper identifies hyperparameter tuning—especially the number of clusters and neighbors—as a useful direction for future work, including applying the same approach to other image-recognition tasks."],
+  ];
+
+  function digitsPaperBody() {
+    return digitsPaperSections.map(([heading, body]) => `<section class="digits-section"><p class="digits-section-label">${escape(heading.toUpperCase())}</p><h2>${escape(heading)}</h2><p>${escape(body)}</p></section>`).join("");
+  }
+
+  function digitsMachine() {
+    const tiles = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
+    return `<div class="digits-machine" aria-hidden="true"><div class="digits-machine-top"><span>MNIST / PATTERN LAB</span><i></i></div><div class="digits-tile-grid">${tiles.map((digit, i) => `<span class="digits-tile tile-${i % 4}">${digit}</span>`).join("")}</div><div class="digits-orbit orbit-one"></div><div class="digits-orbit orbit-two"></div><div class="digits-machine-base"><b></b><b></b><b></b></div></div>`;
+  }
+
+  function digitsProjectMarkup(item, list = false) {
+    const id = list ? "digits-list" : "route";
+    return `<section id="${list ? "list-view" : "scene-view"}" class="digits-${list ? "list" : "scene"}" aria-label="Digits project ${list ? "reading view" : "arcade scene"}"><article class="digits-document digits-item ${list ? "digits-list-document" : "digits-scene-document"}" data-item-world="digits" aria-labelledby="${id}-title" tabindex="-1">
+      <a class="item-back" href="#/work?focus=digits">← Back to Work</a>
+      <div class="digits-hero"><div class="digits-copy"><p class="digits-kicker">01 / PATTERN LAB · PROJECT</p><h1 id="${id}-title" tabindex="-1">${escape(item.title)}</h1><p class="item-description">${escape(item.description)}</p>${tags(item.tags)}${digitsActions(item)}</div>${digitsMachine()}</div>
+      <section class="digits-section"><p class="digits-section-label">PROJECT NOTE</p><h2>Cluster first. Classify second.</h2><p>The project pairs K-Means clustering with K-Nearest Neighbors to recognize handwritten digits. K-Means turns a large labeled training set into representative centroids; KNN then classifies each test image by its nearest example.</p></section>
+      <section class="digits-metrics" aria-label="Reported results"><div><strong>90</strong><span>representative images</span></div><div><strong>0.72s</strong><span>prediction time</span></div><div><strong>92.33%</strong><span>test accuracy</span></div></section>
+      <section class="digits-section digits-next"><p class="digits-section-label">KEEP EXPLORING</p><h2>The paper, in full</h2><p>Read the research structure on this site, or open the source materials directly.</p><div class="item-actions">${anchor("#/writing/digits", "Read on-site →", 'class="action"')}${anchor(item.pdf, "Download PDF ↓", 'class="action" download')}${anchor(item.github, "GitHub ↗", 'class="action"')}</div></section>
+      <footer class="reader-end">MIAMI / DIGITS ARCADE</footer>
+    </article></section>`;
+  }
+
+  function digitsPaperMarkup(item, list = false) {
+    const id = list ? "digits-paper-list" : "route";
+    return `<section id="${list ? "list-view" : "scene-view"}" class="digits-${list ? "list" : "scene"}" aria-label="Digits paper ${list ? "reading view" : "arcade scene"}"><article class="digits-document digits-item ${list ? "digits-list-document" : "digits-scene-document"}" data-item-world="digits" aria-labelledby="${id}-title" tabindex="-1">
+      <a class="item-back" href="#/work/digits">← Back to project</a>
+      <header class="digits-paper-header"><p class="digits-kicker">02 / RESEARCH READER · 2024</p><h1 id="${id}-title" tabindex="-1">${escape(item.title)}</h1><p class="item-description">${escape(item.description)}</p>${tags(item.tags)}${digitsActions(item, true)}</header>
+      <div class="digits-paper-body">${digitsPaperBody()}</div>
+      <footer class="reader-end">LUKE CAPRIO / UNIVERSITY OF MIAMI · 2024</footer>
+    </article></section>`;
+  }
+
   function hotspot(o) {
     const label = o.label.replace(/ [↗↓]$/, "") + (o.pdf ? " — download PDF" : /^https?:/.test(o.href) ? " (opens in a new tab)" : "");
     return `<a class="hotspot" aria-label="${escape(label)}" data-object="${escape(o.id)}" data-place="${escape(o.id)}" data-prop="${escape(o.prop)}" data-scale="${o.scale || 1}" style="--x:${o.position[0]}%;--y:${o.position[1]}%;--mobile-x:${o.mobile[0]}%;--mobile-y:${o.mobile[1]}%" href="${escape(o.href)}"${external(o.href)}${o.pdf ? " download" : ""}></a>`;
@@ -124,13 +172,16 @@
   }
 
   function itemMarkup(item) {
+    if (route.path === "/work/digits") return digitsProjectMarkup(item) + digitsProjectMarkup(item, true);
+    if (route.path === "/writing/digits") return digitsPaperMarkup(item) + digitsPaperMarkup(item, true);
     const home = worlds[item.home];
     return `<article class="panel item-stub" aria-labelledby="route-title"><a class="item-back" href="#/${item.home}?focus=${route.path.split("/").pop()}">← Back to ${escape(home.title)}</a><div class="reader-meta"><span>${escape(item.kind)} · ${escape(item.language)}${item.year ? " · " + escape(item.year) : ""}</span><span class="stub-badge">Custom UI coming</span></div><h1 id="route-title" tabindex="-1"${item.language === "FR" ? ' lang="fr"' : ""}>${escape(item.title)}</h1><p class="item-description">${escape(item.description)}</p>${tags(item.tags)}${itemActions(item)}<section class="reader-placeholder" aria-labelledby="reader-heading"><span class="reader-star" aria-hidden="true">✦</span><h2 id="reader-heading">Read here</h2><p>This is the on-site home for this ${item.kind.toLowerCase()}. Its custom reading experience is coming next.</p><p>${item.pdf ? "The original PDF is available above." : "No PDF has been published for this project. The source repository is available above."}</p></section><p class="reader-end">BISCAYNE BAY / ${escape(home.caption.toUpperCase())}</p></article>`;
   }
 
   function applyView({ focus = false } = {}) {
     const isItem = Boolean(route.item || route.missing);
-    stage.dataset.view = isItem ? "reader" : mode;
+    const richItem = Boolean(route.item && content.querySelector("[data-item-world='digits']"));
+    stage.dataset.view = isItem && !richItem ? "reader" : mode;
     document
       .getElementById("view-switch")
       .setAttribute(
@@ -148,12 +199,14 @@
       .forEach((b) =>
         b.setAttribute(
           "aria-pressed",
-          String(!isItem && b.dataset.view === mode),
-        ),
-      );
-    window.MiamiScene?.setMode(isItem ? "reader" : mode);
+        String((!isItem || richItem) && b.dataset.view === mode),
+      ),
+    );
+    window.MiamiScene?.setMode(isItem && !richItem ? "reader" : mode);
     document.getElementById("scene-hint").innerHTML = isItem
-      ? "A place for this story. <kbd>Esc</kbd> returns to the bay."
+      ? richItem
+        ? "Explore the lab. <kbd>Esc</kbd> returns to the bay."
+        : "A place for this story. <kbd>Esc</kbd> returns to the bay."
       : route.world === "about"
         ? "Make yourself at home. <kbd>Esc</kbd> returns to the bay."
       : mode === "list"
@@ -187,6 +240,7 @@
     stage.dataset.route = route.path;
     stage.dataset.hash = route.hash;
     stage.dataset.item = String(Boolean(route.item));
+    stage.dataset.itemPath = route.item ? route.path : "";
     content.innerHTML = route.missing
       ? `<section class="panel item-stub"><p class="card-kicker">OFF THE MAP</p><h1 id="route-title" tabindex="-1">This place isn’t on the map.</h1><p>Head back to the bay and choose a world.</p>${anchor("#/bay", "Back to bay →", 'class="action"')}</section>`
       : route.item
@@ -212,7 +266,7 @@
       "aria-current",
       route.world === "bay" && !route.missing ? "page" : "false",
     );
-    window.MiamiScene?.setWorld(route.world);
+    window.MiamiScene?.setWorld(route.world, route.item ? route.path : null);
     applyView();
     document.getElementById("route-status").textContent = route.missing
       ? "Unknown location"
@@ -283,7 +337,8 @@
     const view = e.target.closest("button[data-view]");
     if (view) {
       mode = view.dataset.view;
-      if (route.item || route.missing) {
+      const richItem = Boolean(route?.item && content.querySelector("[data-item-world='digits']"));
+      if ((route.item || route.missing) && !richItem) {
         location.hash = "/" + route.world;
       } else {
         applyView();

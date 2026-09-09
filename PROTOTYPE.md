@@ -6,7 +6,7 @@ The original animated bay now opens a static, hash-routed app shell. The island 
 
 Hotspots use large transparent hit targets with accessible names and a restrained glow on the in-world canvas object; hover and focus no longer place floating label pills over the artwork. About opens directly as a complete standalone porch world with its own animated blue-hour canvas, supplied headshot, sharper current bio, education, experience, skills, and a quiet footer contact link. Scene keeps the profile integrated into the world; List presents the same full content as clean stacked sections, each using a single natural scroll container. Island-nav hover/focus subtitles name each destination without adding hotspot overlays.
 
-This phase is **shell only**: every known project and paper has an on-site stub marked “Custom UI coming.” Existing PDFs, repositories, the Metro demo, résumé, and contact destinations remain available. Final item art and PDF-to-HTML reading experiences come later.
+This phase is **shell plus the first finished item world**: ECG, Metro, and the French papers remain on-brand stubs, while Digits has a standalone arcade project page and a readable on-site paper reader. Existing PDFs, repositories, the Metro demo, résumé, and contact destinations remain available.
 
 ## Preview
 
@@ -21,10 +21,11 @@ Open <http://127.0.0.1:3000/#/bay>. The existing `npm start` also works. No buil
 ## Explore
 
 - Use the nav or any bay door to enter a world.
-- **Scene | List** shows the same destinations in either form. On an item page, these buttons return to its home world in the selected view.
+- **Scene | List** shows the same destinations in either form. Digits keeps both views on its standalone project or paper world; the remaining item stubs return to their home world in the selected view.
 - Every Work object and Bookshop book opens its own route. The Digits paper has its home in Work; Writing cross-links it in List only.
 - **Back to bay** and **Escape** return to the hub. Item pages also have a back-to-world link. Browser Back/Forward and direct hash links work normally.
 - **Résumé** in the nav opens Contact and focuses its résumé object/list entry; the PDF is one click away.
+- Digits opens a dark neon arcade world at `#/work/digits`; its paper reader at `#/writing/digits` keeps the source PDF and GitHub beside readable Abstract, Introduction, Method, Results, and Conclusion sections. Both views scroll inside their own content column on mobile and desktop.
 - Reduced motion starts in List with animation paused; compact screens also default to List. Visitors can explicitly choose Scene. Transitions are instant while motion is paused or reduced motion is enabled.
 
 ## Hub doors

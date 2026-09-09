@@ -941,6 +941,204 @@ kbd {
   }
 }
 
+/* Digits gets its own arcade world and reader; both views keep the full story in-page. */
+.miami-hero[data-item-path="/work/digits"],
+.miami-hero[data-item-path="/writing/digits"] {
+  background: #090d24;
+}
+.miami-hero[data-item-path="/work/digits"] .hero-shade,
+.miami-hero[data-item-path="/writing/digits"] .hero-shade {
+  background: linear-gradient(180deg, #08091a55, transparent 35%, #08091acc);
+}
+.miami-hero[data-item-path="/work/digits"] + .shell-footer,
+.miami-hero[data-item-path="/writing/digits"] + .shell-footer {
+  display: none;
+}
+.digits-scene,
+.digits-list {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  padding: calc(var(--shell-top) + 22px) 20px calc(var(--shell-bottom) + 34px);
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: #fa69c2 #15132e;
+  scrollbar-width: thin;
+}
+.digits-document {
+  position: relative;
+  width: min(1080px, calc(100% - 20px));
+  margin: 0 auto;
+  color: #f6e8ff;
+  line-height: 1.7;
+}
+.digits-scene-document {
+  padding: 30px 38px 46px;
+  border: 1px solid #ff7bce77;
+  background: linear-gradient(135deg, #110e2ce6, #1a1236db 60%, #101d3ee6);
+  box-shadow: 8px 8px 0 #08091999, inset 0 1px #b7fff044;
+}
+.digits-list-document {
+  padding: 34px 52px 52px;
+  border: 1px solid #a9e9e477;
+  background: #0d1830f2;
+  box-shadow: 7px 7px 0 #09091a99;
+}
+.digits-document .item-back {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: #9ff8ee;
+}
+.digits-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
+  gap: 30px;
+  align-items: center;
+}
+.digits-kicker,
+.digits-section-label {
+  font: 10px/1.4 "JetBrains Mono", monospace;
+  letter-spacing: 2px;
+  color: #ff7aca;
+  text-transform: uppercase;
+}
+.digits-document h1 {
+  max-width: 760px;
+  margin: 10px 0 17px;
+  color: #fff3fa;
+  font: 500 clamp(38px, 5vw, 70px)/1.05 "Newsreader", serif;
+  letter-spacing: -1.8px;
+}
+.digits-paper-header h1 {
+  max-width: 900px;
+}
+.digits-document .item-description {
+  max-width: 680px;
+  color: #d9d7f2;
+  font-size: 18px;
+}
+.digits-document .tags > span {
+  border-color: #61eee266;
+  background: #4be7da15;
+  color: #b9fff2;
+}
+.digits-actions {
+  margin: 24px 0 0;
+}
+.digits-actions .action {
+  border-color: #ff7bca77;
+  background: #ff64c812;
+}
+.digits-actions .action:hover,
+.digits-actions .action:focus-visible {
+  background: #ff64c82b;
+}
+.digits-machine {
+  position: relative;
+  min-height: 245px;
+  padding: 17px 17px 22px;
+  border: 3px solid #36d9d0;
+  background: #070b1c;
+  box-shadow: 7px 7px 0 #ff59bb55, inset 0 0 0 2px #ff63c933;
+  overflow: hidden;
+}
+.digits-machine-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  color: #74f4e8;
+  font: 9px "JetBrains Mono", monospace;
+  letter-spacing: 1.2px;
+}
+.digits-machine-top i {
+  width: 8px;
+  height: 8px;
+  background: #ff63c3;
+  box-shadow: 0 0 10px #ff63c3;
+}
+.digits-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+.digits-tile {
+  display: grid;
+  place-items: center;
+  min-height: 48px;
+  border: 1px solid #55e9df66;
+  color: #b6fff6;
+  background: #152844;
+  font: 26px/1 "JetBrains Mono", monospace;
+  text-shadow: 2px 2px #ff55bf;
+}
+.digits-tile:nth-child(3n + 1) { background: #331641; color: #ffd0ed; border-color: #ff68c477; }
+.digits-tile:nth-child(3n + 2) { transform: translateY(4px); }
+.digits-orbit { position: absolute; border: 1px solid #ff64c855; border-radius: 50%; pointer-events: none; }
+.orbit-one { width: 150px; height: 90px; right: -40px; top: 54px; transform: rotate(-20deg); }
+.orbit-two { width: 92px; height: 150px; left: -42px; bottom: -52px; border-color: #5be9df55; transform: rotate(26deg); }
+.digits-machine-base { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
+.digits-machine-base b { width: 38px; height: 4px; background: #ff65c4; box-shadow: 0 0 8px #ff65c4; }
+.digits-machine-base b:nth-child(2) { background: #65ede1; box-shadow: 0 0 8px #65ede1; }
+.digits-section {
+  max-width: 820px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #77e9df3b;
+}
+.digits-section h2 {
+  margin: 6px 0 11px;
+  color: #fff0fa;
+  font: 400 34px/1.15 "Newsreader", serif;
+}
+.digits-section p:not(.digits-section-label) {
+  color: #d9d7f2;
+  font-size: 17px;
+}
+.digits-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 30px;
+}
+.digits-metrics > div {
+  padding: 17px 16px;
+  border: 1px solid #ff65c455;
+  background: #25133d99;
+}
+.digits-metrics strong { display: block; color: #7ff4e8; font: 500 28px/1 "JetBrains Mono", monospace; }
+.digits-metrics span { display: block; margin-top: 8px; color: #dbc9ec; font-size: 12px; }
+.digits-next { margin-top: 34px; }
+.digits-paper-header { max-width: 920px; }
+.digits-paper-body { max-width: 820px; }
+.digits-paper-body .digits-section:first-child { margin-top: 34px; }
+.digits-paper-body .digits-section h2 { font-size: 31px; }
+.digits-paper-body .digits-section p:not(.digits-section-label) { font-size: 17px; }
+.digits-document .reader-end { margin-top: 34px; color: #8bb7c6; }
+@media (max-width: 760px) {
+  .digits-hero { grid-template-columns: 1fr; }
+  .digits-machine { max-width: 430px; width: 100%; margin: 2px auto 0; }
+  .digits-document { width: 100%; }
+  .digits-scene-document, .digits-list-document { padding: 24px 20px 38px; }
+  .digits-document h1 { font-size: clamp(36px, 10vw, 54px); }
+  .digits-document .item-description { font-size: 16px; }
+  .digits-section h2 { font-size: 30px; }
+}
+@media (max-width: 430px) {
+  .digits-scene, .digits-list { padding: calc(var(--shell-top) + 14px) 12px calc(var(--shell-bottom) + 28px); }
+  .digits-scene-document, .digits-list-document { padding: 20px 15px 32px; }
+  .digits-metrics { grid-template-columns: 1fr; gap: 8px; }
+  .digits-metrics > div { padding: 13px; }
+  .digits-section { margin-top: 27px; padding-top: 20px; }
+  .digits-section p:not(.digits-section-label), .digits-paper-body .digits-section p:not(.digits-section-label) { font-size: 16px; }
+  .digits-actions .action { width: 100%; justify-content: center; }
+}
+
 /* About is one complete embedded document in both views, never a scene gate. */
 .about-page {
   position:absolute;top:165px;bottom:var(--shell-bottom);left:50%;transform:translateX(-50%);

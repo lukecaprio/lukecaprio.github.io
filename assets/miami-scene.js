@@ -26,6 +26,7 @@
     last = 0;
   let highlighted = null, highlightLayer = null;
   let currentWorld = "bay",
+    currentItem = null,
     mode = "scene";
   let pointer = 0,
     drift = 0;
@@ -143,6 +144,16 @@
     V: ["10001", "10001", "10001", "10001", "10001", "01010", "00100"],
     Y: ["10001", "10001", "01010", "00100", "00100", "00100", "00100"],
     Z: ["11111", "00001", "00010", "00100", "01000", "10000", "11111"],
+    "0": ["01110", "10001", "10011", "10101", "11001", "10001", "01110"],
+    "1": ["00100", "01100", "00100", "00100", "00100", "00100", "01110"],
+    "2": ["01110", "10001", "00001", "00010", "00100", "01000", "11111"],
+    "3": ["11110", "00001", "00001", "01110", "00001", "00001", "11110"],
+    "4": ["00010", "00110", "01010", "10010", "11111", "00010", "00010"],
+    "5": ["11111", "10000", "10000", "11110", "00001", "00001", "11110"],
+    "6": ["01110", "10000", "10000", "11110", "10001", "10001", "01110"],
+    "7": ["11111", "00001", "00010", "00100", "01000", "01000", "01000"],
+    "8": ["01110", "10001", "10001", "01110", "10001", "10001", "01110"],
+    "9": ["01110", "10001", "10001", "01111", "00001", "00001", "01110"],
     " ": ["000", "000", "000", "000", "000", "000", "000"],
   };
   function letters(c, text, x, y, color, size = 1) {
@@ -388,6 +399,64 @@
       rect(c, x, y, 3, 3, "#b7ffcf");
     }
     c.globalAlpha = 1;
+  }
+
+  function digitsScene(c, t) {
+    // A separate night arcade world for the Digits project and paper reader.
+    const stops = [[0, "#090d24"], [0.38, "#171442"], [0.72, "#351348"], [1, "#100c23"]];
+    for (let y = 0; y < H; y += 2) {
+      const p = y / H;
+      let i = 1;
+      while (i < stops.length - 1 && p > stops[i][0]) i++;
+      rect(c, 0, y, W, 2, mix(stops[i - 1][1], stops[i][1], (p - stops[i - 1][0]) / (stops[i][0] - stops[i - 1][0])));
+    }
+    const rng = random(1771);
+    for (let i = 0; i < 90; i++) {
+      const x = rng() * W, y = rng() * H * 0.58;
+      rect(c, x, y, i % 8 === 0 ? 2 : 1, i % 8 === 0 ? 2 : 1, i % 3 ? "#8df7ef88" : "#ff75ce99");
+    }
+    // Neon horizon and perspective grid.
+    const vanY = H * 0.61;
+    line(c, 0, vanY, W, vanY, "#ff66c8", 2);
+    for (let i = 1; i < 9; i++) {
+      const y = vanY + Math.pow(i / 9, 1.65) * H * 0.42;
+      line(c, 0, y, W, y, i % 2 ? "#5ee8e455" : "#ff64c866", 1);
+    }
+    for (let i = -8; i <= 8; i++) {
+      const bx = W / 2 + i * W * 0.085;
+      line(c, W / 2, vanY, bx, H, "#4de7df55", 1);
+    }
+    // Floating clustering orbs and their links.
+    const nodes = [
+      [W * 0.17, H * 0.34, 16, "#ff6fc8"], [W * 0.31, H * 0.47, 11, "#6af2e4"],
+      [W * 0.52, H * 0.31, 20, "#ff9bdd"], [W * 0.7, H * 0.46, 13, "#66e8df"],
+      [W * 0.84, H * 0.3, 17, "#ff74c8"],
+    ];
+    nodes.forEach(([x, y, r, color], i) => {
+      const bob = Math.sin(t * 1.1 + i * 1.7) * 5;
+      nodes.slice(i + 1).forEach(([nx, ny]) => {
+        if (Math.abs(nx - x) < W * 0.4) line(c, x, y + bob, nx, ny + Math.sin(t + i) * 4, color + "55", 1);
+      });
+      ellipse(c, x, y + bob, r + 5, r + 5, color + "18");
+      ellipse(c, x, y + bob, r, r, color + "66");
+      ellipse(c, x, y + bob, r * 0.52, r * 0.52, color);
+    });
+    // A row of dark cabinets anchors the lab without competing with the HTML reader.
+    const cabinetY = H * 0.72;
+    for (let i = 0; i < 5; i++) {
+      const x = W * 0.08 + i * W * 0.2;
+      rect(c, x, cabinetY, W * 0.12, H * 0.21, "#10152c");
+      rect(c, x + 5, cabinetY + 6, W * 0.12 - 10, H * 0.13, i % 2 ? "#18294a" : "#271742");
+      rect(c, x + 9, cabinetY + 13, W * 0.12 - 18, 2, i % 2 ? "#5ef1e5" : "#ff64c8");
+      letters(c, String(i + 1), x + W * 0.055, cabinetY + 34, i % 2 ? "#6af2e4" : "#ff83d2", 2);
+      rect(c, x + 8, cabinetY + H * 0.17, W * 0.12 - 16, 3, "#52305c");
+    }
+    for (let i = 0; i < 16; i++) {
+      const x = ((i * 97 + t * (8 + i % 3) * 2) % (W + 80)) - 40;
+      const y = H * (0.16 + (i % 5) * 0.09);
+      rect(c, x, y, 2 + (i % 3), 1, i % 2 ? "#ff6fc8aa" : "#6af2e4aa");
+    }
+    rect(c, 0, H - 10, W, 10, "#080a19");
   }
   function water(c, t) {
     for (let y = horizon; y < H; y += 3)
@@ -1171,6 +1240,10 @@
   }
   function render(t) {
     ctx.imageSmoothingEnabled = false;
+    if (currentItem === "/work/digits" || currentItem === "/writing/digits") {
+      digitsScene(ctx, t);
+      return;
+    }
     if (currentWorld === "about") {
       aboutScene(ctx, t);
       return;
@@ -1365,9 +1438,10 @@
       updateHighlight(elapsed);
       render(elapsed);
     },
-    setWorld(world) {
+    setWorld(world, itemPath = null) {
       if (!window.MiamiMap.worlds[world]) return;
       currentWorld = world;
+      currentItem = itemPath;
       highlighted = null; highlightLayer = null;
       resize();
     },
