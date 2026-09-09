@@ -89,16 +89,9 @@
     return `<article class="panel item-stub project-overview" aria-labelledby="route-title"><a class="item-back" href="#/work?focus=${route.path.split("/").pop()}">← Back to Projects</a><div class="reader-meta"><span>${escape(item.kind)} · ${escape(item.language)}${item.year ? " · " + escape(item.year) : ""}</span><span class="card-kicker">PROJECT OVERVIEW</span></div><h1 id="route-title" tabindex="-1"${item.language === "FR" ? ' lang="fr"' : ""}>${escape(item.title)}</h1><p class="item-description">${escape(item.description)}</p>${tags(item.tags)}<div class="item-actions">${pdf}${item.github ? anchor(item.github, "GitHub ↗", 'class="action"') : ""}${demo}</div><section class="project-overview-note" aria-labelledby="overview-heading"><span class="reader-star" aria-hidden="true">✦</span><h2 id="overview-heading">Overview</h2><p>This project page keeps the published description and source links together so you can jump directly to the repository or demo.</p></section><p class="reader-end">MIAMI / ${escape(home.caption.toUpperCase())}</p></article>`;
   }
 
-  const digitsPaperSections = [
-    ["Abstract", "This study combines K-Means clustering and a K-Nearest Neighbors classifier to recognize handwritten digits efficiently. Clustering creates a compact set of representative images before classification, reducing the amount of data KNN must compare while preserving useful accuracy."],
-    ["Introduction", "The project focuses on classifying handwritten digits from 0–9, with efficiency treated as a first-class constraint. K-Means provides an unsupervised way to organize similar examples, while KNN uses labeled examples and proximity to make the final classification."],
-    ["Method", "The model uses the MNIST database: 60,000 grayscale training images and 10,000 test images. Images are normalized to a 0–1 scale and reshaped for the algorithms. The training images are separated by digit, then each group is clustered into nine centroids. Across ten digit groups this produces 90 approximate training images. A 1-nearest-neighbor model then compares each test image with that compact set. The implementation uses Scikit-learn and TensorFlow."],
-    ["Results", "The compact model classified the 10,000-image test set in 0.72 seconds, compared with 38.27 seconds for a standard KNN model using the full training set. Its test accuracy was 92.33%, compared with 96.91% for the standard model. The paper describes this as a 98.12% speed improvement alongside a 4.58 percentage-point accuracy decrease: a deliberate tradeoff between speed and detail."],
-    ["Conclusion", "K-Means and KNN together produced an efficient handwritten-digit classifier while retaining practical accuracy. The paper identifies hyperparameter tuning—especially the number of clusters and neighbors—as a useful direction for future work, including applying the same approach to other image-recognition tasks."],
-  ];
-
-  function digitsPaperBody() {
-    return digitsPaperSections.map(([heading, body]) => `<section class="digits-section"><p class="digits-section-label">${escape(heading.toUpperCase())}</p><h2>${escape(heading)}</h2><p>${escape(body)}</p></section>`).join("");
+  function digitsPdfViewer(item, suffix = "") {
+    const pdf = escape(item.pdf || "docs/KNNKMEANSFINALPAPER.pdf");
+    return `<section class="digits-pdf-section" aria-labelledby="digits-pdf-heading${suffix}"><div class="digits-pdf-heading"><div><p class="digits-section-label">FULL PAPER</p><h2 id="digits-pdf-heading${suffix}">Read the original paper</h2><p>The complete paper is embedded below. If your browser does not display PDFs inline, use the download link.</p></div>${anchor(item.pdf || "docs/KNNKMEANSFINALPAPER.pdf", "Download PDF ↓", 'class="action" download')}</div><object class="digits-pdf-viewer" data="${pdf}" type="application/pdf" aria-label="Full digit recognition paper PDF"><iframe src="${pdf}" title="Full digit recognition paper PDF"></iframe><p class="digits-pdf-fallback">Inline PDF viewing is unavailable here. ${anchor(item.pdf || "docs/KNNKMEANSFINALPAPER.pdf", "Download the full paper ↓", 'class="action" download')}</p></object></section>`;
   }
 
   function digitsMachine() {
@@ -113,8 +106,7 @@
       <div class="digits-hero"><div class="digits-copy"><p class="digits-kicker">01 / PATTERN LAB · PROJECT</p><h1 id="${id}-title" tabindex="-1">${escape(item.title)}</h1><p class="item-description">${escape(item.description)}</p>${tags(item.tags)}${digitsActions(item)}</div>${digitsMachine()}</div>
       <section class="digits-section"><p class="digits-section-label">PROJECT NOTE</p><h2>Cluster first. Classify second.</h2><p>The project pairs K-Means clustering with K-Nearest Neighbors to recognize handwritten digits. K-Means turns a large labeled training set into representative centroids; KNN then classifies each test image by its nearest example.</p></section>
       <section class="digits-metrics" aria-label="Reported results"><div><strong>90</strong><span>representative images</span></div><div><strong>0.72s</strong><span>prediction time</span></div><div><strong>92.33%</strong><span>test accuracy</span></div></section>
-      <section class="digits-section digits-paper-intro"><p class="digits-section-label">FULL PAPER</p><h2>Efficient Digit Recognition Using K-Means Clustering and K-Nearest Neighbors</h2><p>The complete paper is available below in a reader-first format, with the original PDF beside it for download.</p></section>
-      <div class="digits-paper-body">${digitsPaperBody()}</div>
+      ${digitsPdfViewer(item, list ? "-list" : "")}
       <section class="digits-section digits-next"><p class="digits-section-label">SOURCE LINKS</p><h2>Keep exploring</h2><p>Open the dedicated reader or source materials directly.</p><div class="item-actions">${anchor("#/writing/digits", "Open reader →", 'class="action"')}${anchor(item.pdf, "Download PDF ↓", 'class="action" download')}${anchor(item.github, "GitHub ↗", 'class="action"')}</div></section>
       <footer class="reader-end">MIAMI / DIGITS ARCADE</footer>
     </article></section>`;
@@ -125,7 +117,7 @@
     return `<section id="${list ? "list-view" : "scene-view"}" class="digits-${list ? "list" : "scene"}" aria-label="Digits paper ${list ? "reading view" : "arcade scene"}"><article class="digits-document digits-item ${list ? "digits-list-document" : "digits-scene-document"}" data-item-world="digits" aria-labelledby="${id}-title" tabindex="-1">
       <a class="item-back" href="#/work/digits">← Back to project</a>
       <header class="digits-paper-header"><p class="digits-kicker">02 / RESEARCH READER · 2024</p><h1 id="${id}-title" tabindex="-1">${escape(item.title)}</h1><p class="item-description">${escape(item.description)}</p>${tags(item.tags)}${digitsActions(item, true)}</header>
-      <div class="digits-paper-body">${digitsPaperBody()}</div>
+      ${digitsPdfViewer(item, list ? "-list" : "")}
       <footer class="reader-end">LUKE CAPRIO / UNIVERSITY OF MIAMI · 2024</footer>
     </article></section>`;
   }

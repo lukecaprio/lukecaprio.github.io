@@ -34,8 +34,8 @@ The Bay hub’s green Bizzy bar carries a processed nearest-neighbor pixel mark 
 | `#/contact?focus=resume` | Contact with résumé highlighted and keyboard-focused |
 | `#/work/ecg` | ECG project overview; back to Projects |
 | `#/work/metro` | Metro Health project overview; back to Projects |
-| `#/work/digits` | Standalone Digits arcade project world with the full paper below; back to Projects |
-| `#/writing/digits` | Standalone Digits paper reader with Abstract, Introduction, Method, Results, and Conclusion; home/back link is Projects |
+| `#/work/digits` | Standalone Digits arcade project world with the original PDF embedded below its overview; back to Projects |
+| `#/writing/digits` | Standalone Digits paper reader with the original PDF embedded in-page; home/back link is Projects |
 | `#/writing/faux-noble` | Molière essay stub; back to Writing |
 | `#/writing/ville-intelligente` | Paris / AI paper stub; back to Writing |
 
@@ -57,7 +57,7 @@ Every item has its own title, source actions, and home-world back link. Digits n
 | --- | --- | --- |
 | ECG | Not published on the prior site; unavailable state, not a fake link | `https://github.com/lukecaprio/Deep-Learning-Based-ECG-Signal-Classification` |
 | Metro Health | Not published on the prior site; unavailable state, not a fake link | `https://github.com/lukecaprio/metrohealth`; demo `https://youtu.be/a2-lpVSoVdc` |
-| Digits project + paper | `docs/KNNKMEANSFINALPAPER.pdf?v=20250126`; on-site reader at `#/writing/digits` | `https://github.com/lukecaprio/Efficient-Digit-Recognition-Using-K-Means-Clustering-and-KNN` |
+| Digits project + paper | `docs/KNNKMEANSFINALPAPER.pdf?v=20250126`; native PDF viewers at both Digits routes | `https://github.com/lukecaprio/Efficient-Digit-Recognition-Using-K-Means-Clustering-and-KNN` |
 | Le faux noble | `papers/Le%20Bourgeois%20gentilhomme.pdf` | No existing repository |
 | La ville intelligente | `papers/La%20ville%20intelligent.pdf` | No existing repository |
 

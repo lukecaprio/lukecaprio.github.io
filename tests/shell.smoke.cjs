@@ -203,7 +203,8 @@ async function shot(page, name) {
       if (digits) {
         check(await page.locator(".digits-item").count() === 2, route + " has Scene and List documents");
         check(await page.locator(".stub-badge, .reader-placeholder").count() === 0, route + " is no longer a placeholder");
-        check(await page.locator(".digits-section").count() >= (route === "/writing/digits" ? 10 : 4), route + " has full themed content");
+        check(await page.locator(".digits-pdf-viewer").count() === 2, route + " embeds the full PDF in Scene and List");
+        check((await page.locator(".digits-pdf-viewer").first().getAttribute("data")).includes("KNNKMEANSFINALPAPER.pdf"), route + " PDF viewer points at the published paper");
       } else if (project) {
         check(await page.locator(".project-overview").count() === 1, route + " has a project overview");
         check(await page.locator(".stub-badge, .reader-placeholder").count() === 0, route + " has no fake paper gate");

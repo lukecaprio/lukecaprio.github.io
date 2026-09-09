@@ -25,7 +25,7 @@ Open <http://127.0.0.1:3000/#/bay>. The existing `npm start` also works. No buil
 - Every Projects object and Bookshop book opens its own route. The Digits paper has its home in Projects; Writing cross-links it in List only.
 - **Back to bay** and **Escape** return to the hub. Item pages also have a back-to-world link. Browser Back/Forward and direct hash links work normally.
 - **Résumé** in the nav opens Contact and focuses its résumé object/list entry; the PDF is one click away.
-- Digits opens a dark neon arcade world at `#/work/digits`; its paper reader at `#/writing/digits` keeps the source PDF and GitHub beside readable Abstract, Introduction, Method, Results, and Conclusion sections. Both views scroll inside their own content column on mobile and desktop.
+- Digits opens a dark neon arcade world at `#/work/digits`; its project and paper routes embed the complete source PDF in a tall native viewer with prominent Download PDF and GitHub actions. Both views scroll inside their own content column on mobile and desktop.
 - Reduced motion starts in List with animation paused; compact screens also default to List. Visitors can explicitly choose Scene. Transitions are instant while motion is paused or reduced motion is enabled.
 
 ## Hub doors

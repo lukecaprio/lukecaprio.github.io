@@ -1115,10 +1115,49 @@ kbd {
 .digits-metrics span { display: block; margin-top: 8px; color: #dbc9ec; font-size: 12px; }
 .digits-next { margin-top: 34px; }
 .digits-paper-header { max-width: 920px; }
-.digits-paper-body { max-width: 820px; }
-.digits-paper-body .digits-section:first-child { margin-top: 34px; }
-.digits-paper-body .digits-section h2 { font-size: 31px; }
-.digits-paper-body .digits-section p:not(.digits-section-label) { font-size: 17px; }
+.digits-pdf-section {
+  margin-top: 34px;
+  padding-top: 26px;
+  border-top: 1px solid #77e9df3b;
+}
+.digits-pdf-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+.digits-pdf-heading h2 {
+  margin: 6px 0 8px;
+  color: #fff0fa;
+  font: 400 34px/1.15 "Newsreader", serif;
+}
+.digits-pdf-heading p:not(.digits-section-label) {
+  max-width: 680px;
+  color: #d9d7f2;
+  font-size: 16px;
+}
+.digits-pdf-heading .action { flex: 0 0 auto; }
+.digits-pdf-viewer {
+  display: block;
+  width: 100%;
+  height: 860px;
+  border: 2px solid #55e9df88;
+  background: #050817;
+  box-shadow: 6px 6px 0 #ff59bb44;
+}
+.digits-pdf-viewer iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #050817;
+}
+.digits-pdf-fallback {
+  padding: 28px;
+  color: #d9d7f2;
+  font-size: 16px;
+}
 .digits-document .reader-end { margin-top: 34px; color: #8bb7c6; }
 .project-overview-note {
   position: relative;
@@ -1149,7 +1188,10 @@ kbd {
   .digits-metrics { grid-template-columns: 1fr; gap: 8px; }
   .digits-metrics > div { padding: 13px; }
   .digits-section { margin-top: 27px; padding-top: 20px; }
-  .digits-section p:not(.digits-section-label), .digits-paper-body .digits-section p:not(.digits-section-label) { font-size: 16px; }
+  .digits-section p:not(.digits-section-label) { font-size: 16px; }
+  .digits-pdf-heading { align-items: start; flex-direction: column; gap: 14px; }
+  .digits-pdf-heading .action { width: 100%; justify-content: center; }
+  .digits-pdf-viewer { height: 720px; }
   .digits-actions .action { width: 100%; justify-content: center; }
 }
 
