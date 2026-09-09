@@ -2,11 +2,11 @@
 
 Branch: `prototype/miami-pixel-hero`
 
-The original animated bay now opens a static, hash-routed app shell. The island nav stays in place while visitors enter About, Work, Writing, and Contact; Bizzy is a direct external destination. The bay has exactly five large world doors, no per-project sparks, and a neon-green Bizzy entrance. Bizzy art is an imaginative club/bar facade on the hub, while its object and nav item open `https://bizzyu.com/` directly.
+The original animated bay now opens a static, hash-routed app shell. The island nav stays in place while visitors enter About, Projects, Writing, and Contact; Bizzy is a direct external destination. The bay has exactly five large world doors, no per-project sparks, and a neon-green Bizzy entrance. Bizzy art is an imaginative club/bar facade on the hub, while its object and nav item open `https://bizzyu.com/` directly.
 
 Hotspots use large transparent hit targets with accessible names and a restrained glow on the in-world canvas object; hover and focus no longer place floating label pills over the artwork. About opens directly as a complete standalone porch world with its own animated blue-hour canvas, supplied headshot, sharper current bio, education, experience, skills, and a quiet footer contact link. Scene keeps the profile integrated into the world; List presents the same full content as clean stacked sections, each using a single natural scroll container. Island-nav hover/focus subtitles name each destination without adding hotspot overlays.
 
-This phase is **shell plus the first finished item world**: ECG, Metro, and the French papers remain on-brand stubs, while Digits has a standalone arcade project page and a readable on-site paper reader. Existing PDFs, repositories, the Metro demo, résumé, and contact destinations remain available.
+This phase is **shell plus the Projects desktop and first finished item world**: ECG and Metro have focused overviews, the French papers remain on-brand stubs, and Digits has a standalone arcade project page with the full paper reader embedded below its overview. Existing PDFs, repositories, the Metro demo, résumé, and contact destinations remain available.
 
 ## Preview
 
@@ -21,8 +21,8 @@ Open <http://127.0.0.1:3000/#/bay>. The existing `npm start` also works. No buil
 ## Explore
 
 - Use the nav or any bay door to enter a world.
-- **Scene | List** shows the same destinations in either form. Digits keeps both views on its standalone project or paper world; the remaining item stubs return to their home world in the selected view.
-- Every Work object and Bookshop book opens its own route. The Digits paper has its home in Work; Writing cross-links it in List only.
+- **Scene | List** shows the same destinations in either form. Projects uses a full-screen computer desktop in Scene and clean cards in List. Digits keeps both views on its standalone project or paper world; the remaining item routes keep their focused overview/stub page.
+- Every Projects object and Bookshop book opens its own route. The Digits paper has its home in Projects; Writing cross-links it in List only.
 - **Back to bay** and **Escape** return to the hub. Item pages also have a back-to-world link. Browser Back/Forward and direct hash links work normally.
 - **Résumé** in the nav opens Contact and focuses its résumé object/list entry; the PDF is one click away.
 - Digits opens a dark neon arcade world at `#/work/digits`; its paper reader at `#/writing/digits` keeps the source PDF and GitHub beside readable Abstract, Introduction, Method, Results, and Conclusion sections. Both views scroll inside their own content column on mobile and desktop.
@@ -32,7 +32,7 @@ Open <http://127.0.0.1:3000/#/bay>. The existing `npm start` also works. No buil
 
 | Object | Route |
 | --- | --- |
-| Project dock | `#/work` |
+| Projects desktop | `#/work` |
 | Bayside bookshop | `#/writing` |
 | Bizzy venue | `https://bizzyu.com/` (opens externally) |
 | About porch | `#/about` |

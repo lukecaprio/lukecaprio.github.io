@@ -1,19 +1,19 @@
 # World-map shell
 
-This implements the navigation phase of `WORLD-MAP-SPEC.md`. The current brief limits delivery to stub worlds and item route slots: no final custom page art, PDF-to-HTML conversion, weekly articles, or new headshot.
+This implements the navigation phase of `WORLD-MAP-SPEC.md`, with the Projects desktop and Digits reader now shipped as the first finished item surface.
 
 ## Shared shell
 
 `index.html` mounts the island nav, Back to bay, Scene | List, one canvas stage, the current route content, and motion control. Only the route content and renderer’s world inventory change on navigation. Chrome and canvas remain mounted.
 
-The hub has **five doors**, one each for About, Work, Writing, Bizzy, and Contact. Résumé is folded into Contact. There are no featured items. No ticket-booth duplicate, project boat, arcade, or paper spark remains on the hub.
+The hub has **five doors**, one each for About, Projects, Writing, Bizzy, and Contact. Résumé is folded into Contact. There are no featured items. No ticket-booth duplicate, project boat, arcade, or paper spark remains on the hub.
 
 | World | Primary objects | List content |
 | --- | --- | --- |
-| Bay | Work dock, bookshop, neon-green Bizzy venue, porch, mailbox | Bizzy opens externally; the other four enter worlds |
+| Bay | Projects desktop door, bookshop, neon-green Bizzy venue, porch, mailbox | Bizzy opens externally; the other four enter worlds |
 | About | Dedicated animated blue-hour porch world with integrated headshot/profile | Clean stacked biography, education, experience, and skills; quiet contact footer |
-| Work | ECG boat/console, Metro tower, Digits arcade | The same three projects, with read/repository/PDF actions as available |
-| Writing | One book for each French piece | Both books; a clearly marked “also in Work” Digits-paper cross-link |
+| Projects | Pixel computer desktop with ECG, Metro, and Digits icons | The same three projects, with source actions as available |
+| Writing | One book for each French piece | Both books; a clearly marked “also in Projects” Digits-paper cross-link |
 | Bizzy | Direct external `bizzyu.com` destination; green club art remains on the hub | External site only; `#/bizzy` is retained as an unused legacy stub |
 | Contact | Email mailbox, résumé board, GitHub sign | Email, résumé, GitHub, plus the existing LinkedIn link |
 
@@ -27,31 +27,31 @@ The Bay hub’s green Bizzy bar carries a processed nearest-neighbor pixel mark 
 | --- | --- |
 | `#/bay` | Bay hub |
 | `#/about` | About porch |
-| `#/work` | Work / research dock |
+| `#/work` | Projects / digital computer desktop |
 | `#/writing` | Bayside bookshop |
 | `#/bizzy` | Legacy Bizzy stub (the hub and island nav open `https://bizzyu.com/` directly) |
 | `#/contact` | Contact / shore desk |
 | `#/contact?focus=resume` | Contact with résumé highlighted and keyboard-focused |
-| `#/work/ecg` | ECG project stub; back to Work |
-| `#/work/metro` | Metro Health project stub; back to Work |
-| `#/work/digits` | Standalone Digits arcade project world; back to Work; links to paper, PDF, and GitHub |
-| `#/writing/digits` | Standalone Digits paper reader with Abstract, Introduction, Method, Results, and Conclusion; home/back link is Work |
+| `#/work/ecg` | ECG project overview; back to Projects |
+| `#/work/metro` | Metro Health project overview; back to Projects |
+| `#/work/digits` | Standalone Digits arcade project world with the full paper below; back to Projects |
+| `#/writing/digits` | Standalone Digits paper reader with Abstract, Introduction, Method, Results, and Conclusion; home/back link is Projects |
 | `#/writing/faux-noble` | Molière essay stub; back to Writing |
 | `#/writing/ville-intelligente` | Paris / AI paper stub; back to Writing |
 
-Empty hash, `#/`, `#bay`, and old bare world hashes normalize without adding history entries. `#/projects` aliases Work. `#top` aliases Bay; old `#experience`, `#education`, and `#skills` alias About. `#/work/digits/paper` aliases the Digits paper route; ECG/Metro `/paper` aliases open their existing project stubs without inventing PDFs. Unknown or malformed routes display an “off the map” page with a working return link.
+Empty hash, `#/`, `#bay`, and old bare world hashes normalize without adding history entries. `#/projects` aliases `#/work` while Projects is the canonical display name. `#top` aliases Bay; old `#experience`, `#education`, and `#skills` alias About. `#/work/digits/paper` aliases the Digits paper route; ECG/Metro `/paper` aliases open their existing project overviews without inventing PDFs. Unknown or malformed routes display an “off the map” page with a working return link.
 
 Normal internal anchor navigation uses browser hash history. Browser Back/Forward traverses world/item routes; item back links always return to the correct home, even on a direct deep link. Escape pushes a return to Bay. A navigation generation counter cancels superseded transitions, so rapid navigation cannot mount a stale destination.
 
-Scene | List selection lasts while this page remains open and carries between worlds. Digits keeps Scene and List on its standalone project or paper world; other item stubs return to their home in that view. There is no storage or backend. Initial reduced-motion and compact-screen visits default to List; the visitor can still choose Scene.
+Scene | List selection lasts while this page remains open and carries between worlds. Projects uses a full-screen computer desktop in Scene and clean cards in List. Digits keeps Scene and List on its standalone project or paper world; other project and paper routes keep their focused overview/stub page. There is no storage or backend. Initial reduced-motion and compact-screen visits default to List; the visitor can still choose Scene.
 
 Hotspots use large transparent anchors with `aria-label` text and a subtle canvas-object glow. The shell does not render floating hover/focus pills or tooltip cards over the pixel artwork. About is a complete route on arrival: Scene enters a separate animated blue-hour porch world with the full profile integrated into the architecture, while List presents the same information as clean stacked sections. Both views use one scroll container so wheel, trackpad, and touch scrolling continue through the full story. Its lead copy states the May 2026 graduation and current end-to-end Bizzy role in a concise professional voice.
 
-Island nav links carry explicit accessible names plus a small Miami-pixel destination subtitle on hover and keyboard focus: Bay / Home, About, Work / Projects, Writing, Bizzy, Résumé (PDF), and Contact.
+Island nav links carry explicit accessible names plus a small Miami-pixel destination subtitle on hover and keyboard focus: Bay / Home, About, Projects, Writing, Bizzy, Résumé (PDF), and Contact.
 
 ## Known item actions
 
-Every item has its own title, source actions, and home-world back link. Digits now has a dedicated arcade project world and reader; the remaining items keep their clearly marked stub frame until their individual art passes. Available sources:
+Every item has its own title, source actions, and home-world back link. Digits now has a dedicated arcade project world and reader; ECG and Metro have focused project overviews, while the French papers keep their clearly marked stub frame until their individual art passes. Available sources:
 
 | Item | PDF | Other links |
 | --- | --- | --- |
@@ -73,7 +73,7 @@ Local PDF actions use the HTML `download` attribute. External sites open a new t
 - `assets/miami-hero.css`: persistent chrome, scene layout, large target boxes, readable lists, stub frame, neon Digits world, responsive/reduced-motion states. No old `.m-*` layout remains.
 - `tests/shell.smoke.cjs`: browser regression checks using Playwright; no application dependency added.
 
-To add a later item: register its metadata and route in `MiamiMap.items`, add exactly one object to its home world, and give it a prop plus desktop/mobile coordinates. Both Scene and List inherit the same destination. Digits is intentionally one Work arcade object for the project/paper pair; its separate paper route does not add another scene object.
+To add a later item: register its metadata and route in `MiamiMap.items`, add exactly one object to its home world, and give it a prop plus desktop/mobile coordinates. Both Scene and List inherit the same destination. Digits is intentionally one Projects desktop icon for the project/paper pair; its separate paper route does not add another scene object.
 
 The renderer keeps the sky/skyline/shore palette and original motion, caches static layers, and caps frames at 30 fps. It suspends on hidden tabs, offscreen stages, List views, and readers. A short 150 ms focus zoom out plus 230 ms crossfade in connects routes. Reduced motion or the pause button makes routing instant.
 

@@ -134,6 +134,7 @@
     I: ["111", "010", "010", "010", "010", "010", "111"],
     K: ["10001", "10010", "10100", "11000", "10100", "10010", "10001"],
     L: ["10000", "10000", "10000", "10000", "10000", "10000", "11111"],
+    M: ["10001", "11011", "10101", "10101", "10001", "10001", "10001"],
     N: ["10001", "11001", "11001", "10101", "10011", "10011", "10001"],
     O: ["01110", "10001", "10001", "10001", "10001", "10001", "01110"],
     P: ["11110", "10001", "10001", "11110", "10000", "10000", "10000"],
@@ -457,6 +458,73 @@
       rect(c, x, y, 2 + (i % 3), 1, i % 2 ? "#ff6fc8aa" : "#6af2e4aa");
     }
     rect(c, 0, H - 10, W, 10, "#080a19");
+  }
+
+  function projectIcon(c, object, t) {
+    const p = points[object.id];
+    if (!p) return;
+    const size = mobile.matches ? 58 : 72;
+    const x = p.x - size / 2, y = p.y - size / 2;
+    const active = highlighted === object.id;
+    const accent = object.id === "ecg" ? "#78f1d2" : object.id === "metro" ? "#8cc7ff" : "#ff78ce";
+    if (active) {
+      c.globalAlpha = 0.22 + Math.sin(t * 3) * 0.08;
+      rect(c, x - 10, y - 10, size + 20, size + 20, accent);
+      c.globalAlpha = 1;
+    }
+    // Folder-like desktop icon with a tiny project-specific screen.
+    rect(c, x + 4, y + 5, size - 8, size - 6, "#090c1d");
+    rect(c, x + 8, y + 9, size - 16, size - 23, accent + "44");
+    rect(c, x + 8, y + 9, size - 16, 3, accent);
+    if (object.id === "ecg") {
+      for (let i = 0; i < 4; i++) line(c, x + 12 + i * 7, y + 26, x + 16 + i * 7, y + 20 - (i % 2) * 5, accent, 2);
+    } else if (object.id === "metro") {
+      rect(c, x + 19, y + 18, size - 38, size - 38, "#8cc7ff33");
+      line(c, x + size / 2, y + 20, x + size / 2, y + size - 16, accent, 2);
+      line(c, x + 20, y + size / 2, x + size - 20, y + size / 2, accent, 2);
+    } else {
+      letters(c, "8", x + size * 0.38, y + 17, accent, 3);
+    }
+    rect(c, x + 11, y + size - 14, size - 22, 3, "#f4e6ff66");
+    rect(c, x + 14, y + size - 8, size - 28, 2, accent);
+    const label = object.id === "ecg" ? "ECG" : object.id === "metro" ? "METRO" : "DIGITS";
+    c.font = `${mobile.matches ? 10 : 12}px "JetBrains Mono", monospace`;
+    c.textAlign = "center";
+    c.fillStyle = active ? "#fff2fa" : "#e8e3ff";
+    c.fillText(label, p.x, y + size + 15);
+    c.textAlign = "start";
+  }
+
+  function projectsDesktop(c, t) {
+    const stops = [[0, "#0a1027"], [0.52, "#18234a"], [1, "#090c1b"]];
+    for (let y = 0; y < H; y += 2) {
+      const p = y / H;
+      let i = 1;
+      while (i < stops.length - 1 && p > stops[i][0]) i++;
+      rect(c, 0, y, W, 2, mix(stops[i - 1][1], stops[i][1], (p - stops[i - 1][0]) / (stops[i][0] - stops[i - 1][0])));
+    }
+    const rng = random(229);
+    for (let i = 0; i < 85; i++) rect(c, rng() * W, rng() * H * 0.48, i % 7 ? 1 : 2, 1, i % 3 ? "#7be7df55" : "#ff70c977");
+    const bx = W * 0.07, by = H * 0.17, bw = W * 0.86, bh = H * 0.67;
+    rect(c, bx + 10, by + 12, bw, bh, "#050713aa");
+    rect(c, bx, by, bw, bh, "#323b59");
+    rect(c, bx + 8, by + 8, bw - 16, bh - 24, "#111931");
+    rect(c, bx + 17, by + 17, bw - 34, bh - 42, "#080e24");
+    // Scanlines and a quiet wallpaper glow keep the desktop alive behind the icons.
+    for (let y = by + 25; y < by + bh - 32; y += 7) rect(c, bx + 19, y, bw - 38, 1, "#6de8df12");
+    ellipse(c, bx + bw * 0.72, by + bh * 0.34, bw * 0.18, bw * 0.18, "#ff57bf12");
+    ellipse(c, bx + bw * 0.72, by + bh * 0.34, bw * 0.08, bw * 0.08, "#66e9df22");
+    rect(c, bx + 17, by + bh - 27, bw - 34, 19, "#22294a");
+    rect(c, bx + 26, by + bh - 23, 15, 11, "#67e7d5");
+    rect(c, bx + 50, by + bh - 20, 120, 5, "#596180");
+    rect(c, bx + bw - 90, by + bh - 20, 56, 5, "#ff72c866");
+    // Pixel cursor drifts a few squares to make the desktop feel live.
+    const cursorX = bx + bw * (0.38 + Math.sin(t * 0.32) * 0.08), cursorY = by + bh * (0.25 + Math.sin(t * 0.4) * 0.04);
+    line(c, cursorX, cursorY, cursorX, cursorY + 11, "#fff1fb", 2);
+    line(c, cursorX, cursorY, cursorX + 8, cursorY + 8, "#fff1fb", 2);
+    for (const object of window.MiamiMap.worlds.work.objects) projectIcon(c, object, t);
+    rect(c, bx + bw * 0.35, by + bh + 10, bw * 0.3, 6, "#1c2542");
+    rect(c, bx + bw * 0.47, by + bh + 16, bw * 0.06, 10, "#2c3655");
   }
   function water(c, t) {
     for (let y = horizon; y < H; y += 3)
@@ -1242,6 +1310,10 @@
     ctx.imageSmoothingEnabled = false;
     if (currentItem === "/work/digits" || currentItem === "/writing/digits") {
       digitsScene(ctx, t);
+      return;
+    }
+    if (currentWorld === "work") {
+      projectsDesktop(ctx, t);
       return;
     }
     if (currentWorld === "about") {

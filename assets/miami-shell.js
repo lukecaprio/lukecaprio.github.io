@@ -82,6 +82,13 @@
     return `<div class="item-actions digits-actions">${links.join("")}</div>`;
   }
 
+  function projectOverviewMarkup(item) {
+    const home = worlds[item.home];
+    const pdf = item.pdf ? anchor(item.pdf, "Download PDF ↓", 'class="action" download') : "";
+    const demo = item.demo ? anchor(item.demo, "Watch demo ↗", 'class="action"') : "";
+    return `<article class="panel item-stub project-overview" aria-labelledby="route-title"><a class="item-back" href="#/work?focus=${route.path.split("/").pop()}">← Back to Projects</a><div class="reader-meta"><span>${escape(item.kind)} · ${escape(item.language)}${item.year ? " · " + escape(item.year) : ""}</span><span class="card-kicker">PROJECT OVERVIEW</span></div><h1 id="route-title" tabindex="-1"${item.language === "FR" ? ' lang="fr"' : ""}>${escape(item.title)}</h1><p class="item-description">${escape(item.description)}</p>${tags(item.tags)}<div class="item-actions">${pdf}${item.github ? anchor(item.github, "GitHub ↗", 'class="action"') : ""}${demo}</div><section class="project-overview-note" aria-labelledby="overview-heading"><span class="reader-star" aria-hidden="true">✦</span><h2 id="overview-heading">Overview</h2><p>This project page keeps the published description and source links together so you can jump directly to the repository or demo.</p></section><p class="reader-end">MIAMI / ${escape(home.caption.toUpperCase())}</p></article>`;
+  }
+
   const digitsPaperSections = [
     ["Abstract", "This study combines K-Means clustering and a K-Nearest Neighbors classifier to recognize handwritten digits efficiently. Clustering creates a compact set of representative images before classification, reducing the amount of data KNN must compare while preserving useful accuracy."],
     ["Introduction", "The project focuses on classifying handwritten digits from 0–9, with efficiency treated as a first-class constraint. K-Means provides an unsupervised way to organize similar examples, while KNN uses labeled examples and proximity to make the final classification."],
@@ -102,11 +109,13 @@
   function digitsProjectMarkup(item, list = false) {
     const id = list ? "digits-list" : "route";
     return `<section id="${list ? "list-view" : "scene-view"}" class="digits-${list ? "list" : "scene"}" aria-label="Digits project ${list ? "reading view" : "arcade scene"}"><article class="digits-document digits-item ${list ? "digits-list-document" : "digits-scene-document"}" data-item-world="digits" aria-labelledby="${id}-title" tabindex="-1">
-      <a class="item-back" href="#/work?focus=digits">← Back to Work</a>
+      <a class="item-back" href="#/work?focus=digits">← Back to Projects</a>
       <div class="digits-hero"><div class="digits-copy"><p class="digits-kicker">01 / PATTERN LAB · PROJECT</p><h1 id="${id}-title" tabindex="-1">${escape(item.title)}</h1><p class="item-description">${escape(item.description)}</p>${tags(item.tags)}${digitsActions(item)}</div>${digitsMachine()}</div>
       <section class="digits-section"><p class="digits-section-label">PROJECT NOTE</p><h2>Cluster first. Classify second.</h2><p>The project pairs K-Means clustering with K-Nearest Neighbors to recognize handwritten digits. K-Means turns a large labeled training set into representative centroids; KNN then classifies each test image by its nearest example.</p></section>
       <section class="digits-metrics" aria-label="Reported results"><div><strong>90</strong><span>representative images</span></div><div><strong>0.72s</strong><span>prediction time</span></div><div><strong>92.33%</strong><span>test accuracy</span></div></section>
-      <section class="digits-section digits-next"><p class="digits-section-label">KEEP EXPLORING</p><h2>The paper, in full</h2><p>Read the research structure on this site, or open the source materials directly.</p><div class="item-actions">${anchor("#/writing/digits", "Read on-site →", 'class="action"')}${anchor(item.pdf, "Download PDF ↓", 'class="action" download')}${anchor(item.github, "GitHub ↗", 'class="action"')}</div></section>
+      <section class="digits-section digits-paper-intro"><p class="digits-section-label">FULL PAPER</p><h2>Efficient Digit Recognition Using K-Means Clustering and K-Nearest Neighbors</h2><p>The complete paper is available below in a reader-first format, with the original PDF beside it for download.</p></section>
+      <div class="digits-paper-body">${digitsPaperBody()}</div>
+      <section class="digits-section digits-next"><p class="digits-section-label">SOURCE LINKS</p><h2>Keep exploring</h2><p>Open the dedicated reader or source materials directly.</p><div class="item-actions">${anchor("#/writing/digits", "Open reader →", 'class="action"')}${anchor(item.pdf, "Download PDF ↓", 'class="action" download')}${anchor(item.github, "GitHub ↗", 'class="action"')}</div></section>
       <footer class="reader-end">MIAMI / DIGITS ARCADE</footer>
     </article></section>`;
   }
@@ -157,7 +166,7 @@
 
   function worldSupplement(world) {
     if (world === "writing")
-      return `<aside class="cross-list"><span class="card-kicker">ALSO IN WORK · 2024 · EN</span><h2>${anchor("#/writing/digits", items["/writing/digits"].title)}</h2><p>The Digits project and its paper share one home at the research dock.</p><div class="card-actions">${anchor("#/writing/digits", "Read here →")}${anchor(items["/writing/digits"].pdf, "Download PDF ↓", "download")}${anchor(items["/writing/digits"].github, "GitHub ↗")}</div></aside>`;
+      return `<aside class="cross-list"><span class="card-kicker">ALSO IN PROJECTS · 2024 · EN</span><h2>${anchor("#/writing/digits", items["/writing/digits"].title)}</h2><p>The Digits project and its paper share one home on the project desktop.</p><div class="card-actions">${anchor("#/writing/digits", "Read here →")}${anchor(items["/writing/digits"].pdf, "Download PDF ↓", "download")}${anchor(items["/writing/digits"].github, "GitHub ↗")}</div></aside>`;
     if (world === "contact")
       return `<p class="list-footnote">You can also find me on ${anchor("https://linkedin.com/in/lukecaprio", "LinkedIn ↗")}.</p>`;
     if (world === "bizzy")
@@ -174,8 +183,9 @@
   function itemMarkup(item) {
     if (route.path === "/work/digits") return digitsProjectMarkup(item) + digitsProjectMarkup(item, true);
     if (route.path === "/writing/digits") return digitsPaperMarkup(item) + digitsPaperMarkup(item, true);
+    if (item.home === "work") return projectOverviewMarkup(item);
     const home = worlds[item.home];
-    return `<article class="panel item-stub" aria-labelledby="route-title"><a class="item-back" href="#/${item.home}?focus=${route.path.split("/").pop()}">← Back to ${escape(home.title)}</a><div class="reader-meta"><span>${escape(item.kind)} · ${escape(item.language)}${item.year ? " · " + escape(item.year) : ""}</span><span class="stub-badge">Custom UI coming</span></div><h1 id="route-title" tabindex="-1"${item.language === "FR" ? ' lang="fr"' : ""}>${escape(item.title)}</h1><p class="item-description">${escape(item.description)}</p>${tags(item.tags)}${itemActions(item)}<section class="reader-placeholder" aria-labelledby="reader-heading"><span class="reader-star" aria-hidden="true">✦</span><h2 id="reader-heading">Read here</h2><p>This is the on-site home for this ${item.kind.toLowerCase()}. Its custom reading experience is coming next.</p><p>${item.pdf ? "The original PDF is available above." : "No PDF has been published for this project. The source repository is available above."}</p></section><p class="reader-end">BISCAYNE BAY / ${escape(home.caption.toUpperCase())}</p></article>`;
+    return `<article class="panel item-stub" aria-labelledby="route-title"><a class="item-back" href="#/${item.home}?focus=${route.path.split("/").pop()}">← Back to ${escape(home.title)}</a><div class="reader-meta"><span>${escape(item.kind)} · ${escape(item.language)}${item.year ? " · " + escape(item.year) : ""}</span><span class="stub-badge">Custom UI coming</span></div><h1 id="route-title" tabindex="-1"${item.language === "FR" ? ' lang="fr"' : ""}>${escape(item.title)}</h1><p class="item-description">${escape(item.description)}</p>${tags(item.tags)}${itemActions(item)}<section class="reader-placeholder" aria-labelledby="reader-heading"><span class="reader-star" aria-hidden="true">✦</span><h2 id="reader-heading">Read here</h2><p>This is the on-site home for this ${item.kind.toLowerCase()}. Its custom reading experience is coming next.</p><p>${item.pdf ? "The original PDF is available above." : "No PDF has been published for this project. The source repository is available above."}</p></section><p class="reader-end">MIAMI / ${escape(home.caption.toUpperCase())}</p></article>`;
   }
 
   function applyView({ focus = false } = {}) {

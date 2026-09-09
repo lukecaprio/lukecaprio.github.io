@@ -81,10 +81,10 @@ async function shot(page, name) {
       await page.locator('.island-nav [data-world="bizzy"]').evaluate((el) => el.href === "https://bizzyu.com/" && el.target === "_blank" && el.rel.includes("noopener")),
       "Island nav Bizzy opens the external site",
     );
-    await page.locator('.island-nav a[data-world="work"]').hover();
+      await page.locator('.island-nav a[data-world="work"]').hover();
     check(
-      await page.locator('.island-nav a[data-world="work"]').evaluate((el) => getComputedStyle(el, "::after").content.includes("Work / Projects")),
-      "Island nav reveals Work destination on hover",
+      await page.locator('.island-nav a[data-world="work"]').evaluate((el) => getComputedStyle(el, "::after").content.includes("Projects")),
+      "Island nav reveals Projects destination on hover",
     );
     check(
       (await page.locator('.hotspot[href^="#/work/"]').count()) === 0,
@@ -106,7 +106,7 @@ async function shot(page, name) {
     await ready(page, "/bay");
     await page.goForward();
     await ready(page, "/work");
-    check(true, "Back/Forward traverses Bay → Work → item");
+    check(true, "Back/Forward traverses Bay → Projects → item");
     await page.locator('.hotspot[href="#/work/digits"]').click();
     await ready(page, "/work/digits");
     await page.keyboard.press("Escape");
@@ -199,10 +199,14 @@ async function shot(page, name) {
     for (const route of routes) {
       await go(page, route);
       const digits = route === "/work/digits" || route === "/writing/digits";
+      const project = route === "/work/ecg" || route === "/work/metro";
       if (digits) {
         check(await page.locator(".digits-item").count() === 2, route + " has Scene and List documents");
         check(await page.locator(".stub-badge, .reader-placeholder").count() === 0, route + " is no longer a placeholder");
         check(await page.locator(".digits-section").count() >= (route === "/writing/digits" ? 10 : 4), route + " has full themed content");
+      } else if (project) {
+        check(await page.locator(".project-overview").count() === 1, route + " has a project overview");
+        check(await page.locator(".stub-badge, .reader-placeholder").count() === 0, route + " has no fake paper gate");
       } else {
         check(
           (await page.locator(".stub-badge").textContent()) ===
@@ -229,7 +233,7 @@ async function shot(page, name) {
       );
       if (["/work/ecg", "/work/metro"].includes(route))
         check(
-          (await page.locator(".unavailable-action").count()) === 1,
+          (await page.locator(".unavailable-action, a[download]").count()) === 0,
           route + " does not fabricate a PDF",
         );
       else {

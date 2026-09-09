@@ -169,8 +169,8 @@ window.MiamiMap = (() => {
       description: "Software Engineer · Miami",
       note: "Pick a place. Stay a while.",
       objects: [
-        object("work", "Work", "dock", "#/work", [49, 64], [50, 50], {
-          description: "Projects at the research dock.",
+        object("work", "Projects", "dock", "#/work", [49, 64], [50, 50], {
+          description: "Projects on the digital desktop.",
         }),
         object(
           "writing",
@@ -203,9 +203,9 @@ window.MiamiMap = (() => {
       ],
     },
     work: {
-      title: "Work",
-      caption: "The Research Dock",
-      eyebrow: "01 / THE RESEARCH DOCK",
+      title: "Projects",
+      caption: "The Project Desktop",
+      eyebrow: "01 / PROJECT DESKTOP",
       description: "A few things I’ve built and explored.",
       note: "Three projects. Three places to start.",
       objects: [
@@ -215,7 +215,7 @@ window.MiamiMap = (() => {
           "boat",
           "#/work/ecg",
           [22, 61],
-          [25, 56],
+          [28, 47],
           {
             scale: 2.5,
             item: "/work/ecg",
@@ -228,7 +228,7 @@ window.MiamiMap = (() => {
           "tower",
           "#/work/metro",
           [50, 65],
-          [75, 56],
+          [72, 47],
           {
             scale: 1.6,
             item: "/work/metro",
@@ -241,7 +241,7 @@ window.MiamiMap = (() => {
           "arcade",
           "#/work/digits",
           [78, 65],
-          [50, 78],
+          [50, 68],
           {
             scale: 3,
             item: "/work/digits",

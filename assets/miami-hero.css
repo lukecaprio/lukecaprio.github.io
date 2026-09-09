@@ -1120,6 +1120,20 @@ kbd {
 .digits-paper-body .digits-section h2 { font-size: 31px; }
 .digits-paper-body .digits-section p:not(.digits-section-label) { font-size: 17px; }
 .digits-document .reader-end { margin-top: 34px; color: #8bb7c6; }
+.project-overview-note {
+  position: relative;
+  margin-top: 26px;
+  padding: 26px 24px;
+  border: 1px solid #75e5d866;
+  background: #152642c7;
+  color: #d9e9ef;
+}
+.project-overview-note h2 {
+  margin-bottom: 8px;
+  color: #fff0fa;
+  font: 400 30px/1.2 "Newsreader", serif;
+}
+.project-overview-note p { font-size: 16px; line-height: 1.65; }
 @media (max-width: 760px) {
   .digits-hero { grid-template-columns: 1fr; }
   .digits-machine { max-width: 430px; width: 100%; margin: 2px auto 0; }
