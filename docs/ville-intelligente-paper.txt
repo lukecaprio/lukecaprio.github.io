@@ -1,0 +1,466 @@
+                                                                      Caprio 1
+
+
+
+
+La ville intelligente et IA à Paris : innovation ou précipitation ?
+
+                           Luke Caprio
+
+                       Université de Miami
+
+                           4 mai 2025
+                                                                                               Caprio 2
+
+
+Introduction
+
+        Depuis dix ans, l’intelligence artificielle (IA) s’est développée très vite et fait maintenant
+
+partie de notre vie quotidienne. Que ce soit à travers un assistant intelligent sur un téléphone
+
+portable ou une voiture entièrement autonome, l’IA est devenue presque inévitable. Une autre
+
+utilisation de l’intelligence artificielle peut être observée dans les « villes intelligentes ». Une
+
+ville intelligente utilise la technologie, les données, et l’intelligence artificielle pour améliorer les
+
+services de la ville, comme les transports, l’énergie, la gestion des déchets ou même la sécurité
+
+publique.
+
+        Des villes comme Paris, Londres ou Barcelone utilisent ces technologies pour devenir
+
+plus modernes, plus efficaces, et plus durables. Cette étude se concentre sur l’utilisation de
+
+l’intelligence artificielle dans le développement de la ville intelligente à Paris. Si cette
+
+technologie est souvent perçue comme une grande innovation, elle soulève également des
+
+problèmes importants. L’utilisation de l’intelligence artificielle pour faire de Paris une ville
+
+intelligente favorise l’efficacité et l’innovation, mais cela se fait au détriment de la surveillance
+
+éthique, de la responsabilité publique ainsi que de la transparence et de la participation
+
+citoyenne.
+
+
+Avantages de l’intelligence artificielle à Paris
+
+
+        Afin d’examiner les problèmes et les risques liés à l’intégration de l’intelligence
+
+artificielle à Paris en tant que ville intelligente, il est important de d’abord comprendre les
+
+résultats positifs et les innovations que ces technologies peuvent offrir. Paris cherche à devenir
+
+un modèle mondial de ville intelligente et d’innovation, en utilisant l’IA pour améliorer
+
+l’efficacité, la durabilité et la qualité de vie. En 2023, Kadiri, Pap et Baletić ont réalisé une
+                                                                                              Caprio 3
+
+
+analyse comparative de quatre villes intelligentes européennes Londres, Paris, Barcelone et
+
+Milan en comparant leurs stratégies et leurs définitions de la ville intelligente (Kadiri et al.,
+
+2023). Selon leurs résultats Paris met l’accent sur la transparence, la connectivité, l’équilibre
+
+environnemental et la résilience (Kadiri et al., 2023, p. 241).
+
+
+       L’intelligence artificielle est considérée comme une force de transformation pour les
+
+systèmes urbains et les services publics. Bellon, Velkovska et Domingues-Montanari notent que
+
+la mise en place de solutions d’IA dans les villes est perçue positivement et elle permet
+
+d’améliorer les transports, d’optimiser la consommation d’énergie et d’utiliser les ressources de
+
+manière plus efficace (Bellon et al., 2023).
+
+
+       À Paris, plusieurs initiatives ont été lancées pour appliquer ces principes. La ville a
+
+développé son infrastructure d’objets connectés (IoT), mis en place des réseaux d’énergie
+
+intelligents et utilisé la gestion par les données pour améliorer les transports publics (Kadiri et
+
+al., 2023). Grâce à ces systèmes, Paris montre son engagement à utiliser l’intelligence artificielle
+
+pour créer un environnement plus durable, plus efficace et plus agréable à vivre.
+
+
+       Beaucoup de conversations sur les villes intelligentes parlent surtout des avantages,
+
+comme la réduction du trafic, un air plus propre, des transports publics plus efficaces, et une
+
+meilleure sécurité dans les espaces publics. Bien que les bénéfices de l’intelligence artificielle
+
+soient reconnus, cette analyse cherche plutôt à poser une autre question : quel est le prix de ces
+
+avantages ? Ces problèmes sont souvent ignorés à cause de l’enthousiasme pour les nouvelles
+
+technologies et l’idée d’améliorer les services dans la ville. Cette étude se concentre surtout sur
+
+le manque de gouvernance, c’est-à-dire le fait que les processus éthiques et démocratiques ne
+
+sont pas bien développés ou parfois oubliés.
+                                                                                              Caprio 4
+
+
+Problèmes de surveillance éthique
+
+
+       La première façon dont l'intégration de l'intelligence artificielle peut affecter
+
+négativement Paris est liée aux risques éthiques. Une utilisation courante de l’IA est la
+
+surveillance algorithmique. Ces systèmes utilisent l’IA pour suivre et analyser les comportements
+
+et actions des personnes, en collectant des données grâce à des caméras ou des capteurs. Ces
+
+systèmes ont récemment été utilisés dans le monde pour assurer la sécurité, et il est important
+
+d’examiner leurs effets sur les villes et les questions éthiques qui viennent avec cela.
+
+
+       Dans son article « Ville intelligente et intelligence artificielle, pour de vrai » Isabelle
+
+Baraud-Serfaty examine les dangers de l’usage de l’intelligence artificielle pour la surveillance
+
+dans les espaces publics. Elle cite l’exemple du système City Brain en Chine, qui utilise des
+
+caméras et des algorithmes pour surveiller les citoyens dans les espaces publics (Baraud-Serfaty,
+
+2019). Baraud-Serfaty écrit que « City Brain sert à optimiser les feux de signalisation, solliciter
+
+une patrouille de police ou encore adapter en temps réel la cadence des transport publics en
+
+fonction du trafic » (2019, p. 21). Ces systèmes sont souvent utilisés sans règles claires et sans
+
+débat avec le public. Bien que City Brain puisse améliorer l’efficacité des villes, plus il devient
+
+puissant, plus la peur d’une société entièrement surveillée grandit (Baraud-Serfaty, 2019). On
+
+pourrait penser que ce genre de surveillance extrême existe seulement dans un pays comme la
+
+Chine, avec un gouvernement très autoritaire, mais un système assez similaire a été utilisé à Paris
+
+en 2024 pendant les Jeux olympiques d’été.
+
+
+       Selon un article publié sur le site Lawfare « Algorithmic Surveillance Takes the Stage at
+
+the Paris Olympics », la France est devenue le premier pays européen à légaliser la
+
+vidéosurveillance algorithmique à grande échelle pour des raisons de sécurité publique
+                                                                                               Caprio 5
+
+
+(Laanstra-Corn & Sewell, 2024). Cette décision a provoqué un débat public sur l’équilibre entre
+
+la sécurité et la vie privée. De nombreuses personnes s’inquiètent du précédent que cela pourrait
+
+créer en Europe. Même si le gouvernement affirme que ce système est totalement sûr, 38
+
+organisations civiles ont demandé de ne pas l’accepter, en disant que ces mesures représentent un
+
+risque important pour les droits fondamentaux et pourraient mener à une normalisation de
+
+pouvoirs de surveillance exceptionnels (Laanstra-Corn & Sewell, 2024). La normalisation de la
+
+surveillance algorithmique pourrait transformer durablement l’espace public parisien, en
+
+réduisant la vie privée des citoyens et en rendant la démocratie moins transparente.
+
+
+        Paris utilise l’IA pour être plus innovante et plus sécurisée, mais sans assez de contrôle
+
+éthique ni de transparence. Le système de surveillance utilisé pendant les Jeux olympiques est un
+
+bon exemple d’une technologie mise en place très vite, même si beaucoup de personnes et
+
+d’organisations s’inquiètent des droits humains. Si ce genre de technologie continue à se
+
+développer à Paris sans débat public sur les implications éthiques, on pourrait petit à petit arriver
+
+à une situation comme en Chine avec City Brain, où tout le monde est surveillé en permanence
+
+sans limites. Ce problème de surveillance nous montre un autre danger du manque de
+
+responsabilité publique et de règles claires dans l’utilisation de l’intelligence artificielle à Paris.
+
+
+Responsabilité publique
+
+
+        Ce problème de surveillance nous montre un autre danger du manque de responsabilité
+
+publique et de règles claires dans l’utilisation de l’intelligence artificielle à Paris. La
+
+responsabilité publique concerne ceux qui décident d’utiliser l’intelligence artificielle dans la
+
+ville, comme les institutions publiques, les agences ou le gouvernement. Ces groupes doivent
+
+pouvoir expliquer leurs décisions sur l’utilisation de nouvelles technologies d’IA et mettre en
+                                                                                              Caprio 6
+
+
+place les règlements et lois nécessaires pour encadrer ces services. L’IA est souvent intégrée
+
+dans les services publics sans assez d’explications ou les règlements et lois nécessaires. Cela
+
+pose des problèmes de confiances entre les citoyens.
+
+
+       Le manque de responsabilité publique peut s’expliquer par un écart entre l’innovation et
+
+la gouvernance. Les villes adoptent l’intelligence artificielle plus vite qu’elles ne créent de règles
+
+pour la contrôler. Comme l’expliquent Diran et al. (2021), l’introduction de l’IA dans les villes
+
+intelligentes crée des défis importants pour établir un cadre réglementaire adapté. De plus, les
+
+applications de l’IA dans les villes souffrent souvent d’un manque de puissance informatique, de
+
+problèmes de sécurité et de vie privée, surtout au niveau local (Diran et al., 2021, p. 9). Si le
+
+public ne peut pas voir ou comprendre ces projets, il peut commencer à ne plus faire confiance.
+
+Cela montre que la technologie avance plus vite que la capacité des gouvernements locaux à
+
+assurer un bon contrôle.
+
+
+       Le décalage entre l’innovation et la gouvernance a pu être observé à Paris avec la
+
+vidéosurveillance algorithmique mentionnée plus tôt, utilisée pendant les Jeux olympiques de
+
+Paris en 2024. Cette technologie a été introduite très rapidement et montre comment l’innovation
+
+avance parfois plus vite que les règles qui la régulent. Bien que le gouvernement ait assuré que
+
+cela respecte les lois sur la protection des données, de nombreuses organisations ont critiqué le
+
+manque de transparence et de contrôle public (Laanstra-Corn & Sewell, 2024). La responsabilité
+
+publique est importante à plusieurs niveaux, notamment pour assurer la sécurité des citoyens,
+
+mais pour être efficace, elle doit aussi être transparente et inclure la participation des citoyens.
+                                                                                                 Caprio 7
+
+
+Participation citoyenne et transparence
+
+
+       Bien que la responsabilité publique soit importante pour encadrer l’IA, elle ne suffit pas.
+
+Pour avoir une bonne gouvernance, il faut aussi une participation active des citoyens et de la
+
+transparence dans les décisions. Contrairement à beaucoup d’autres villes, Paris essaie de mettre
+
+les citoyens au centre de ses projets. Comme le montrent Kadiri et al., Paris a mis en place
+
+plusieurs outils pour que les citoyens puissent donner leur avis, comme « Madame la Maire, j’ai
+
+une idée » et le « budget participatif » (Kadiri et al., 2023, p. 242). Ces initiatives sont un bon
+
+début pour impliquer les citoyens dans la gestion de l’IA et renforcer la responsabilité publique.
+
+Mais la participation et la transparence ne garantissent pas toujours un vrai pouvoir de décision.
+
+
+       Levenda et al. (2019) expliquent que dans beaucoup de villes intelligentes, la
+
+participation peut devenir symbolique. Cela veut dire que les citoyens peuvent donner leur avis,
+
+mais sans que cela ait un vrai impact. Leur étude montre que ces plateformes donnent souvent
+
+une impression de transparence, mais en réalité, peu de choses changent. Donc, même si Paris a
+
+créé de bons outils participatifs, si la participation reste symbolique, les décisions sur les
+
+changements urbains et l’IA restent concentrées entre les mains du gouvernement.
+
+
+       Cet écart entre les plateformes de participation et la vraie implication des citoyens est
+
+aussi étudié par Zaza, qui analyse l’augmentation des outils d’e-gouvernance dans les villes
+
+intelligentes et comment les plateformes numériques sont utilisées pour co-créer des projets
+
+urbains avec les citoyens (Zaza, 2016). Ces systèmes pourraient permettre plus d’innovation
+
+ouverte et de transparence, mais Zaza montre que les décisions restent en réalité très centralisées.
+
+« Un exemple parmi d’autres, en interrogeant les agents de la Ville de Paris travaillant aux
+
+concertations des projets urbains, ils définissent la co-construction comme un processus inséré
+                                                                                             Caprio 8
+
+
+dans une réalité législative et politique contraignante. » (Zaza, 2016, p. 5). Cela montre que
+
+même si les outils numériques sont présentés comme participatifs, ils fonctionnent souvent dans
+
+des cadres politiques qui limitent vraiment le pouvoir des citoyens.
+
+
+       Même si Paris a fait des efforts pour impliquer les citoyens dans les projets urbains avec
+
+ces plateformes, ces systèmes n’ont pas vraiment d’effet sur les décisions finales. Il faut des
+
+mécanismes plus solides pour que les citoyens participent réellement, surtout dans le domaine de
+
+l’IA, car les choix faits aujourd’hui peuvent transformer profondément l’avenir de la ville.
+
+
+Réflexions et implications globales
+
+
+       Paris a beaucoup progressé pour devenir une ville intelligente reconnue dans le monde,
+
+mais cette analyse montre que l’innovation ne suffit pas. L’intégration de l’intelligence
+
+artificielle dans les systèmes urbains et la planification peut créer un avenir très innovant, mais
+
+cela pose aussi des questions importantes sur l’éthique, la responsabilité publique, la
+
+participation des citoyens et la transparence. Il faut trouver un équilibre entre l’innovation et les
+
+règles pour garantir un avenir sûr et durable pour tous.
+
+
+       Ce cas de Paris reflète un problème plus large dans le monde : comment les villes
+
+peuvent-elles suivre les avancées technologiques avec une gouvernance et des règles claires et
+
+fortes. Comme l’intelligence artificielle continue d’évoluer et de s’intégrer dans la vie
+
+quotidienne, il est important que les villes et les pays développent des cadres juridiques et
+
+institutionnels assez vite pour suivre l’innovation. Sans ces cadres, il y a un risque que l’IA
+
+menace les valeurs démocratiques et les libertés des citoyens. Heureusement, il n’est pas trop
+
+tard pour mettre en place ces cadres car nous sommes encore au début de l’innovation avec l’IA,
+                                                                                                Caprio 9
+
+
+mais l’innovation avance très vite donc il est important de ne pas rester en arrière. Avec les bons
+
+systèmes et les bonnes règles, l’IA pourrait être un outil essentiel pour aider les villes à devenir
+
+plus efficaces, plus performantes et plus durables.
+
+
+        Les prochaines étapes pourraient inclure une collaboration internationale plus forte, où
+
+des villes comme Paris, Londres et Barcelone pourraient partager les bonnes pratiques qu’elles
+
+utilisent pour intégrer l’IA dans la vie urbaine, ainsi que les erreurs à éviter. Il est aussi essentiel
+
+d’inclure les citoyens de manière plus significative dans la conception et la régulation des
+
+systèmes urbains basés sur l’IA. Comme ce sont eux qui vivent dans la ville, il est important
+
+qu’ils participent activement à la construction de leur environnement. L’avenir des villes
+
+intelligentes et de l’intégration de l’IA ne dépend pas seulement de l’innovation technologique,
+
+mais aussi de la manière dont elle est mise en œuvre et encadrée.
+
+
+Conclusion
+
+
+        En conclusion, cette étude a montré que, même si l’intelligence artificielle peut créer un
+
+avenir plus efficace, innovant et durable pour Paris, son intégration pose aussi des problèmes.
+
+L’IA ne peut pas être utilisée sans un bon contrôle éthique, une vraie responsabilité publique et
+
+la participation des citoyens. Ces éléments sont essentiels non seulement pour protéger les
+
+habitants, mais aussi pour créer la confiance entre les citoyens et la technologie qui transforme
+
+leur vie quotidienne.
+
+
+        Ces défis ne sont pas uniques à Paris. Partout dans le monde, les villes intelligentes
+
+doivent trouver un équilibre pour que l’innovation ne se fasse pas au détriment des droits ou des
+
+valeurs des citoyens. Alors que l’IA continue de changer nos villes et notre monde, il est
+                                                                                         Caprio 10
+
+
+important de garder un bon équilibre entre innovation et responsabilité. En fin de compte, la
+
+réussite des villes intelligentes ne dépend pas seulement de la technologie, mais de leur capacité
+
+à bien servir et protéger les personnes qui y vivent.
+                                                                                              Caprio 11
+
+
+                                              Références
+
+
+Baraud-Serfaty, I. (2019). Ville intelligente et intelligence artificielle, pour de vrai. Constructif,
+
+        (3), 20-23. https://doi.org/10.3917/const.054.0020
+
+
+
+Bellon, A., Velkovska, J., & Domingues-Montanari, S. (2023). L’intelligence artificielle dans
+
+        l’espace public : du domaine scientifique au problème public. Réseaux, 240(4), 31-70.
+
+        https://doi.org/10.3917/res.240.0031
+
+
+
+Diran, D., Van Veenstra, A. F., Timan, T., Testa, P., & Kirova, M. (2021). Artificial Intelligence in
+
+        smart cities and urban mobility. Policy Department for Economic, Scientific and Quality
+
+        of Life Policies.
+
+        https://www.europarl.europa.eu/RegData/etudes/BRIE/2021/662937/IPOL_BRI(2021)66
+
+        2937_EN.pdf
+
+
+
+Kadiri, D., Pap, M., & Baletić, B. (2023). Smart Cities: London, Paris, Barcelona, Milan;
+
+        Definitions and Strategies. Prostor: znanstveni časopis za arhitekturu i urbanizam, 31(2
+
+        (66)), 236-247. https://doi.org/10.31522/p.31.2(66).8
+
+
+Laanstra-Corn, A., & Sewell, T. (2024). Algorithmic surveillance takes the stage at the Paris
+
+        Olympics. Default. https://www.lawfaremedia.org/article/algorithmic-surveillance-takes-
+
+        the-stage-at-the-paris-olympics
+                                                                                       Caprio 12
+
+
+Levenda, A. M., Keough, N., Rock, M., & Miller, B. (2020). Rethinking public participation in
+
+       the smart city. The Canadian geographer/Le géographe canadien, 64(3), 344-358.
+
+       https://doi.org/10.1111/cag.12601
+
+
+Zaza, O. (2016). L’e-gouvernance pour la participation citoyenne : imaginaires du futur,
+
+       nouvelles compétences et impacts territoriaux. Pyramides. Revue du Centre d'études et de
+
+       recherches en administration publique, (26/27), 163-190.
+
+       http://journals.openedition.org/pyramides/1001
+

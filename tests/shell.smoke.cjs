@@ -18,7 +18,7 @@ const expected = {
   bay: 5,
   about: 0,
   work: 3,
-  writing: 2,
+  writing: 3,
   bizzy: 1,
   contact: 3,
 };
@@ -74,7 +74,7 @@ async function shot(page, name) {
       .locator(".island-nav a[data-destination]")
       .evaluateAll((els) => els.map((el) => [el.dataset.world, el.dataset.destination, el.getAttribute("aria-label")]));
     check(
-      navDestinations.length === 7 && navDestinations.every(([, destination, label]) => destination && label),
+      navDestinations.length === 6 && navDestinations.every(([, destination, label]) => destination && label),
       "Island nav names every destination",
     );
     check(
@@ -200,14 +200,20 @@ async function shot(page, name) {
       await go(page, route);
       const digits = route === "/work/digits" || route === "/writing/digits";
       const project = route === "/work/ecg" || route === "/work/metro";
+      const french = route === "/writing/faux-noble" || route === "/writing/ville-intelligente";
       if (digits) {
         check(await page.locator(".digits-item").count() === 2, route + " has Scene and List documents");
         check(await page.locator(".stub-badge, .reader-placeholder").count() === 0, route + " is no longer a placeholder");
-        check(await page.locator(".digits-pdf-viewer").count() === 2, route + " embeds the full PDF in Scene and List");
-        check((await page.locator(".digits-pdf-viewer").first().getAttribute("data")).includes("KNNKMEANSFINALPAPER.pdf"), route + " PDF viewer points at the published paper");
+        check(await page.locator(".native-paper").count() === 2, route + " renders the full paper in Scene and List");
+        check(await page.locator(".digits-pdf-viewer, .native-paper iframe").count() === 0, route + " has no PDF iframe gate");
+        check(await page.locator(".paper-source-body p").count() > 12, route + " includes the complete source paper");
       } else if (project) {
         check(await page.locator(".project-overview").count() === 1, route + " has a project overview");
         check(await page.locator(".stub-badge, .reader-placeholder").count() === 0, route + " has no fake paper gate");
+      } else if (french) {
+        check(await page.locator(".paper-document").count() === 2, route + " has Scene and List documents");
+        check(await page.locator(".stub-badge, .reader-placeholder").count() === 0, route + " renders full paper text");
+        check(await page.locator(".paper-source-body p").count() > 8, route + " includes the complete paper body");
       } else {
         check(
           (await page.locator(".stub-badge").textContent()) ===
@@ -256,8 +262,11 @@ async function shot(page, name) {
             .count()) >= 1,
           route + " GitHub exists",
         );
-      if (digits) {
-        check(await page.locator('.digits-actions a[href="#/writing/digits"], .digits-actions a[href="#/work/digits"]').count() >= 1, route + " has internal cross-link");
+      if (digits || french) {
+        if (digits)
+          check(await page.locator('.digits-actions a[href="#/writing/digits"], .digits-actions a[href="#/work/digits"]').count() >= 1, route + " has internal cross-link");
+        else
+          check(await page.locator('.paper-document a[download]').count() >= 2, route + " keeps its PDF download");
         await page.locator('button[data-view="scene"]').click();
         check(await page.locator("#scene-view").evaluate((el) => el.scrollHeight > el.clientHeight), route + " Scene scrolls");
         await page.locator('button[data-view="list"]').click();
@@ -269,29 +278,14 @@ async function shot(page, name) {
     }
     await go(page, "/writing");
     check(
-      (await page.locator('.hotspot[href="#/writing/digits"]').count()) === 0,
-      "Digits paper has no duplicate Bookshop prop",
+      (await page.locator('.hotspot[href="#/writing/digits"]').count()) === 1,
+      "Digits paper has one bookcase prop",
     );
     await page.locator('button[data-view="list"]').click();
     check(
-      (await page.locator('.cross-list a[href="#/writing/digits"]').count()) >
+      (await page.locator('.list-card a[href="#/writing/digits"]').count()) >
         0,
-      "Writing list cross-links Digits",
-    );
-    await page.locator('.island-nav [data-world="resume"]').click();
-    await ready(page, "/contact");
-    check(
-      await page
-        .locator('[data-list-object="resume"]')
-        .evaluate((el) => el.contains(document.activeElement)),
-      "Résumé nav focuses list noticeboard",
-    );
-    await page.locator('button[data-view="scene"]').click();
-    check(
-      await page
-        .locator('[data-object="resume"]')
-        .evaluate((el) => el === document.activeElement),
-      "Résumé focus survives Scene switch",
+      "Writing list includes Digits",
     );
     await go(page, "/work/digits");
     await shot(page, "item-desktop");

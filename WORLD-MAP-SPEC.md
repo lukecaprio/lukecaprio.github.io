@@ -1,5 +1,5 @@
 # lukecaprio.com — World Map & Transition Spec
-**Status:** planning (branch `prototype/miami-pixel-hero`)  
+**Status:** implemented prototype (branch `prototype/miami-pixel-hero`)
 **Aesthetic:** 16-bit / Pokémon-adjacent Miami Vice — pink sunset, teal water, neon accents  
 **Rule:** one continuous pixel world language. No return to the old dark long-scroll portfolio.
 
@@ -31,14 +31,13 @@
 - Hotspots are **large** — easy tap/click (generous padding, big pixel props, fat labels). Prefer fewer, bigger targets over many tiny sparks.
 
 
-### Unique item pages (phase after shell)
-- Every project and every paper/writing piece eventually gets its **own custom immersive UI** (not one shared reader skin forever).
-- Shell ships **route slots + stub pages** for each known item so navigation works end-to-end.
-- Luke and Astra will redesign each stub **one by one** later (content, layout, motion).
-- Stubs must still expose: on-site read (placeholder body OK), Download PDF, GitHub when applicable, back to world.
+### Unique item pages
+- Every project and paper has its own full-screen route with a themed scene and readable List view.
+- ECG and Metro are overview-only until a source paper exists. Digits and the three known papers use complete native HTML sourced from checked-in extraction text, with the original PDFs retained as downloads.
+- Item routes keep large actions for on-site reading, Download PDF, GitHub or demo when available, and a back link to the parent world.
 
 ### Native readers (Projects + Writing)
-- Papers and write-ups are **read on-site** in a pixel-styled reader overlay/route (`#/writing/digits`, `#/work/ecg/paper`, etc.). Visitor does **not** have to leave or download to read.
+- Papers and write-ups are **read on-site** in a pixel-styled reader route (`#/writing/digits`, `#/work/ecg/paper`, etc.). Visitor does **not** have to leave or download to read.
 - Reader chrome always offers:
   - **Read here** (default)
   - **Download PDF**
@@ -57,11 +56,11 @@
 ## 2. Global navigation
 
 ### Island nav (always visible)
-`Bay (logo)` · `About` · `Work` · `Writing` · `Bizzy` · `Résumé` · `Contact`
+`Home (logo)` · `About` · `Projects` · `Writing` · `Bizzy` · `Contact`
 
-- Logo / “Bay” → Hub
-- Work → Projects world
-- Résumé can deep-link PDF *or* open Contact world focused on the noticeboard (prefer: open Contact world + highlight résumé discoverable; PDF still one click)
+- Logo / “Home” → Hub
+- Projects → Projects world (the `#/work` alias remains supported)
+- Résumé is reachable from Contact and the résumé action in the shell; it is not a top-level island item.
 
 ### Hub scene hotspots
 **World doors (exactly one each):**
@@ -134,24 +133,24 @@ One shell: chrome stays mounted; only the stage (canvas + world hotspots + world
 
 ---
 
-### 5.1 Projects world — “The Dock / Arcade”
-**Metaphor:** waterfront workshop + mini arcade + research pier.  
-**Enter from:** Work nav, Projects laptop, or focused project sparks.
+### 5.1 Projects world — “The Pixel Desktop”
+**Metaphor:** a full-screen CRT computer desktop with a Miami-night wallpaper and chunky project icons.
+**Enter from:** Projects nav, Projects desktop door, or a direct project route.
 
 **Discoverables — one large object per project**
 
 | Object | Project | On interact |
 | --- | --- | --- |
-| Research boat / ECG console | Deep Learning ECG | Open **project detail / native paper reader** (if paper) + actions: GitHub, Download PDF |
-| Health tower neon | Metro Health | Project detail (GitHub, demo if any) |
-| Arcade cabinet | K-Means + KNN digits | Native reader for the paper + GitHub + Download PDF |
+| ECG desktop icon | Deep Learning ECG | Project overview + GitHub |
+| Metro desktop icon | Metro Health | Project overview + GitHub + demo |
+| Digits desktop icon | K-Means + KNN digits | Full project page, native paper reader, GitHub + Download PDF |
 | (Future) | New projects | One new large object each |
 
-Digits research paper lives with the Digits project object (not a second bench object), unless moved to Writing only — **pick one home**. Default home: **Projects** (it’s a project paper); Writing world can list it in fallback with “also in Work” without a second scene prop.
+Digits research paper lives with the Digits project object (not a second bench object), while Writing offers a direct reader link without adding a duplicate Projects object.
 
-**Fallback list:** cards — title, one-liner, tags, **Read**, GitHub, Download PDF.
+**Fallback list:** cards — title, one-liner, tags, **Open project**, GitHub, demo or Download PDF when available.
 
-**UI chrome in-world:** title “Work”, Back to bay, “Show as list”.
+**UI chrome in-world:** title “Projects”, Back to bay, “Scene | List”.
 
 ---
 
@@ -170,33 +169,24 @@ Digits research paper lives with the Digits project object (not a second bench o
 ---
 
 ### 5.3 Writing world — “Bayside Bookshop”
-**Metaphor:** open-air bookshop / zine rack.  
+**Metaphor:** a full-screen open-air pixel bookcase / zine rack. Scene has one readable book per research piece plus an intentionally empty Bizzy build-log shelf.
 **Discoverables:** **one large book/zine per piece** (no duplicate racks).
 
 | Piece | On interact |
 | --- | --- |
-| Efficient Digit Recognition… | **Native reader** (HTML from PDF) + Download PDF (+ GitHub if tied to project) |
-| Le faux noble… (FR) | Native reader + Download PDF |
-| La ville intelligente… (FR) | Native reader + Download PDF |
+| Efficient Digit Recognition… | **Native reader** (HTML from `docs/digits-paper.txt`) + Download PDF (+ GitHub) |
+| Le faux noble… (FR) | Native reader (HTML from `docs/faux-noble-paper.txt`) + Download PDF |
+| La ville intelligente… (FR) | Native reader (HTML from `docs/ville-intelligente-paper.txt`) + Download PDF |
 | (Future weekly posts) | Custom immersive article pages — stub “New issues soon” |
 
-If Digits paper’s **home** is Projects, Writing fallback still links it, but the Bookshop scene does not also place a physical copy (avoids two homes). If Luke prefers Writing as home for that paper, remove it as a separate Projects prop and feature from Writing only.
+Digits keeps its project icon in Projects while the Writing bookcase offers a direct reader link for research readers; there is no duplicate project object in the Projects desktop.
 
 **Fallback:** chronological list with language tags + Read / Download.
 
 ---
 
-### 5.4 Bizzy world — “The Venue”
-**Metaphor:** nightlife / campus-deals venue floor — marquee, ticket booth, dance floor glow, promoter stand.  
-**Hard rule:** places & mood only. **No invented features, metrics, campuses, or product claims.** Pull any factual line from live site / BizzyBot later.
-
-**Discoverables:**  
-- Marquee → `https://bizzyu.com/`  
-- Ticket booth → same (or “Get tickets” external)  
-- “Lead engineer” backstage pass → About world focus  
-- Optional “What Bizzy is” placard with **only** approved one-liner from current site  
-
-**Fallback:** 2–3 sentence approved blurb + single CTA to bizzyu.com.
+### 5.4 Bizzy destination — “The Green Room”
+Bizzy is an external destination, reached directly from the green hub venue and island nav at `https://bizzyu.com/`. The hub prop supplies nightlife atmosphere and a clear Bizzy label without pretending to be a real Brickell club or inventing product claims. A legacy `#/bizzy` hash may remain as a compatibility route, but it is not the primary action.
 
 ---
 
@@ -238,7 +228,7 @@ Reuse from current site / PROTOTYPE.md — do not invent:
 
 Weekly Substack-like custom article UIs = **phase 2** (Writing world gets a “New issues” shelf only for now).
 
-**PDF → native:** treat converting the three existing papers (+ any project write-ups) into on-site readers as part of Projects/Writing build, not a later nice-to-have.
+**PDF → native:** the three existing papers are rendered from checked-in `docs/*-paper.txt` sources as on-site readers; their PDFs remain downloadable twins.
 
 ---
 
@@ -255,9 +245,9 @@ Weekly Substack-like custom article UIs = **phase 2** (Writing world gets a “N
 
 ## 9. Build order
 
-1. **Spec lock** ← you are here  
-2. **Shell + router + transitions** (Hub stays; stub empty worlds)  
-3. **Projects world** + fallback list + hub retarget  
+1. **Spec lock** ← shipped
+2. **Shell + router + transitions** (shipped)
+3. **Projects desktop** + fallback list + hub retarget (shipped)
 4. **About** → **Writing** → **Contact** → **Bizzy**  
 5. Delete old dark sections  
 6. Mobile QA / reduced-motion QA  

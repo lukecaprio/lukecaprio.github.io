@@ -526,6 +526,72 @@
     rect(c, bx + bw * 0.35, by + bh + 10, bw * 0.3, 6, "#1c2542");
     rect(c, bx + bw * 0.47, by + bh + 16, bw * 0.06, 10, "#2c3655");
   }
+
+  function writingBookcaseScene(c, t) {
+    const stops = [[0, "#261c39"], [0.55, "#5a3157"], [1, "#1b172d"]];
+    for (let y = 0; y < H; y += 2) {
+      const p = y / H;
+      let i = 1;
+      while (i < stops.length - 1 && p > stops[i][0]) i++;
+      rect(c, 0, y, W, 2, mix(stops[i - 1][1], stops[i][1], (p - stops[i - 1][0]) / (stops[i][0] - stops[i - 1][0])));
+    }
+    const shelfLeft = W * 0.09, shelfRight = W * 0.91;
+    for (let y = H * 0.31; y < H * 0.86; y += H * 0.18) {
+      rect(c, shelfLeft, y, shelfRight - shelfLeft, 8, "#c99378");
+      rect(c, shelfLeft, y + 8, shelfRight - shelfLeft, 3, "#4b2849");
+      rect(c, shelfLeft - 6, y - H * 0.16, 8, H * 0.18, "#3b2644");
+      rect(c, shelfRight - 2, y - H * 0.16, 8, H * 0.18, "#3b2644");
+    }
+    for (let i = 0; i < 22; i++) {
+      const x = shelfLeft + 18 + ((i * 67) % Math.max(80, shelfRight - shelfLeft - 30));
+      const y = H * 0.31 + (i % 3) * H * 0.18 - 3;
+      rect(c, x, y - 48 - (i % 3) * 7, 11 + (i % 4) * 3, 48 + (i % 3) * 7, ["#d48c9f", "#e2b37f", "#77c4b6", "#9f80c1"][i % 4]);
+    }
+    for (const object of window.MiamiMap.worlds.writing.objects) {
+      const p = points[object.id];
+      if (!p) continue;
+      const active = highlighted === object.id;
+      const color = object.id === "digits-paper" ? "#69e5d2" : object.id === "faux-noble" ? "#f0bd70" : "#ff8bb9";
+      const bob = Math.sin(t * 1.2 + p.x * 0.02) * 2;
+      const x = p.x - 21, y = p.y - 23 + bob;
+      if (active) { c.globalAlpha = 0.2; ellipse(c, p.x, p.y, 38, 30, color); c.globalAlpha = 1; }
+      rect(c, x, y, 42, 47, "#20152f");
+      rect(c, x + 4, y + 4, 34, 38, color);
+      rect(c, x + 8, y + 9, 25, 2, "#fff0d699");
+      rect(c, x + 8, y + 16, 19, 2, "#fff0d655");
+      rect(c, x + 8, y + 29, 24, 2, "#2d2348aa");
+      c.font = "10px \"JetBrains Mono\", monospace";
+      c.fillStyle = "#fff5e6";
+      c.textAlign = "center";
+      c.fillText(object.id === "digits-paper" ? "DIGITS" : object.id === "faux-noble" ? "FR / 01" : "FR / 02", p.x, y + 60);
+      c.textAlign = "start";
+    }
+    rect(c, 0, H * 0.88, W, H * 0.12, "#171327");
+    for (let i = 0; i < 7; i++) rect(c, W * 0.18 + i * W * 0.11, H * 0.9, W * 0.07, 2, i % 2 ? "#e2a56f66" : "#72e0d066");
+  }
+
+  function paperScene(c, t) {
+    const frenchSalon = currentItem === "/writing/faux-noble";
+    const stops = frenchSalon ? [[0, "#2a1327"], [0.55, "#6d273d"], [1, "#1b1021"]] : [[0, "#071b33"], [0.52, "#123e5c"], [1, "#101329"]];
+    for (let y = 0; y < H; y += 2) {
+      const p = y / H; let i = 1;
+      while (i < stops.length - 1 && p > stops[i][0]) i++;
+      rect(c, 0, y, W, 2, mix(stops[i - 1][1], stops[i][1], (p - stops[i - 1][0]) / (stops[i][0] - stops[i - 1][0])));
+    }
+    const rng = random(frenchSalon ? 515 : 626);
+    for (let i = 0; i < 90; i++) rect(c, rng() * W, rng() * H * 0.7, i % 9 ? 1 : 2, 1, frenchSalon ? "#f4c77e66" : "#70eee566");
+    if (frenchSalon) {
+      rect(c, W * 0.08, H * 0.2, W * 0.16, H * 0.72, "#43162f");
+      rect(c, W * 0.76, H * 0.2, W * 0.16, H * 0.72, "#43162f");
+      for (let x = W * 0.1; x < W * 0.9; x += W * 0.08) line(c, x, H * 0.72, x + Math.sin(t + x) * 5, H * 0.92, "#e6b66c44", 2);
+      rect(c, W * 0.2, H * 0.73, W * 0.6, 5, "#d4a366");
+    } else {
+      line(c, W * 0.12, H * 0.78, W * 0.88, H * 0.2, "#67e6df55", 1);
+      line(c, W * 0.2, H * 0.86, W * 0.86, H * 0.28, "#67e6df55", 1);
+      for (let i = 0; i < 12; i++) rect(c, W * 0.08 + i * W * 0.08, H * 0.74 - i * H * 0.035, 2, 2, "#66e9df88");
+      rect(c, W * 0.1, H * 0.78, W * 0.8, 3, "#5be7df77");
+    }
+  }
   function water(c, t) {
     for (let y = horizon; y < H; y += 3)
       rect(
@@ -1312,8 +1378,16 @@
       digitsScene(ctx, t);
       return;
     }
+    if (currentItem === "/writing/faux-noble" || currentItem === "/writing/ville-intelligente") {
+      paperScene(ctx, t);
+      return;
+    }
     if (currentWorld === "work") {
       projectsDesktop(ctx, t);
+      return;
+    }
+    if (currentWorld === "writing") {
+      writingBookcaseScene(ctx, t);
       return;
     }
     if (currentWorld === "about") {

@@ -258,6 +258,19 @@ window.MiamiMap = (() => {
       note: "Open a book. Each piece has its own place.",
       objects: [
         object(
+          "digits-paper",
+          "Digits paper",
+          "book",
+          "#/writing/digits",
+          [50, 64],
+          [50, 82],
+          {
+            scale: 2.15,
+            item: "/writing/digits",
+            description: items["/writing/digits"].description,
+          },
+        ),
+        object(
           "faux-noble",
           "Le faux noble",
           "book",
