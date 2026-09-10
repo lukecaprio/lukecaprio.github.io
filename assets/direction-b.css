@@ -380,11 +380,11 @@ h1:focus,
 .hub em { color: #f9d6c8; }
 .hub-landmarks {
   display: grid;
-  grid-template-columns: 1.05fr 1.05fr 1.15fr 0.95fr 0.85fr;
+  grid-template-columns: 1.2fr 1.08fr 1.3fr .9fr .7fr;
   align-items: end;
-  gap: 18px;
+  gap: clamp(18px, 2.3vw, 42px);
   margin-top: auto;
-  padding: 45px 0 32px;
+  padding: 36px 0 8px;
   isolation: isolate;
 }
 .landmark {
@@ -397,15 +397,14 @@ h1:focus,
 }
 .landmark > .hub-vignette {
   width: 100%;
-  filter: drop-shadow(0 15px 14px #17233830);
+  filter: none;
   transition:
     filter 0.3s,
     transform 0.3s;
 }
 .landmark:hover > .hub-vignette,
 .landmark:focus-visible > .hub-vignette {
-  transform: translateY(-5px);
-  filter: drop-shadow(0 0 17px #a7dac658);
+  filter: drop-shadow(0 0 8px #efcca936);
 }
 .landmark-label {
   font-size: 14px;
@@ -418,13 +417,13 @@ h1:focus,
 }
 .landmark:hover .landmark-label,
 .landmark:focus-visible .landmark-label { opacity: 1; }
-.hub-bizzy { transform: translateY(-12px); }
-.hub-about { transform: translateY(8px); }
-.hub-writing { transform: translateY(-5px); }
-.hub-contact { transform: translateY(15px); }
+.hub-bizzy { transform: translateY(-28px); }
+.hub-about { transform: translateY(-60px); }
+.hub-writing { transform: translateY(-18px); }
+.hub-contact { transform: translateY(5px); }
 .hub-bizzy .bizzy-mark {
-  width: 105px;
-  height: 52.5px;
+  width: 230px;
+  height: 115px;
   max-width: none;
   filter: none;
   transform: none;
@@ -959,7 +958,7 @@ h1:focus,
   border-color: #305e6b40;
 }
 .paper-source-header {
-  padding: 45px 0 32px;
+  padding: 36px 0 8px;
   border-bottom: 1px solid #26385125;
   margin-bottom: 40px;
 }
@@ -1258,6 +1257,13 @@ h1:focus,
 }
 .hub-vignette .sign-breathe {
   animation: hubSignBreathe 4.5s ease-in-out infinite;
+}
+.hub-vignette .painted-reflection {
+  animation: paintedReflection 6s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+@keyframes paintedReflection {
+  50% { transform: translateX(3px); opacity: .65; }
 }
 .hub-vignette .landing-reflection {
   animation: hubWaterGlint 5s ease-in-out infinite;

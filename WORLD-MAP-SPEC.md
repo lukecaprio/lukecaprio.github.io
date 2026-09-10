@@ -22,7 +22,7 @@ Exactly five small illustrated stations with large accessible hit targets:
 | Bookshelf | `#/writing` |
 | Mailbox | `#/contact` |
 
-No featured project clutter. Hover/focus reveals the station name and gently illuminates the landmark; names stay visible on small and touch screens. Background: Biscayne Bay sunset, illustrated skyline, water shimmer, palms, timber landings with pilings in continuous water, and restrained parallax. Home landmarks are finer, smaller hand-drawn vignettes with breathing room: a boardwalk computer, lived-in apartment, Bizzy storefront with the supplied green mark, wood bookcase, and mailbox.
+No featured project clutter. Hover/focus reveals the station name and gently illuminates the landmark; names stay visible on small and touch screens. Background: Biscayne Bay sunset, illustrated skyline, water shimmer, palms, timber landings with pilings in continuous water, and restrained parallax. Home landmarks are distinct painted layers with varied silhouettes and breathing room: a working boardwalk desk, veranda apartment with terracotta roof, curved Art Deco Bizzy storefront with the supplied green mark, crooked walnut bookshelf and lamp, and blue mailbox garden. Pilings, masked wet edges, and animated reflections join them to a matching painted bay.
 
 ## Transitions
 

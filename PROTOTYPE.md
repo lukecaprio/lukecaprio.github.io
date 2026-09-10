@@ -2,7 +2,7 @@
 
 Branch: `prototype/direction-b-shell`, based on `prototype/miami-pixel-hero`.
 
-This sample replaces the active chunky pixel shell with resolution-independent Miami illustration, editorial type, and a glass island nav. The Home art pass now uses smaller, hand-drawn anime-style waterfront vignettes: a boardwalk PC, lived-in apartment, real Bizzy storefront mark, bookcase, and mailbox. The original prototype renderer remains in the repository but is not loaded by this entry point. Interiors are shell-level compositions to refine after Luke's individual world briefs.
+This sample replaces the active chunky pixel shell with resolution-independent Miami illustration, editorial type, and a glass island nav. The Home art pass now uses five fully redrawn, generated anime-style paintings with independent light/reflection layers: a boardwalk PC, lived-in apartment, real Bizzy storefront mark, bookcase, and mailbox. The original prototype renderer remains in the repository but is not loaded by this entry point. Interiors are shell-level compositions to refine after Luke's individual world briefs.
 
 ## Preview
 
@@ -39,3 +39,5 @@ ECG and Metro are themed overview shells with their existing descriptions and Gi
 See `SHELL.md` for implementation and verification, `WORLD-MAP-SPEC.md` for the current IA, and `ITEM-THEMES.md` for item themes.
 
 The latest pass trims decorative microcopy across Home and all worlds. Home has one short role line; project descriptions appear once. Small timber landings now sit in continuous bay water with visible pilings and moving reflections. The storefront uses the sharp original Bizzy source logo at its correct aspect ratio.
+
+The full redraw replaces every former Home SVG prop with a distinct painting in `assets/home-art/`, plus a matching painted dusk backdrop. The real source logo remains a separate layer on the Art Deco venue. Desktop silhouettes are staggered and differently sized; the mobile layout retains clear names and large targets. Generation prompts/provenance are in `assets/home-art/PROMPTS.md`.

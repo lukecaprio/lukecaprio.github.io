@@ -118,6 +118,18 @@ async function scrollInside(page) {
       (await page.locator(".hub-landmarks .hub-vignette").count()) === 5,
       "Home landmarks use illustrated vignettes",
     );
+    check(await page.locator('.station-painting').evaluateAll(async els => {
+      const sources = els.map(el => el.getAttribute('href'));
+      if (new Set(sources).size !== 5) return false;
+      const sizes = await Promise.all(sources.map(async src => {
+        const img = new Image(); img.src = src; await img.decode();
+        return img.naturalWidth >= 1000 && img.naturalHeight >= 1000;
+      }));
+      return sizes.every(Boolean);
+    }), 'Five distinct full-resolution painted station assets load');
+    await page.waitForFunction(() => document.querySelector('canvas').dataset.painting === 'ready');
+    check(await page.locator('canvas').getAttribute('data-painting') === 'ready',
+      'Matching painted bay background is loaded');
     check(
       await page.locator('.hub-landmarks small, .hub .eyebrow, .hub-invitation, .hub-coordinate').count() === 0,
       "Home has no decorative microcopy",

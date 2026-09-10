@@ -26,6 +26,9 @@
   const canvas = document.getElementById("miami-scene");
   const ctx = canvas.getContext("2d", { alpha: false });
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const bayPainting = new Image();
+  bayPainting.src = "assets/home-art/bay.webp";
+  bayPainting.addEventListener("load", () => { canvas.dataset.painting = "ready"; draw(); });
   let w = 0,
     h = 0,
     world = "bay",
@@ -121,6 +124,10 @@
     }
   }
   function bay() {
+    if (bayPainting.complete && bayPainting.naturalWidth) {
+      paintedBay();
+      return;
+    }
     sky();
     const base = h * 0.52;
     ctx.save();
@@ -177,6 +184,37 @@
     }
     palm(w * 0.02, h * 0.7, w < 600 ? 0.6 : 1, -0.45);
     palm(w * 0.985, h * 0.69, w < 600 ? 0.55 : 0.95, 0.4);
+  }
+  function paintedBay() {
+    const iw = bayPainting.naturalWidth, ih = bayPainting.naturalHeight;
+    const scale = Math.max(w / iw, h / ih);
+    const sw = w / scale, sh = h / scale;
+    const sx = (iw - sw) * (w < 700 ? .72 : .5), sy = (ih - sh) * .5;
+    ctx.drawImage(bayPainting, sx, sy, sw, sh, 0, 0, w, h);
+    const horizon = (ih * .565 - sy) * scale;
+    // Refract actual painted water in thin strips; architectural silhouettes stay still.
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, horizon, w, h - horizon); ctx.clip();
+    for (let y = horizon; y < h; y += 5) {
+      const depth = (y - horizon) / (h - horizon);
+      const shift = Math.sin(clock * .8 + y * .045) * (0.25 + depth * 1.8);
+      const rows = Math.min(5, h - y);
+      ctx.drawImage(bayPainting, sx, sy + y / scale, sw, rows / scale,
+        shift, y, w, rows);
+    }
+    for (let i = 0; i < 34; i++) {
+      const depth = (i + .5) / 34;
+      const x = (Math.sin(i * 17.7) * .5 + .5) * w;
+      const y = horizon + depth * (h - horizon);
+      const alpha = (.1 + .08 * Math.sin(clock * 1.2 + i)) * depth;
+      line([[x, y], [x + 9 + depth * 22, y]], `rgba(255,214,166,${alpha})`, .8);
+    }
+    ctx.restore();
+    const veil = ctx.createLinearGradient(0, 0, 0, h);
+    veil.addColorStop(0, "#17253a45");
+    veil.addColorStop(.48, "#23364c00");
+    veil.addColorStop(1, "#102c4438");
+    rect(0, 0, w, h, veil);
   }
   function palm(x, y, s, lean) {
     ctx.save();
