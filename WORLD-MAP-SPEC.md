@@ -22,7 +22,7 @@ Exactly five large, visibly named portals:
 | Bookshelf | `#/writing` |
 | Mailbox | `#/contact` |
 
-No featured project clutter. Hover/focus gently raises or illuminates the landmark while its name remains visible. Background: Biscayne Bay sunset, illustrated skyline, water shimmer, palms, promenade, and restrained parallax.
+No featured project clutter. Hover/focus gently raises or illuminates the landmark while its name remains visible. Background: Biscayne Bay sunset, illustrated skyline, water shimmer, palms, promenade, and restrained parallax. Home landmarks are finer, smaller hand-drawn vignettes with breathing room: a boardwalk computer, lived-in apartment, Bizzy storefront with the supplied green mark, wood bookcase, and mailbox.
 
 ## Transitions
 

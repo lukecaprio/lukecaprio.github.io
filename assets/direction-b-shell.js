@@ -232,12 +232,12 @@
   const destination = (href, label, icon, subtitle = "", className = "") =>
     link(
       href,
-      `${art(icon)}<span class="landmark-label">${label}<span aria-hidden="true">↗</span></span>${subtitle ? `<small>${subtitle}</small>` : ""}`,
+      `${window.HubIllustrations(icon)}<span class="landmark-label">${label}<span aria-hidden="true">↗</span></span>${subtitle ? `<small>${subtitle}</small>` : ""}`,
       `landmark ${className}`,
       "data-portal",
     );
   function home() {
-    return `<section class="hub">${title("MIAMI, FLORIDA · A LITTLE CORNER OF THE INTERNET", "Luke <em>Caprio.</em>", "Software engineer. End-to-end builder.<br>At home somewhere between math, music, and Miami.")}<p class="hub-invitation"><span></span> A few places to get to know me. Step inside.</p><div class="hub-landmarks" aria-label="Explore the neighborhood">${destination("#/bizzy", "Bizzy", "bizzy", "THE GREEN ROOM", "hub-bizzy")}${destination("#/about", "About", "about", "THE APARTMENT", "hub-about")}${destination("#/projects", "Projects", "computer", "THE DESKTOP", "hub-projects")}${destination("#/writing", "Writing", "writing", "THE BOOKSHELF", "hub-writing")}${destination("#/contact", "Contact", "contact", "THE MAILBOX", "hub-contact")}</div><div class="hub-coordinate"><span>25°45′ N &nbsp; 80°11′ W</span><span>BISCAYNE BAY / MAKE YOURSELF AT HOME</span></div></section>`;
+    return `<section class="hub">${title("MIAMI, FLORIDA · A LITTLE CORNER OF THE INTERNET", "Luke <em>Caprio.</em>", "Software engineer. End-to-end builder.<br>At home somewhere between math, music, and Miami.")}<p class="hub-invitation"><span></span> A few places to get to know me. Step inside.</p><div class="hub-landmarks" aria-label="Explore the neighborhood">${destination("#/bizzy", "Bizzy", "bizzy", "THE GREEN ROOM", "hub-bizzy")}${destination("#/about", "About", "about", "THE APARTMENT", "hub-about")}${destination("#/projects", "Projects", "computer", "THE BOARDWALK", "hub-projects")}${destination("#/writing", "Writing", "writing", "THE BOOKSHELF", "hub-writing")}${destination("#/contact", "Contact", "contact", "THE MAILBOX", "hub-contact")}</div><div class="hub-coordinate"><span>An evening on Biscayne Bay.</span><span>Stay a little while.</span></div></section>`;
   }
   function projects() {
     return `<section class="projects-world">${title("01 / THE DESKTOP", "Built with <em>curiosity.</em>", "Projects in software, systems, and machine learning.")}<div class="computer-frame"><div class="computer-menubar"><span><i class="status-light"></i> luke / projects</span><span>03 folders</span></div><div class="computer-desktop"><div class="desktop-greeting"><span class="eyebrow">PERSONAL WORKSPACE</span><p>Open something.</p></div><div class="project-folders">${[

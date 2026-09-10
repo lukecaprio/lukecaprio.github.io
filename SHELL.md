@@ -6,11 +6,12 @@ Branch: `prototype/direction-b-shell` (from `prototype/miami-pixel-hero`). This 
 
 - `index.html`: persistent Home / About / Projects / Writing / Bizzy / Contact nav, Back to bay, motion pause, canvas, one scroll container, and no-JavaScript source links. No Scene/List UI or top-nav résumé.
 - `assets/direction-b-shell.js`: hash parsing, native semantic page templates, paper fetching and rendering, cancellable camera transitions, focus management, and failure recovery.
-- `assets/direction-b-art.js`: smooth SVG landmark/project illustrations and high-DPI canvas ambience. No external illustration dependency. Canvas DPR is capped at 1.5; hidden tabs, reduced motion, and user pause stop the loop.
+- `assets/direction-b-art.js`: high-DPI canvas ambience for water shimmer, skyline, rooms, and soft world motion. `assets/hub-illustrations.js` supplies the hand-drawn Home vignettes: boardwalk computer, lived-in apartment, bookshelf, mailbox, and Bizzy storefront. No external illustration dependency. Canvas DPR is capped at 1.5; hidden tabs, reduced motion, and user pause stop the loop.
 - `assets/direction-b.css`: glass navigation, editorial typography, responsive rooms/readers, visible landmark labels, keyboard affordances, and reduced-motion states.
 - `assets/miami-content.js`: existing factual biography, education, experience, skills, and project/PDF/source links. Legacy world coordinates remain for the prior renderer.
 - `docs/*-paper.txt`: original extraction text, retained unchanged. Paragraph rendering removes repeated page headers and repairs line wrapping. No summary substitute.
 - `assets/paper-figures/`: three PNGs extracted unchanged from the Digits PDF. See the figure README for provenance.
+- `assets/bizzy-logo-transparent.png`: supplied Bizzy mark with only its black source backing removed for storefront compositing; brand artwork is otherwise unchanged.
 - `assets/miami-shell.js`, `assets/miami-scene.js`, `assets/miami-hero.css`: retained original prototype implementation; not loaded by Direction B.
 - `tests/shell.smoke.cjs`: current Direction B browser checks. Playwright is a development tool, not a shipped dependency.
 
@@ -64,4 +65,4 @@ Use `SHELL_BASE_URL` for another preview URL and `SHELL_QA_DIR` to capture deskt
 
 The suite checks the exact nav, five visible Home portals, landmark camera origins, browser history, Escape, aliases, direct loads, all project/book routes, full source-line fidelity for every paper, real figures, PDF responses, Bizzy actions, résumé, source failure/retry, navigation races, natural scrolling, 390px layouts, 320px Home, reduced motion, pause/resume, no-JS links, and browser runtime errors. CNAME and JavaScript syntax are also checked. Visual review covers desktop/mobile Home, Projects, Writing, About, Bizzy, and representative paper/figure layouts. These are browser viewport checks, not physical-device profiling.
 
-Latest local Chrome run: **180 checks passed**, including fresh reloads of every route and keyboard Enter/Escape navigation. All 21 French PDF pages were visually reviewed and contain text only. The three extracted Digits figures were reviewed at their native resolutions and in the mobile reader.
+Latest local Chrome run: **183 checks passed**, including fresh reloads of every route and keyboard Enter/Escape navigation. The Home art pass was reviewed at desktop and 390px mobile sizes. All 21 French PDF pages were visually reviewed and contain text only. The three extracted Digits figures were reviewed at their native resolutions and in the mobile reader.

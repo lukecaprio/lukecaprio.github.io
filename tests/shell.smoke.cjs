@@ -114,6 +114,18 @@ async function scrollInside(page) {
       (await page.locator(".hub-landmarks [data-portal]").count()) === 5,
       "Exactly five Home landmarks",
     );
+    check(
+      (await page.locator(".hub-landmarks .hub-vignette").count()) === 5,
+      "Home landmarks use illustrated vignettes",
+    );
+    check(
+      await page.locator('.hub-projects > small').textContent().then(t => t.includes('THE BOARDWALK')),
+      "Projects Home landmark is the boardwalk workstation",
+    );
+    check(
+      await page.locator('.hub-bizzy image[href*="bizzy-logo-transparent.png"]').count() === 1,
+      "Home Bizzy landmark uses the composited supplied mark",
+    );
     await page.locator('.island-nav [data-world="projects"]').focus();
     check(
       await page

@@ -2,7 +2,7 @@
 
 Branch: `prototype/direction-b-shell`, based on `prototype/miami-pixel-hero`.
 
-This sample replaces the active chunky pixel shell with resolution-independent Miami illustration, editorial type, and a glass island nav. The original prototype renderer remains in the repository but is not loaded by this entry point. Interiors are shell-level compositions to refine after Luke's individual world briefs.
+This sample replaces the active chunky pixel shell with resolution-independent Miami illustration, editorial type, and a glass island nav. The Home art pass now uses smaller, hand-drawn anime-style waterfront vignettes: a boardwalk PC, lived-in apartment, real Bizzy storefront mark, bookcase, and mailbox. The original prototype renderer remains in the repository but is not loaded by this entry point. Interiors are shell-level compositions to refine after Luke's individual world briefs.
 
 ## Preview
 
