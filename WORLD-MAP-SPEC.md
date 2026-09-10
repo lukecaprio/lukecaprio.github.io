@@ -12,7 +12,7 @@ The nav is persistent. Each page presents its complete content or its clear sele
 
 ## Home landmarks
 
-Exactly five large, visibly named portals:
+Exactly five small illustrated stations with large accessible hit targets:
 
 | Landmark | Destination |
 | --- | --- |
@@ -22,7 +22,7 @@ Exactly five large, visibly named portals:
 | Bookshelf | `#/writing` |
 | Mailbox | `#/contact` |
 
-No featured project clutter. Hover/focus gently raises or illuminates the landmark while its name remains visible. Background: Biscayne Bay sunset, illustrated skyline, water shimmer, palms, promenade, and restrained parallax. Home landmarks are finer, smaller hand-drawn vignettes with breathing room: a boardwalk computer, lived-in apartment, Bizzy storefront with the supplied green mark, wood bookcase, and mailbox.
+No featured project clutter. Hover/focus reveals the station name and gently illuminates the landmark; names stay visible on small and touch screens. Background: Biscayne Bay sunset, illustrated skyline, water shimmer, palms, timber landings with pilings in continuous water, and restrained parallax. Home landmarks are finer, smaller hand-drawn vignettes with breathing room: a boardwalk computer, lived-in apartment, Bizzy storefront with the supplied green mark, wood bookcase, and mailbox.
 
 ## Transitions
 
@@ -38,7 +38,7 @@ No featured project clutter. Hover/focus gently raises or illuminates the landma
 
 **Projects** — full-screen glass computer desktop with three labeled project icons: Digits, ECG, Metro. Project routes remain `#/work/digits`, `#/work/ecg`, `#/work/metro`.
 
-**Writing** — lived-in wood/neon bookcase with three books: Digits paper, Le faux noble, La ville intelligente. A separate Bizzy build-log shelf is empty / coming soon. No Bizzy 5.0 article.
+**Writing** — lived-in wood/neon bookcase with three books: Digits paper, Le faux noble, La ville intelligente. Lower shelf decor carries no placeholder copy or article links. No Bizzy 5.0 article.
 
 **About** — clean Miami apartment: existing headshot, desk, decorative poster, window over the bay. Full existing bio, education, experience, and skills visible on arrival and scrollable. No secondary bio gate or invented biography.
 

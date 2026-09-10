@@ -225,38 +225,34 @@
       blanks = 0;
     }
     flush();
-    return `<header class="paper-source-header"><p class="eyebrow">${path.endsWith("/digits") ? "RESEARCH PAPER · 2024" : "ESSAI · FRANÇAIS · 2025"}</p><h2>${escape(title)}</h2><p>Luke Caprio<br>${metadata.map(escape).join(" · ")}</p></header><div class="paper-source-body">${nodes.join("")}</div>`;
+    return `<header class="paper-source-header"><h2>${escape(title)}</h2><p>Luke Caprio<br>${metadata.map(escape).join(" · ")}</p></header><div class="paper-source-body">${nodes.join("")}</div>`;
   }
-  const title = (eyebrow, heading, description = "") =>
-    `<header class="page-heading"><p class="eyebrow">${eyebrow}</p><h1 id="route-title" tabindex="-1">${heading}</h1>${description ? `<p class="lead">${description}</p>` : ""}</header>`;
-  const destination = (href, label, icon, subtitle = "", className = "") =>
-    link(
-      href,
-      `${window.HubIllustrations(icon)}<span class="landmark-label">${label}<span aria-hidden="true">↗</span></span>${subtitle ? `<small>${subtitle}</small>` : ""}`,
-      `landmark ${className}`,
-      "data-portal",
-    );
+  const title = (heading, description = "") =>
+    `<header class="page-heading"><h1 id="route-title" tabindex="-1">${heading}</h1>${description ? `<p class="lead">${description}</p>` : ""}</header>`;
+  const destination = (href, label, icon, className) =>
+    link(href,
+      `${window.HubIllustrations(icon)}<span class="landmark-label">${label}</span>`,
+      `landmark ${className}`, `data-portal aria-label="${label}"`);
   function home() {
-    return `<section class="hub">${title("MIAMI, FLORIDA · A LITTLE CORNER OF THE INTERNET", "Luke <em>Caprio.</em>", "Software engineer. End-to-end builder.<br>At home somewhere between math, music, and Miami.")}<p class="hub-invitation"><span></span> A few places to get to know me. Step inside.</p><div class="hub-landmarks" aria-label="Explore the neighborhood">${destination("#/bizzy", "Bizzy", "bizzy", "THE GREEN ROOM", "hub-bizzy")}${destination("#/about", "About", "about", "THE APARTMENT", "hub-about")}${destination("#/projects", "Projects", "computer", "THE BOARDWALK", "hub-projects")}${destination("#/writing", "Writing", "writing", "THE BOOKSHELF", "hub-writing")}${destination("#/contact", "Contact", "contact", "THE MAILBOX", "hub-contact")}</div><div class="hub-coordinate"><span>An evening on Biscayne Bay.</span><span>Stay a little while.</span></div></section>`;
+    return `<section class="hub">${title("Luke <em>Caprio.</em>", "Software engineer · Miami")}<div class="hub-landmarks" aria-label="Explore the neighborhood">${destination("#/bizzy", "Bizzy", "bizzy", "hub-bizzy")}${destination("#/about", "About", "about", "hub-about")}${destination("#/projects", "Projects", "computer", "hub-projects")}${destination("#/writing", "Writing", "writing", "hub-writing")}${destination("#/contact", "Contact", "contact", "hub-contact")}</div></section>`;
   }
   function projects() {
-    return `<section class="projects-world">${title("01 / THE DESKTOP", "Built with <em>curiosity.</em>", "Projects in software, systems, and machine learning.")}<div class="computer-frame"><div class="computer-menubar"><span><i class="status-light"></i> luke / projects</span><span>03 folders</span></div><div class="computer-desktop"><div class="desktop-greeting"><span class="eyebrow">PERSONAL WORKSPACE</span><p>Open something.</p></div><div class="project-folders">${[
+    return `<section class="projects-world">${title("Projects")}<div class="computer-frame"><div class="computer-menubar"><span><i class="status-light"></i> luke / projects</span></div><div class="computer-desktop"><div class="project-folders">${[
       "digits",
       "ecg",
       "metro",
     ]
       .map((slug, i) => {
-        const item = items["/work/" + slug];
         return link(
           "#/work/" + slug,
-          `<span class="folder-art">${art(slug)}</span><strong>${["Digits", "ECG", "Metro Health"][i]}</strong><span>${["MACHINE LEARNING", "CARDIAC SIGNALS", "FULL-STACK SYSTEM"][i]}</span>`,
+          `<span class="folder-art">${art(slug)}</span><strong>${["Digits", "ECG", "Metro Health"][i]}</strong>`,
           "project-folder",
           "data-portal",
         );
       })
       .join(
         "",
-      )}</div><div class="desktop-taskbar"><span>⌘ &nbsp; Selected projects</span><span>PYTHON &nbsp; / &nbsp; TYPESCRIPT</span></div></div><div class="computer-chin"><span>lc.</span></div></div></section>`;
+      )}</div></div><div class="computer-chin"><span>lc.</span></div></div></section>`;
   }
   function writing() {
     const bookPaths = [
@@ -264,23 +260,23 @@
       "/writing/faux-noble",
       "/writing/ville-intelligente",
     ];
-    return `<section class="writing-world">${title("02 / THE BOOKSHELF", "Notes from <em>elsewhere.</em>", "Research, French essays, and ideas worth sitting with.")}<div class="bookcase"><div class="shelf-topline"><span>RESEARCH / PAPERS</span><span>VOLUME 01—03</span></div><div class="books">${bookPaths
+    return `<section class="writing-world">${title("Writing")}<div class="bookcase"><div class="books">${bookPaths
       .map((path, i) => {
         const item = items[path];
         return link(
           "#" + path,
-          `<span class="book-binding"><small>${item.language} / ${item.year}</small><strong>${["Efficient<br>digit recognition", "Le faux<br>noble", "La ville<br>intelligente"][i]}</strong><span class="book-motif" aria-hidden="true">${["0 1<br>7 9", "✧", "╱╲"][i]}</span><span class="book-author">LUKE CAPRIO</span></span><span class="book-caption">${["K-Means + KNN", "Molière, comedy & status", "Intelligence artificielle à Paris"][i]} <span aria-hidden="true">↗</span></span>`,
+          `<span class="book-binding"><small>${item.language} / ${item.year}</small><strong>${["Efficient<br>digit recognition", "Le faux<br>noble", "La ville<br>intelligente"][i]}</strong><span class="book-motif" aria-hidden="true">${["0 1<br>7 9", "✧", "╱╲"][i]}</span><span class="book-author">LUKE CAPRIO</span></span>`,
           "book book-" + i,
           "data-portal",
         );
       })
       .join(
         "",
-      )}<div class="shelf-keepsake" aria-hidden="true"><div class="vase"></div><span>READ.<br>THEN READ<br>AGAIN.</span></div></div><div class="empty-shelf"><div><p class="eyebrow">BIZZY BUILD LOG</p><h2>A little space for what’s next.</h2><p>Coming soon.</p></div><span class="stacked-books" aria-hidden="true"><i></i><i></i><i></i></span></div></div></section>`;
+      )}<div class="shelf-keepsake" aria-hidden="true"><div class="vase"></div></div></div><div class="empty-shelf"><span class="stacked-books" aria-hidden="true"><i></i><i></i><i></i></span></div></div></section>`;
   }
   function about() {
     const ed = biography.education;
-    return `<section class="about-world"><div class="apartment-details" aria-hidden="true"><div class="wall-poster"><span>AFTER<br>THE<br>SUNSET</span><small>A MIAMI EVENING</small></div><div class="apartment-desk">${art("computer")}</div></div><article class="about-document"><div class="about-hero"><figure class="portrait"><img src="assets/headshot.jpg" width="1280" height="1600" alt="Luke Caprio"><figcaption>MIAMI NOW. NAPLES ROOTS.</figcaption></figure>${title("03 / THE APARTMENT", "A little <em>about me.</em>", "Luke Caprio<br>Software Engineer · Miami")}</div><section class="story-section"><h2>At home in the details.</h2>${biography.bio.map((p) => `<p>${escape(p)}</p>`).join("")}</section><section class="story-section"><p class="eyebrow">EDUCATION</p><h2>${escape(ed.school)}</h2><p>${escape(ed.degree)}<br>${escape(ed.minor)}</p><p class="muted">${escape(ed.graduated)} · ${escape(ed.gpa)} GPA</p><ul>${ed.honors.map((v) => `<li>${escape(v)}</li>`).join("")}</ul></section><section class="story-section"><p class="eyebrow">EXPERIENCE</p>${biography.experience.map((e) => `<section class="experience"><div><h2>${escape(e.company)}</h2><p class="muted">${escape(e.dates)}</p></div><h3>${escape(e.role)}</h3><ul>${e.details.map((d) => `<li>${escape(d)}</li>`).join("")}</ul></section>`).join("")}</section><section class="story-section"><p class="eyebrow">SKILLS</p><div class="skill-groups">${Object.entries(
+    return `<section class="about-world"><div class="apartment-details" aria-hidden="true"><div class="wall-poster"><span>AFTER<br>THE<br>SUNSET</span></div><div class="apartment-desk">${art("computer")}</div></div><article class="about-document"><div class="about-hero"><figure class="portrait"><img src="assets/headshot.jpg" width="1280" height="1600" alt="Luke Caprio"></figure>${title("Luke <em>Caprio.</em>", "Software engineer · Miami")}</div><section class="story-section">${biography.bio.map((p) => `<p>${escape(p)}</p>`).join("")}</section><section class="story-section"><h2>${escape(ed.school)}</h2><p>${escape(ed.degree)}<br>${escape(ed.minor)}</p><p class="muted">${escape(ed.graduated)} · ${escape(ed.gpa)} GPA</p><ul>${ed.honors.map((v) => `<li>${escape(v)}</li>`).join("")}</ul></section><section class="story-section"><h2>Experience</h2>${biography.experience.map((e) => `<section class="experience"><div><h2>${escape(e.company)}</h2><p class="muted">${escape(e.dates)}</p></div><h3>${escape(e.role)}</h3><ul>${e.details.map((d) => `<li>${escape(d)}</li>`).join("")}</ul></section>`).join("")}</section><section class="story-section"><h2>Skills</h2><div class="skill-groups">${Object.entries(
       biography.skills,
     )
       .map(
@@ -289,13 +285,13 @@
       )
       .join(
         "",
-      )}</div></section><footer class="document-end">SEE YOU AROUND THE BAY. ${link("#/contact", "Say hello ↗", "text-link")}</footer></article></section>`;
+      )}</div></section><footer class="document-end">${link("#/contact", "Say hello ↗", "text-link")}</footer></article></section>`;
   }
   function bizzy() {
-    return `<section class="bizzy-world"><div class="bizzy-copy">${title("04 / THE GREEN ROOM", "A good night<br>starts with <em>Bizzy.</em>", "A campus deals and nightlife/events marketplace for students and organizers.")}<p class="body-copy">I lead engineering at Bizzy, building across the backend, web, and mobile.</p><div class="actions">${link("https://bizzyu.com/", "Explore Bizzy ↗", "action primary")}${link("https://bizzyu.com/", "Get the app ↗")}</div><p class="muted app-note">App access and downloads via bizzyu.com.</p></div><div class="venue-interior" aria-hidden="true"><div class="venue-neon">Bizzy<span>Live College For Less.</span></div><div class="venue-arch"><span class="venue-pendant"></span></div><div class="bar-counter"></div><div class="bar-stools"><i></i><i></i><i></i></div></div></section>`;
+    return `<section class="bizzy-world"><div class="bizzy-copy">${title("Bizzy", "A campus deals and nightlife/events marketplace for students and organizers.")}<p class="body-copy">I lead engineering at Bizzy, building across the backend, web, and mobile.</p><div class="actions">${link("https://bizzyu.com/", "Explore Bizzy ↗", "action primary")}${link("https://bizzyu.com/", "Get the app ↗")}</div></div><div class="venue-interior" aria-hidden="true"><div class="venue-neon">Bizzy<span>Live College For Less.</span></div><div class="venue-arch"><span class="venue-pendant"></span></div><div class="bar-counter"></div><div class="bar-stools"><i></i><i></i><i></i></div></div></section>`;
   }
   function contact() {
-    return `<section class="contact-world"><div>${title("05 / THE MAILBOX", "Leave a <em>note.</em>", "Have something in mind? I’d love to hear it.")}<div class="contact-links">${link("mailto:lukecaprio1@gmail.com", '<span>Email</span><strong>lukecaprio1@gmail.com</strong><b aria-hidden="true">↗</b>', "contact-row")}${link(resume, '<span>Résumé</span><strong>Luke Caprio · PDF</strong><b aria-hidden="true">↓</b>', "contact-row", 'download data-object="resume"')}${link(github, '<span>GitHub</span><strong>lukecaprio</strong><b aria-hidden="true">↗</b>', "contact-row")}${link("https://linkedin.com/in/lukecaprio", '<span>LinkedIn</span><strong>Luke Caprio</strong><b aria-hidden="true">↗</b>', "contact-row")}</div></div><div class="contact-art" aria-hidden="true">${art("contact")}<span>LETTERS FROM ANYWHERE.</span></div></section>`;
+    return `<section class="contact-world"><div>${title("Contact")}<div class="contact-links">${link("mailto:lukecaprio1@gmail.com", '<span>Email</span><strong>lukecaprio1@gmail.com</strong><b aria-hidden="true">↗</b>', "contact-row")}${link(resume, '<span>Résumé</span><strong>Luke Caprio · PDF</strong><b aria-hidden="true">↓</b>', "contact-row", 'download data-object="resume"')}${link(github, '<span>GitHub</span><strong>lukecaprio</strong><b aria-hidden="true">↗</b>', "contact-row")}${link("https://linkedin.com/in/lukecaprio", '<span>LinkedIn</span><strong>Luke Caprio</strong><b aria-hidden="true">↗</b>', "contact-row")}</div></div><div class="contact-art" aria-hidden="true">${art("contact")}</div></section>`;
   }
   function itemPage(next, source, error) {
     const { item, path, theme } = next;
@@ -313,9 +309,9 @@
       : "Back to Projects";
     const actions = `<div class="actions">${item.pdf ? link(item.pdf, "Download PDF ↓", "action primary", "download") : ""}${item.github ? link(item.github, "GitHub ↗") : ""}${item.demo ? link(item.demo, "Watch demo ↗") : ""}</div>`;
     const paperBody = paper
-      ? `<section class="native-paper" lang="${item.language === "FR" ? "fr" : "en"}"><div class="paper-toolbar"><span>FULL PAPER</span>${link(item.pdf, "Download PDF ↓", "text-link", "download")}</div>${error ? `<div class="paper-error" role="alert"><h2>The paper couldn’t load.</h2><p>Please retry, or download the original PDF above.</p><button class="action" data-retry>Retry loading</button></div>` : paperText(source, path)}</section>`
+      ? `<section class="native-paper" lang="${item.language === "FR" ? "fr" : "en"}"><div class="paper-toolbar"><span>Paper</span>${link(item.pdf, "Download PDF ↓", "text-link", "download")}</div>${error ? `<div class="paper-error" role="alert"><h2>The paper couldn’t load.</h2><p>Please retry, or download the original PDF above.</p><button class="action" data-retry>Retry loading</button></div>` : paperText(source, path)}</section>`
       : "";
-    return `<article class="item-document theme-${theme}${reader ? " reader-first" : ""}" lang="${item.language === "FR" ? "fr" : "en"}">${link(back, "← " + backLabel, "item-back")}<div class="item-hero"><div>${title(`${{ digits: "PATTERN LAB", ecg: "CARDIAC SIGNAL LAB", metro: "HOSPITAL NIGHT WING", salon: "LE SALON", paris: "PARIS / APRÈS LA NUIT" }[theme]} / ${reader ? "PAPER" : "PROJECT"}`, escape(item.title), escape(item.description))}${tags(item.tags)}${actions}</div>${!reader ? `<div class="item-illustration" aria-hidden="true">${art(theme)}</div>` : ""}</div>${!reader && theme === "digits" ? `<div class="metrics" aria-label="Results reported in the paper"><div><strong>90</strong><span>representative images</span></div><div><strong>0.72s</strong><span>prediction time</span></div><div><strong>92.33%</strong><span>test accuracy</span></div></div><p class="paper-entry">The research, from method to results. ${link("#/writing/digits", "Open dedicated reader ↗", "text-link")}</p>` : ""}${!paper ? `<section class="project-shell-note"><span class="eyebrow">PROJECT OVERVIEW</span><h2>${theme === "ecg" ? "Learning from the heartbeat." : "Software for patient care."}</h2><p>${escape(item.description)}</p><p class="muted">Explore the source${item.demo ? " or watch the demo" : ""} above.</p></section>` : paperBody}<footer class="document-end">LUKE CAPRIO ${link(back, "← " + backLabel, "text-link")}</footer></article>`;
+    return `<article class="item-document theme-${theme}${reader ? " reader-first" : ""}" lang="${item.language === "FR" ? "fr" : "en"}">${link(back, "← " + backLabel, "item-back")}<div class="item-hero"><div>${title(escape(item.title), escape(item.description))}${tags(item.tags)}${actions}</div>${!reader ? `<div class="item-illustration" aria-hidden="true">${art(theme)}</div>` : ""}</div>${!reader && theme === "digits" ? `<div class="metrics" aria-label="Results reported in the paper"><div><strong>90</strong><span>representative images</span></div><div><strong>0.72s</strong><span>prediction time</span></div><div><strong>92.33%</strong><span>test accuracy</span></div></div><p class="paper-entry">${link("#/writing/digits", "Open dedicated reader ↗", "text-link")}</p>` : ""}${paperBody}<footer class="document-end">${link(back, "← " + backLabel, "text-link")}</footer></article>`;
   }
   function originFor(next) {
     if (clickedOrigin) {
@@ -390,7 +386,7 @@
     layer.dataset.world = next.world;
     layer.dataset.route = next.path;
     content.innerHTML = next.missing
-      ? `<section class="missing-world">${title("OFF THE MAP", "A wrong <em>turn.</em>", "This page isn’t here. The bay is just a step away.")}${link("#/bay", "Back to Home ↗")}</section>`
+      ? `<section class="missing-world">${title("A wrong <em>turn.</em>", "This page isn’t here. The bay is just a step away.")}${link("#/bay", "Back to Home ↗")}</section>`
       : next.item
         ? itemPage(next, result.source, result.error)
         : { bay: home, projects, writing, about, bizzy, contact }[next.world]();

@@ -119,13 +119,26 @@ async function scrollInside(page) {
       "Home landmarks use illustrated vignettes",
     );
     check(
-      await page.locator('.hub-projects > small').textContent().then(t => t.includes('THE BOARDWALK')),
-      "Projects Home landmark is the boardwalk workstation",
+      await page.locator('.hub-landmarks small, .hub .eyebrow, .hub-invitation, .hub-coordinate').count() === 0,
+      "Home has no decorative microcopy",
     );
     check(
-      await page.locator('.hub-bizzy image[href*="bizzy-logo-transparent.png"]').count() === 1,
-      "Home Bizzy landmark uses the composited supplied mark",
+      await page.locator('.hub-bizzy image[href="assets/bizzy-logo-source.png"]').count() === 1,
+      "Home Bizzy sign uses the sharp source logo",
     );
+    await page.locator('.hub-projects').focus();
+    await page.waitForFunction(() =>
+      Number(getComputedStyle(document.querySelector('.hub-projects .landmark-label')).opacity) > 0.95,
+    );
+    check(await page.locator('.hub-projects').getAttribute('aria-label') === 'Projects',
+      'Keyboard users get a visible station name and accessible link');
+    check(await page.locator('.bizzy-mark').evaluate(el => {
+      // Nested SVG bounds include the clipped source image, so inspect the viewport.
+      const style = getComputedStyle(el);
+      const ratio = parseFloat(style.width) / parseFloat(style.height);
+      return Math.abs(ratio - el.viewBox.baseVal.width / el.viewBox.baseVal.height) < .01 &&
+        el.getAttribute('preserveAspectRatio') === 'xMidYMid meet' && style.filter === 'none';
+    }), 'Source logo keeps its aspect ratio without a blur filter');
     await page.locator('.island-nav [data-world="projects"]').focus();
     check(
       await page
@@ -305,8 +318,9 @@ async function scrollInside(page) {
       }
       if (["/work/ecg", "/work/metro"].includes(route)) {
         check(
-          (await page.locator(".project-shell-note").count()) === 1,
-          "Overview shell without paper claims",
+          (await page.locator(".item-hero .lead").count()) === 1 &&
+            (await page.locator(".project-shell-note").count()) === 0,
+          "One project overview without duplicated description",
         );
         check(
           (await page.locator(".native-paper, a[download]").count()) === 0,
@@ -436,6 +450,11 @@ async function scrollInside(page) {
       );
       if (paperSources[route] || route === "/about") await scrollInside(page);
       if (route === "/bay") {
+        await page.waitForFunction(() =>
+          Number(getComputedStyle(document.querySelector('.hub-contact .landmark-label')).opacity) > .95,
+        );
+        check(await page.locator('.hub-contact .landmark-label').evaluate(el =>
+          Number(getComputedStyle(el).opacity) > .95), 'Mobile station labels stay visible');
         for (const a of await page.locator("[data-portal]").all()) {
           const r = await a.boundingBox();
           check(r.width >= 44 && r.height >= 44, "390px large portal");

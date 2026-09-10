@@ -66,7 +66,7 @@
       <path d="M221 62V221" stroke="#c1dab0" stroke-width="2"/>
       <rect x="100" y="54" width="113" height="59" rx="4" fill="#10211f" stroke="#8ad784" stroke-width="1.4"/>
       <ellipse class="sign-breathe" cx="156" cy="85" rx="81" ry="49" fill="url(#green)"/>
-      <svg class="bizzy-mark" x="105" y="59" width="103" height="48" viewBox="100 1040 1120 550" preserveAspectRatio="xMidYMid meet"><image href="assets/bizzy-logo-transparent.png" width="1290" height="2796"/></svg>
+      <svg class="bizzy-mark" x="104" y="58" width="105" height="52.5" viewBox="130 1040 1080 540" preserveAspectRatio="xMidYMid meet"><image href="assets/bizzy-logo-source.png" width="1290" height="2796" preserveAspectRatio="xMidYMid meet"/></svg>
       <path class="sign-breathe" d="M103 57H209M101 109H210" stroke="#a2ed93" stroke-width="1.6"/>
       <path d="M59 120L219 110L242 132L63 145Z" fill="#5e8e7c" stroke="#a8bea0" stroke-width="1"/>
       <path d="M65 145L240 132V141L65 154Z" fill="#2b5750"/>
@@ -120,6 +120,14 @@
   };
   window.HubIllustrations = (name) => {
     const id = ++serial;
-    return `<svg class="hub-vignette" viewBox="0 0 320 270" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round">${defs}${art[name]}</svg>`.replace(/(stucco|timber|lit|pc|warm|green)(?=["\)])/g, n=>`hub-${n}-${id}`);
+    const dock = name === "computer" ? "" : `<g class="landing"><path d="M49 231L230 220L279 242L57 261L29 247Z" fill="#a58e80" stroke="#676f79" stroke-width="1.2"/><path d="M29 247L57 261L279 242V248L57 267L29 253Z" fill="#635e68"/><path d="M51 242L255 232M40 248L269 239M75 258L270 243" stroke="#d1ac92" stroke-width="1"/><path d="M56 263V283M251 251V274M89 237V258" stroke="#635c65" stroke-width="6"/><path d="M55 265V279M250 254V270" stroke="#c0a18c" stroke-width="1.4"/></g>`;
+    const water = `<g class="landing-reflection" stroke-width="1.5"><path d="M47 283H72M240 275H268M88 289H157M178 281H212" stroke="#b5d8ce" opacity=".45"/><path d="M95 269L199 263M112 276L174 271M130 284L187 280" stroke="${name === "bizzy" ? "#87d69f" : "#edc197"}" opacity=".25"/><path d="M30 298Q81 292 109 298M194 294Q242 288 288 293" stroke="#97c1c1" opacity=".25"/></g>`;
+    const legs = name === "computer" ? `<path d="M42 240V281M276 246V278" stroke="#615e69" stroke-width="7"/><path d="M40 242V271M274 249V269" stroke="#d0a992" stroke-width="1.3"/>` : "";
+    const keepsakes = name === "computer"
+      ? `<g class="window-light"><circle cx="66" cy="143" r="2" fill="#ffe1a9"/><circle cx="103" cy="147" r="2" fill="#ffe1a9"/><circle cx="221" cy="151" r="2" fill="#ffe1a9"/><circle cx="253" cy="148" r="2" fill="#ffe1a9"/></g><path d="M251 218Q262 214 269 219L265 224L252 225Z" fill="#ddae96"/><path d="M251 220L264 220" stroke="#fae0b8" stroke-width=".7"/>`
+      : name === "about"
+        ? `<path d="M111 116L126 116L128 135L113 136Z" fill="#b891a0"/><path d="M114 120L124 120M114 126L125 126M116 133H125" stroke="#eac9b3" stroke-width="1.2"/><path d="M108 115H130" stroke="#675d6b" stroke-width="1"/>`
+        : "";
+    return `<svg class="hub-vignette" viewBox="0 0 320 310" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round">${defs}${dock}${art[name]}${keepsakes}${legs}${water}</svg>`.replace(/(stucco|timber|lit|pc|warm|green)(?=["\)])/g, n=>`hub-${n}-${id}`);
   };
 })();

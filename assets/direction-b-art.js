@@ -62,8 +62,8 @@
   function sky() {
     const g = ctx.createLinearGradient(0, 0, 0, h * 0.73);
     g.addColorStop(0, "#1a314f");
-    g.addColorStop(0.34, "#6c6180");
-    g.addColorStop(0.64, "#dc99a8");
+    g.addColorStop(0.34, "#826780");
+    g.addColorStop(0.64, "#eea4b0");
     g.addColorStop(1, "#f7c6af");
     rect(0, 0, w, h, g);
     glow(w * 0.71, h * 0.42, w * 0.3, "#efbcaa55");
@@ -77,7 +77,14 @@
     for (let i = 0; i < 6; i++) {
       const x = ((i * 0.22 * w + clock * 2) % (w * 1.3)) - 0.15 * w;
       const y = h * (0.16 + (i % 3) * 0.1);
-      ellipse(x, y, w * (0.1 + (i % 2) * 0.035), h * 0.004, "#edc2c821");
+      ctx.beginPath();
+      ctx.moveTo(x - w * 0.10, y);
+      ctx.bezierCurveTo(x - w * 0.065, y - 4, x - w * 0.055, y - 15, x, y - 10);
+      ctx.bezierCurveTo(x + w * 0.025, y - 23, x + w * 0.07, y - 9, x + w * 0.105, y);
+      ctx.quadraticCurveTo(x, y + 7, x - w * 0.10, y);
+      ctx.fillStyle = i % 2 ? "#f6c4bd25" : "#c598b130";
+      ctx.fill();
+      line([[x - w * 0.075, y + 1], [x + w * 0.075, y + 1]], "#ffd9c524", 1);
     }
   }
   function skyline(base, scale = 1) {
@@ -147,49 +154,27 @@
         1.3,
       );
     }
-    const shore = h * (w < 600 ? 0.635 : 0.73);
-    const sg = ctx.createLinearGradient(0, shore, 0, h);
-    sg.addColorStop(0, "#98858a");
-    sg.addColorStop(0.09, "#9f8d90");
-    sg.addColorStop(0.1, "#756d80");
-    sg.addColorStop(1, "#242b43");
-    rect(0, shore, w, h - shore, sg);
-    for (let i = 0; i < 9; i++)
-      line(
-        [
-          [w / 2, shore],
-          [(w * (i - 1)) / 6, h],
-        ],
-        "#d6bbc014",
-        1,
-      );
-    line(
-      [
-        [0, shore],
-        [w, shore],
-      ],
-      "#e3c0b77a",
-      2,
-    );
-    for (let i = 0; i < 13; i++) {
-      const x = (i * w) / 12;
-      line(
-        [
-          [x, shore - 16],
-          [x, shore - 49],
-        ],
-        "#66707d",
-        3,
-      );
+    // Water continues beneath every landing; only the very near bank breaks the bay.
+    for (let i = 0; i < 32; i++) {
+      const y = h * (0.73 + i / 32 * 0.27);
+      const x = (Math.sin(i * 23.4) * 0.5 + 0.5) * w;
+      line([[x, y], [x + 22 + i * 1.8, y + Math.sin(clock + i) * 1.1]],
+        i % 3 ? "#8ccecb25" : "#efbdb540", 1.3);
     }
-    line(
-      [
-        [0, shore - 49],
-        [w, shore - 49],
-      ],
-      "#b5a6aa",
-      2,
-    );
+    // Small irregular shoreline corners anchor the palms without a shelf across the scene.
+    for (const side of [0, 1]) {
+      ctx.save();
+      ctx.translate(side ? w : 0, h);
+      ctx.scale(side ? -1 : 1, 1);
+      ctx.beginPath();
+      ctx.moveTo(0, -h * 0.095);
+      ctx.bezierCurveTo(w * 0.035, -h * 0.065, w * 0.08, -h * 0.03, w * 0.16, 0);
+      ctx.lineTo(0, 0);
+      ctx.fillStyle = "#34484f";
+      ctx.fill();
+      ellipse(w * 0.028, -h * 0.025, w * 0.025, h * 0.012, "#738786");
+      ctx.restore();
+    }
     palm(w * 0.02, h * 0.7, w < 600 ? 0.6 : 1, -0.45);
     palm(w * 0.985, h * 0.69, w < 600 ? 0.55 : 0.95, 0.4);
   }

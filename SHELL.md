@@ -7,11 +7,11 @@ Branch: `prototype/direction-b-shell` (from `prototype/miami-pixel-hero`). This 
 - `index.html`: persistent Home / About / Projects / Writing / Bizzy / Contact nav, Back to bay, motion pause, canvas, one scroll container, and no-JavaScript source links. No Scene/List UI or top-nav résumé.
 - `assets/direction-b-shell.js`: hash parsing, native semantic page templates, paper fetching and rendering, cancellable camera transitions, focus management, and failure recovery.
 - `assets/direction-b-art.js`: high-DPI canvas ambience for water shimmer, skyline, rooms, and soft world motion. `assets/hub-illustrations.js` supplies the hand-drawn Home vignettes: boardwalk computer, lived-in apartment, bookshelf, mailbox, and Bizzy storefront. No external illustration dependency. Canvas DPR is capped at 1.5; hidden tabs, reduced motion, and user pause stop the loop.
-- `assets/direction-b.css`: glass navigation, editorial typography, responsive rooms/readers, visible landmark labels, keyboard affordances, and reduced-motion states.
+- `assets/direction-b.css`: glass navigation, editorial typography, responsive rooms/readers, hover/focus landmark labels (always visible on mobile), keyboard affordances, and reduced-motion states.
 - `assets/miami-content.js`: existing factual biography, education, experience, skills, and project/PDF/source links. Legacy world coordinates remain for the prior renderer.
 - `docs/*-paper.txt`: original extraction text, retained unchanged. Paragraph rendering removes repeated page headers and repairs line wrapping. No summary substitute.
 - `assets/paper-figures/`: three PNGs extracted unchanged from the Digits PDF. See the figure README for provenance.
-- `assets/bizzy-logo-transparent.png`: supplied Bizzy mark with only its black source backing removed for storefront compositing; brand artwork is otherwise unchanged.
+- `assets/bizzy-logo-source.png`: original supplied logo, cropped by an SVG viewport at its native aspect ratio; no raster regeneration or blur. Outer landmark effects never resize the nested sign.
 - `assets/miami-shell.js`, `assets/miami-scene.js`, `assets/miami-hero.css`: retained original prototype implementation; not loaded by Direction B.
 - `tests/shell.smoke.cjs`: current Direction B browser checks. Playwright is a development tool, not a shipped dependency.
 
@@ -19,7 +19,7 @@ Branch: `prototype/direction-b-shell` (from `prototype/miami-pixel-hero`). This 
 
 | Route | Screen / actions |
 | --- | --- |
-| `#/bay` | Full-screen illustrated Miami bay; five labeled landmark portals |
+| `#/bay` | Full-screen illustrated Miami bay; five landmark portals with accessible names |
 | `#/home`, `#/`, `#bay`, `#top` | Home aliases |
 | `#/projects` | Computer desktop with Digits, ECG, Metro icons |
 | `#/work` | Alias of `#/projects`; project item URLs retain `/work/` |
@@ -27,7 +27,7 @@ Branch: `prototype/direction-b-shell` (from `prototype/miami-pixel-hero`). This 
 | `#/writing/digits` | Same full paper and figures, reader-first; Download PDF, GitHub, Back to project |
 | `#/work/ecg` | Cardiac signal lab overview + existing GitHub |
 | `#/work/metro` | Hospital night wing overview + existing GitHub + demo |
-| `#/writing` | Wood-and-neon bookshelf: three research books; empty Bizzy build-log shelf |
+| `#/writing` | Wood-and-neon bookshelf: three research books |
 | `#/writing/faux-noble` | Full French HTML essay and references; salon accent; PDF download |
 | `#/writing/ville-intelligente` | Full French HTML paper and references; Paris/circuit accent; PDF download |
 | `#/about` | Apartment with headshot, desk, bay window, decorative poster, complete existing About content |
@@ -65,4 +65,8 @@ Use `SHELL_BASE_URL` for another preview URL and `SHELL_QA_DIR` to capture deskt
 
 The suite checks the exact nav, five visible Home portals, landmark camera origins, browser history, Escape, aliases, direct loads, all project/book routes, full source-line fidelity for every paper, real figures, PDF responses, Bizzy actions, résumé, source failure/retry, navigation races, natural scrolling, 390px layouts, 320px Home, reduced motion, pause/resume, no-JS links, and browser runtime errors. CNAME and JavaScript syntax are also checked. Visual review covers desktop/mobile Home, Projects, Writing, About, Bizzy, and representative paper/figure layouts. These are browser viewport checks, not physical-device profiling.
 
-Latest local Chrome run: **183 checks passed**, including fresh reloads of every route and keyboard Enter/Escape navigation. The Home art pass was reviewed at desktop and 390px mobile sizes. All 21 French PDF pages were visually reviewed and contain text only. The three extracted Digits figures were reviewed at their native resolutions and in the mobile reader.
+Latest local Chrome run: **186 checks passed**, including fresh reloads of every route and keyboard Enter/Escape navigation. The Home art pass was reviewed at desktop and 390px mobile sizes. All 21 French PDF pages were visually reviewed and contain text only. The three extracted Digits figures were reviewed at their native resolutions and in the mobile reader.
+
+## Quiet waterfront pass
+
+Home keeps the name and one role line. Station subtitles, introductory kickers, helper slogans, and duplicate project descriptions are removed throughout the shell; factual About content, paper prose, source metadata, and actions remain. Water now continues beneath the five small timber landings, with pilings, wet reflections, and gentle ripples instead of a full-width promenade. The apartment keeps its bicycle, plants, warm windows, and a balcony towel; the workstation adds warm string lights. Existing pause and reduced-motion controls cover the new water animation.

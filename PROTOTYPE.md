@@ -16,14 +16,14 @@ Open `http://127.0.0.1:3000/#/bay`. There is no build step, server-side router, 
 
 ## Explore
 
-The persistent nav is **Home · About · Projects · Writing · Bizzy · Contact**. There is no Scene/List switch; each page directly presents its destinations or complete content. Résumé is in Contact. All Home landmarks have visible names, keyboard focus states, and large targets.
+The persistent nav is **Home · About · Projects · Writing · Bizzy · Contact**. There is no Scene/List switch; each page directly presents its destinations or complete content. Résumé is in Contact. Home landmarks retain large targets and accessible names. Names appear on hover/focus on desktop and stay visible on small/touch screens.
 
 | Home landmark | Destination |
 | --- | --- |
 | Green Bizzy venue | `#/bizzy` — short explainer, website and app-access CTAs |
 | About apartment | `#/about` — headshot, full biography, education, experience, skills |
 | Computer | `#/projects` — Digits, ECG, Metro desktop icons |
-| Bookshelf | `#/writing` — three research books and empty Bizzy build-log shelf |
+| Bookshelf | `#/writing` — three research books |
 | Mailbox | `#/contact` — email, résumé, GitHub, LinkedIn |
 
 Entering from a landmark or nav uses that object's position for a 560ms camera push and arrival. Back to bay and parent links pull back; cold hash loads land directly. Reduced motion uses a 180ms fade with no camera transform or ambient motion. A Pause motion button also stops canvas and CSS ambience. Tab, Enter, browser Back/Forward, and Escape work across routes.
@@ -37,3 +37,5 @@ Digits' three actual embedded PDF images are included inline: MNIST examples, ze
 ECG and Metro are themed overview shells with their existing descriptions and GitHub links; Metro also retains the demo. They do not claim to have full papers. Bizzy contains approved marketplace/role copy only. Both Bizzy CTAs use `https://bizzyu.com/`; no store URL was found in the repository. No Bizzy 5.0 article is built.
 
 See `SHELL.md` for implementation and verification, `WORLD-MAP-SPEC.md` for the current IA, and `ITEM-THEMES.md` for item themes.
+
+The latest pass trims decorative microcopy across Home and all worlds. Home has one short role line; project descriptions appear once. Small timber landings now sit in continuous bay water with visible pilings and moving reflections. The storefront uses the sharp original Bizzy source logo at its correct aspect ratio.

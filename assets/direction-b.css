@@ -377,36 +377,14 @@ h1:focus,
   font-size: 17px;
   color: #f2e1e2;
 }
-.hub .eyebrow {
-  font-size: 9px;
-  letter-spacing: 0.19em;
-  color: #ecdcdf;
-}
-.hub em {
-  color: #f9d6c8;
-}
-.hub-invitation {
-  font-size: 12px;
-  color: #f4e1db;
-  margin: 22px 0 0;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-.hub-invitation > span {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #c0e4d7;
-  box-shadow: 0 0 12px #d7fff2;
-}
+.hub em { color: #f9d6c8; }
 .hub-landmarks {
   display: grid;
   grid-template-columns: 1.05fr 1.05fr 1.15fr 0.95fr 0.85fr;
   align-items: end;
   gap: 18px;
   margin-top: auto;
-  padding: 45px 0 14px;
+  padding: 45px 0 32px;
   isolation: isolate;
 }
 .landmark {
@@ -417,66 +395,43 @@ h1:focus,
   min-width: 0;
   transition: transform 0.3s;
 }
-.landmark svg {
+.landmark > .hub-vignette {
   width: 100%;
   filter: drop-shadow(0 15px 14px #17233830);
   transition:
     filter 0.3s,
     transform 0.3s;
 }
-.landmark:hover svg,
-.landmark:focus-visible svg {
+.landmark:hover > .hub-vignette,
+.landmark:focus-visible > .hub-vignette {
   transform: translateY(-5px);
   filter: drop-shadow(0 0 17px #a7dac658);
 }
 .landmark-label {
-  display: flex;
-  gap: 28px;
-  align-items: center;
-  border-bottom: 1px solid #eedcd44d;
-  min-width: 110px;
-  padding: 3px 4px 6px;
-  font-size: 15px;
+  font-size: 14px;
+  text-align: center;
   font-weight: 500;
-  text-shadow: 0 1px 5px #162334;
+  color: #f6e6d5;
+  text-shadow: 0 2px 8px #132f40;
+  opacity: 0;
+  transition: opacity 180ms ease;
 }
-.landmark-label > span {
-  color: #c2c6c4;
-  font-size: 13px;
-  transition: transform 0.2s;
-}
-.landmark:hover .landmark-label > span {
-  transform: translate(2px, -2px);
-}
-.landmark > small {
-  font-size: 8px;
-  font-family: var(--mono);
-  letter-spacing: 0.12em;
-  color: #d5c8c9;
-  margin: 8px 0;
-}
-.hub-coordinate {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 28px;
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.13em;
-  color: #c3bcc9;
-}
-.hub-about {
-  transform: translateY(10px);
-}
-.hub-contact {
-  transform: translateY(12px);
-}
-.hub-bizzy svg {
-  filter: drop-shadow(0 0 22px #80dab225);
-}
+.landmark:hover .landmark-label,
+.landmark:focus-visible .landmark-label { opacity: 1; }
+.hub-bizzy { transform: translateY(-12px); }
+.hub-about { transform: translateY(8px); }
+.hub-writing { transform: translateY(-5px); }
+.hub-contact { transform: translateY(15px); }
 .hub-bizzy .bizzy-mark {
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 0 6px #70ff8b88);
+  width: 105px;
+  height: 52.5px;
+  max-width: none;
+  filter: none;
+  transform: none;
+  image-rendering: auto;
+}
+@media (hover: none) {
+  .landmark-label { opacity: 1; }
 }
 /* Computer: real folder links on a glass desktop, with no hidden alternate view. */
 .projects-world {
@@ -536,19 +491,6 @@ h1:focus,
   transform: rotate(-20deg);
   pointer-events: none;
 }
-.desktop-greeting {
-  padding: 28px 30px 0;
-  position: relative;
-}
-.desktop-greeting .eyebrow {
-  font-size: 8px;
-}
-.desktop-greeting p {
-  font-family: var(--serif);
-  font-size: 28px;
-  color: #ebdce1;
-  margin-top: 10px;
-}
 .project-folders {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -592,16 +534,6 @@ h1:focus,
   color: #d1d3dd;
   font-family: var(--mono);
 }
-.desktop-taskbar {
-  border-top: 1px solid #e0e9e42a;
-  background: #1a2c406e;
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 20px;
-  font-family: var(--mono);
-  font-size: 8px;
-  color: #c2c7d3;
-}
 .computer-chin {
   text-align: center;
   height: 34px;
@@ -633,15 +565,6 @@ h1:focus,
   height: 1px;
   background: #e8bcc4;
   box-shadow: 0 0 14px #ecacca;
-}
-.shelf-topline {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.13em;
-  color: #bbaea9;
-  margin-bottom: 28px;
 }
 .books {
   display: flex;
@@ -715,14 +638,6 @@ h1:focus,
   font-size: 7px;
   letter-spacing: 0.12em;
   margin-top: auto;
-}
-.book-caption {
-  font-size: 10px;
-  line-height: 1.6;
-  display: block;
-  margin-top: 20px;
-  min-height: 32px;
-  color: #ddc8bd;
 }
 .shelf-keepsake {
   margin-left: auto;
@@ -1133,15 +1048,6 @@ h1:focus,
 .theme-paris .native-paper {
   background: #e7eae7;
 }
-.project-shell-note {
-  margin-top: 45px;
-  max-width: 680px;
-  border-top: 1px solid var(--line);
-  padding-top: 35px;
-}
-.project-shell-note h2 {
-  font-size: 35px;
-}
 .project-shell-note p {
   font-size: 16px;
   color: #cad7df;
@@ -1353,6 +1259,14 @@ h1:focus,
 .hub-vignette .sign-breathe {
   animation: hubSignBreathe 4.5s ease-in-out infinite;
 }
+.hub-vignette .landing-reflection {
+  animation: hubWaterGlint 5s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes hubWaterGlint {
+  50% { opacity: .55; transform: translateX(2px) scaleX(1.05); }
+}
 .hub-vignette .tea-steam {
   animation: hubSteamRise 4s ease-in-out infinite;
   transform-box: fill-box;
@@ -1401,7 +1315,7 @@ h1:focus,
     gap: 35px;
     padding-top: 60px;
   }
-  .landmark svg {
+  .landmark > .hub-vignette {
     max-height: 240px;
   }
   .hub {
@@ -1458,9 +1372,6 @@ h1:focus,
   }
   .book-binding {
     padding: 20px 15px;
-  }
-  .hub-coordinate {
-    margin-top: 20px;
   }
 }
 @media (max-width: 700px) {
@@ -1536,17 +1447,6 @@ h1:focus,
     line-height: 1.6;
     max-width: 320px;
   }
-  .hub .eyebrow {
-    font-size: 7px;
-    letter-spacing: 0.11em;
-    max-width: 265px;
-  }
-  .hub-invitation {
-    font-size: 10px;
-    line-height: 1.5;
-    margin-top: 18px;
-    max-width: 280px;
-  }
   .hub-landmarks {
     grid-template-columns: repeat(6, 1fr);
     gap: 16px 14px;
@@ -1566,34 +1466,18 @@ h1:focus,
   .hub-landmarks .hub-projects {
     grid-column: 1/3;
   }
-  .hub-landmarks svg {
+  .hub-landmarks .hub-vignette {
     width: 100%;
     min-height: 100px;
   }
   .landmark-label {
+    opacity: 1;
     font-size: 12px;
     min-width: 0;
     width: 100%;
     justify-content: center;
     gap: 10px;
     padding: 2px 0 5px;
-  }
-  .landmark-label > span {
-    font-size: 11px;
-  }
-  .landmark > small {
-    font-size: 6px;
-    margin: 6px 0;
-  }
-  .hub-coordinate {
-    font-size: 6px;
-    letter-spacing: 0.06em;
-    gap: 20px;
-    margin-top: 26px;
-  }
-  .hub-coordinate span:last-child {
-    text-align: right;
-    max-width: 160px;
   }
   .projects-world .page-heading {
     margin-bottom: 25px;
@@ -1608,12 +1492,6 @@ h1:focus,
   }
   .computer-desktop {
     min-height: 420px;
-  }
-  .desktop-greeting {
-    padding: 25px 18px 0;
-  }
-  .desktop-greeting p {
-    font-size: 27px;
   }
   .project-folders {
     grid-template-columns: 1fr 1fr;
@@ -1638,17 +1516,8 @@ h1:focus,
     width: 50%;
     justify-self: center;
   }
-  .desktop-taskbar {
-    font-size: 6px;
-    padding: 11px 9px;
-    gap: 20px;
-  }
   .bookcase {
     padding: 22px 14px 0;
-  }
-  .shelf-topline {
-    font-size: 7px;
-    gap: 10px;
   }
   .books {
     display: grid;
@@ -1669,11 +1538,6 @@ h1:focus,
   }
   .book-motif {
     font-size: 28px;
-  }
-  .book-caption {
-    font-size: 9px;
-    min-height: 40px;
-    margin-top: 14px;
   }
   .shelf-keepsake {
     margin: 40px auto;
