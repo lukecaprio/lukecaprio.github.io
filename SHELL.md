@@ -1,99 +1,78 @@
-# World-map shell
+# Direction B shell
 
-This implements the navigation phase of `WORLD-MAP-SPEC.md`, with the Projects desktop and Digits reader now shipped as the first finished item surface.
+Branch: `prototype/direction-b-shell` (from `prototype/miami-pixel-hero`). This is a sample shell pass; per-world interiors may be refined after Luke's world briefs.
 
-## Shared shell
+## Active source map
 
-`index.html` mounts the island nav, Back to bay, Scene | List, one canvas stage, the current route content, and motion control. Only the route content and renderer’s world inventory change on navigation. Chrome and canvas remain mounted.
+- `index.html`: persistent Home / About / Projects / Writing / Bizzy / Contact nav, Back to bay, motion pause, canvas, one scroll container, and no-JavaScript source links. No Scene/List UI or top-nav résumé.
+- `assets/direction-b-shell.js`: hash parsing, native semantic page templates, paper fetching and rendering, cancellable camera transitions, focus management, and failure recovery.
+- `assets/direction-b-art.js`: high-DPI canvas ambience for water shimmer, skyline, rooms, and soft world motion. `assets/hub-illustrations.js` composes five new painted Home assets from `assets/home-art/`, with separate logo, lamp, wet-edge, and reflection layers. Home uses the matching bay painting with animated water-strip refraction; the code backdrop remains a loading fallback and supplies interior ambience. No external illustration dependency. Canvas DPR is capped at 1.5; hidden tabs, reduced motion, and user pause stop the loop.
+- `assets/direction-b.css`: glass navigation, editorial typography, responsive rooms/readers, hover/focus landmark labels (always visible on mobile), keyboard affordances, and reduced-motion states.
+- `assets/miami-content.js`: existing factual biography, education, experience, skills, and project/PDF/source links. Legacy world coordinates remain for the prior renderer.
+- `docs/*-paper.txt`: original extraction text, retained unchanged. Paragraph rendering removes repeated page headers and repairs line wrapping. No summary substitute.
+- `assets/paper-figures/`: three PNGs extracted unchanged from the Digits PDF. See the figure README for provenance.
+- `assets/bizzy-logo-source.png`: original supplied logo, cropped by an SVG viewport at its native aspect ratio; no raster regeneration or blur. Outer landmark effects never resize the nested sign.
+- `assets/miami-shell.js`, `assets/miami-scene.js`, `assets/miami-hero.css`: retained original prototype implementation; not loaded by Direction B.
+- `tests/shell.smoke.cjs`: current Direction B browser checks. Playwright is a development tool, not a shipped dependency.
 
-The hub has **five doors**, one each for About, Projects, Writing, Bizzy, and Contact. Résumé is folded into Contact. There are no featured items. No ticket-booth duplicate, project boat, arcade, or paper spark remains on the hub.
+## Route and action map
 
-| World | Primary objects | List content |
-| --- | --- | --- |
-| Bay | Projects desktop door, bookshop, neon-green Bizzy venue, porch, mailbox | Bizzy opens externally; the other four enter worlds |
-| About | Dedicated animated blue-hour porch world with integrated headshot/profile | Clean stacked biography, education, experience, and skills; quiet contact footer |
-| Projects | Pixel computer desktop with ECG, Metro, and Digits icons | The same three projects, with source actions as available |
-| Writing | Pixel bookcase with research shelf and empty Bizzy build-log shelf | Digits, Le faux noble, and La ville intelligente books; Bizzy shelf is intentionally empty |
-| Bizzy | Direct external `bizzyu.com` destination; green club art remains on the hub | External site only; `#/bizzy` is retained as an unused legacy stub |
-| Contact | Email mailbox, résumé board, GitHub sign | Email, résumé, GitHub, plus the existing LinkedIn link |
-
-Bizzy art is an imaginative green room/nightclub place on the Bay hub, not a claim that Bizzy owns a physical Miami venue. The hub object and island-nav item open `https://bizzyu.com/` directly in a new tab; the legacy `#/bizzy` stub remains available only for old links.
-
-The Bay hub’s green Bizzy bar carries a processed nearest-neighbor pixel mark at hub scale. The About house is enlarged and labeled `ABOUT`, with a small idle Luke sprite beside the porch; the house remains the sole About hit target.
-
-## Routes
-
-| Route | Result / home |
+| Route | Screen / actions |
 | --- | --- |
-| `#/bay` | Bay hub |
-| `#/about` | About porch |
-| `#/work` | Projects / digital computer desktop |
-| `#/writing` | Bayside bookshop |
-| `#/bizzy` | Legacy Bizzy stub (the hub and island nav open `https://bizzyu.com/` directly) |
-| `#/contact` | Contact / shore desk |
-| `#/contact?focus=resume` | Contact with résumé highlighted and keyboard-focused |
-| `#/work/ecg` | ECG project overview; back to Projects |
-| `#/work/metro` | Metro Health project overview; back to Projects |
-| `#/work/digits` | Standalone Digits arcade project world with the complete native HTML paper below its overview; back to Projects |
-| `#/writing/digits` | Standalone Digits paper reader sourced from `docs/digits-paper.txt`; home/back link is Projects |
-| `#/writing/faux-noble` | Full French HTML paper in baroque salon world; back to Writing |
-| `#/writing/ville-intelligente` | Full French HTML paper in Paris night world; back to Writing |
+| `#/bay` | Full-screen illustrated Miami bay; five landmark portals with accessible names |
+| `#/home`, `#/`, `#bay`, `#top` | Home aliases |
+| `#/projects` | Computer desktop with Digits, ECG, Metro icons |
+| `#/work` | Alias of `#/projects`; project item URLs retain `/work/` |
+| `#/work/digits` | Pattern lab overview, reported metrics, full HTML paper, three actual PDF figures, GitHub, Download PDF |
+| `#/writing/digits` | Same full paper and figures, reader-first; Download PDF, GitHub, Back to project |
+| `#/work/ecg` | Cardiac signal lab overview + existing GitHub |
+| `#/work/metro` | Hospital night wing overview + existing GitHub + demo |
+| `#/writing` | Wood-and-neon bookshelf: three research books |
+| `#/writing/faux-noble` | Full French HTML essay and references; salon accent; PDF download |
+| `#/writing/ville-intelligente` | Full French HTML paper and references; Paris/circuit accent; PDF download |
+| `#/about` | Apartment with headshot, desk, bay window, decorative poster, complete existing About content |
+| `#/bizzy` | Green venue explainer; website and Get the app both open `https://bizzyu.com/` in safe new tabs |
+| `#/contact` | `mailto:lukecaprio1@gmail.com`, `assets/LukeCaprioResume2026.pdf`, GitHub, LinkedIn |
+| `#/contact?focus=resume` | Contact with résumé keyboard-focused |
 
-Empty hash, `#/`, `#bay`, and old bare world hashes normalize without adding history entries. `#/projects` aliases `#/work` while Projects is the canonical display name. `#top` aliases Bay; old `#experience`, `#education`, and `#skills` alias About. `#/work/digits/paper` aliases the Digits paper route; ECG/Metro `/paper` aliases open their existing project overviews without inventing PDFs. Unknown or malformed routes display an “off the map” page with a working return link.
+Old `/work/digits/paper` redirects to `/writing/digits`; ECG/Metro `/paper` aliases return their overview. Old About section hashes enter About. Unknown/malformed routes show a return-home link. There is no Bizzy 5.0 article route.
 
-Normal internal anchor navigation uses browser hash history. Browser Back/Forward traverses world/item routes; item back links always return to the correct home, even on a direct deep link. Escape pushes a return to Bay. A navigation generation counter cancels superseded transitions, so rapid navigation cannot mount a stale destination.
+PDF/source URLs:
+- Digits: `docs/KNNKMEANSFINALPAPER.pdf?v=20250126`, native source `docs/digits-paper.txt`.
+- Faux noble: `papers/Le%20Bourgeois%20gentilhomme.pdf`, native source `docs/faux-noble-paper.txt`.
+- Ville intelligente: `papers/La%20ville%20intelligent.pdf`, native source `docs/ville-intelligente-paper.txt`.
+- ECG: `https://github.com/lukecaprio/Deep-Learning-Based-ECG-Signal-Classification`.
+- Metro: `https://github.com/lukecaprio/metrohealth`; demo `https://youtu.be/a2-lpVSoVdc`.
+- Digits: `https://github.com/lukecaprio/Efficient-Digit-Recognition-Using-K-Means-Clustering-and-KNN`.
 
-Scene | List selection lasts while this page remains open and carries between worlds. Projects uses a full-screen computer desktop in Scene and clean cards in List. Digits and the French paper routes keep Scene and List on their standalone themed worlds; ECG and Metro remain focused overview worlds. There is no storage or backend. Initial reduced-motion and compact-screen visits default to List; the visitor can still choose Scene.
+## Navigation, motion, and reading
 
-Hotspots use large transparent anchors with `aria-label` text and a subtle canvas-object glow. The shell does not render floating hover/focus pills or tooltip cards over the pixel artwork. About is a complete route on arrival: Scene enters a separate animated blue-hour porch world with the full profile integrated into the architecture, while List presents the same information as clean stacked sections. Both views use one scroll container so wheel, trackpad, and touch scrolling continue through the full story. Its lead copy states the May 2026 graduation and current end-to-end Bizzy role in a concise professional voice.
+The nav stays mounted outside the animated stage. A Home portal or corresponding nav link provides the destination object's center to the camera. Outgoing push plus arrival lasts 560ms total. Back to Home / parent uses a pullback. Reduced motion replaces transforms with a 180ms fade. Cold loads do not animate through Home.
 
-Island nav links carry explicit accessible names plus a small Miami-pixel destination subtitle on hover and keyboard focus: Bay / Home, About, Projects, Writing, Bizzy, and Contact. Résumé remains a clearly labeled Contact-world action.
+Navigation generations cancel superseded animations and prevent slow paper requests from mounting stale content. Paper requests are cached by source file. A failure displays a retry action and keeps the PDF download; it never labels an empty body as a loaded paper.
 
-## Known item actions
-
-Every item has its own title, source actions, and home-world back link. Digits and both French papers render complete on-site HTML sourced from checked-in extraction text; ECG and Metro remain focused overview worlds without invented papers. Available sources:
-
-| Item | PDF | Other links |
-| --- | --- | --- |
-| ECG | Not published on the prior site; unavailable state, not a fake link | `https://github.com/lukecaprio/Deep-Learning-Based-ECG-Signal-Classification` |
-| Metro Health | Not published on the prior site; unavailable state, not a fake link | `https://github.com/lukecaprio/metrohealth`; demo `https://youtu.be/a2-lpVSoVdc` |
-| Digits project + paper | Full HTML from `docs/digits-paper.txt`; PDF download `docs/KNNKMEANSFINALPAPER.pdf?v=20250126` | `https://github.com/lukecaprio/Efficient-Digit-Recognition-Using-K-Means-Clustering-and-KNN` |
-| Le faux noble | Full HTML from `docs/faux-noble-paper.txt`; PDF `papers/Le%20Bourgeois%20gentilhomme.pdf` | No existing repository |
-| La ville intelligente | Full HTML from `docs/ville-intelligente-paper.txt`; PDF `papers/La%20ville%20intelligent.pdf` | No existing repository |
-
-Résumé: `assets/LukeCaprioResume2026.pdf`. Email: `mailto:lukecaprio1@gmail.com`. GitHub profile: `https://github.com/lukecaprio`. LinkedIn: `https://linkedin.com/in/lukecaprio`.
-
-Local PDF actions use the HTML `download` attribute. External sites open a new tab with `rel="noopener"`. Paper routes read the checked-in text sources directly; PDFs remain one-click downloads. Without JavaScript, a direct-link inventory exposes the existing repositories, three PDFs, Bizzy, résumé, and email.
-
-## Source map / next phases
-
-- `assets/miami-content.js`: verified biography migrated from the previous page, world inventory, object positions, titles, summaries, item routes, source URLs. **Single source** for scene doors and fallback list cards.
-- `assets/miami-shell.js`: route parsing, aliases, cancellable transitions, paper-source loading/cleanup, semantic HTML readers, list rendering, and project overviews.
-- `assets/miami-scene.js`: original cached canvas renderer plus Projects desktop, Writing bookcase, Digits arcade, ECG/Metro project motion, and French paper backdrops. `MiamiScene.setWorld()` accepts an optional item path.
-- `assets/miami-hero.css`: persistent chrome, full-screen world layouts, readable native paper typography, large target boxes, responsive/reduced-motion states. No old `.m-*` layout remains.
-- `tests/shell.smoke.cjs`: browser regression checks using Playwright; no application dependency added.
-
-To add a later item: register its metadata and route in `MiamiMap.items`, add exactly one object to its home world, and give it a prop plus desktop/mobile coordinates. Both Scene and List inherit the same destination. Digits is intentionally one Projects desktop icon for the project/paper pair; its separate paper route does not add another scene object.
-
-The renderer keeps the sky/skyline/shore palette and original motion, caches static layers, and caps frames at 30 fps. It suspends on hidden tabs, offscreen stages, List views, and readers. A short 150 ms focus zoom out plus 230 ms crossfade in connects routes. Reduced motion or the pause button makes routing instant.
+`#world-content` is the sole page scroll container, including when the pointer or touch starts over a document. There are no hidden duplicate Scene/List copies. The nav remains fixed while the full About story or a long paper scrolls. Source figures scale to the reading width and link to the original extracted image. French articles use `lang="fr"`.
 
 ## Verification
 
-Start the same static server as in `PROTOTYPE.md`. With Playwright available to Node:
-
 ```sh
+PLAYWRIGHT_MODULE=/tmp/luke-miami-qa/node_modules/playwright \
+SHELL_BROWSER_CHANNEL=chrome \
 node tests/shell.smoke.cjs
 ```
 
-The test runner accepts:
+Use `SHELL_BASE_URL` for another preview URL and `SHELL_QA_DIR` to capture desktop/mobile screenshots. `PLAYWRIGHT_MODULE` and the Chrome channel are local conveniences, not application requirements.
 
-- `SHELL_BASE_URL` (default `http://127.0.0.1:3000/`)
-- `PLAYWRIGHT_MODULE` (optional absolute path to an existing Playwright installation)
-- `SHELL_BROWSER_CHANNEL=chrome` (use installed Chrome instead of Playwright Chromium)
-- `SHELL_QA_DIR` (optional directory for desktop/mobile review screenshots)
+The suite checks the exact nav, five visible Home portals, landmark camera origins, browser history, Escape, aliases, direct loads, all project/book routes, full source-line fidelity for every paper, real figures, PDF responses, Bizzy actions, résumé, source failure/retry, navigation races, natural scrolling, 390px layouts, 320px Home, reduced motion, pause/resume, no-JS links, and browser runtime errors. CNAME and JavaScript syntax are also checked. Visual review covers desktop/mobile Home, Projects, Writing, About, Bizzy, and representative paper/figure layouts. These are browser viewport checks, not physical-device profiling.
 
-The completed desktop/mobile Chrome run passed **225 checks**. Coverage includes normal Back/Forward, Escape, direct item URLs, all internal nav destinations, direct external Bizzy nav and hub links, every hub door, Projects desktop and Writing bookcase scenes, scene/list parity, one-home rules, parent back links, complete Digits and French native HTML paper content with PDF actions, ECG/Metro overview routes, Contact résumé actions, complete About content/headshot/link coverage, sharp current bio copy, no hotspot overlay chrome, object hover/focus behavior, visible island-nav destinations, the green Bizzy hub venue and lit facade, its processed pixel mark, the unclipped About sign and Luke sprite, factual list blurb, standalone About Scene/List content and scroll columns, project/paper mobile scroll columns, unknown/alias routes, rapid navigation, pause/reduced motion, large mobile targets, horizontal overflow, no-JavaScript fallback, and browser runtime errors.
+Latest local Chrome run: **188 checks passed**, including fresh reloads of every route and keyboard Enter/Escape navigation. The Home art pass was reviewed at desktop and 390px mobile sizes. All 21 French PDF pages were visually reviewed and contain text only. The three extracted Digits figures were reviewed at their native resolutions and in the mobile reader.
 
-JavaScript syntax, Git whitespace, unchanged CNAME, and static asset serving are checked separately. Desktop and mobile screenshots are reviewed for the shell and representative worlds/items. These are browser viewport checks, not physical-device performance profiling.
+## Quiet waterfront pass
 
-`CNAME`, DNS, Pages configuration, package dependencies, and `main` remain unchanged. The original résumé and paper files remain byte-for-byte intact.
+Home keeps the name and one role line. Station subtitles, introductory kickers, helper slogans, and duplicate project descriptions are removed throughout the shell; factual About content, paper prose, source metadata, and actions remain. Water now continues beneath the five small timber landings, with pilings, wet reflections, and gentle ripples instead of a full-width promenade. The apartment has a terracotta roof, wraparound veranda, external stairs, bicycle and bougainvillea. Projects has a wide working desk, chair, cables, headphones, lamp, plant, and mooring ropes. Existing pause and reduced-motion controls cover the new water animation.
+
+## Full Home art redraw
+
+All five former geometric Home illustrations have been replaced, not resized: curved green Art Deco venue, seafoam veranda apartment, open boardwalk workstation, crooked walnut bookshelf with brass lamp, and cobalt mailbox garden. Each is an independent transparent WebP with its own silhouette and painted material detail. The scene uses six generated paintings, encoded as WebP (~2.1 MiB total), with code retaining the original sharp Bizzy mark and all animation. No generated branding is used. See `assets/home-art/PROMPTS.md` for the generation prompts and provenance.
+
+Desktop uses varied column widths and depths; mobile keeps two rows with visible station names. Wet-edge masks soften piling bases into continuous water, and reflected image layers move subtly. Pause/reduced-motion stop both CSS lighting/reflections and canvas water movement. Hash routes, 560ms transitions, interior content, native papers, and Pages configuration are unchanged.

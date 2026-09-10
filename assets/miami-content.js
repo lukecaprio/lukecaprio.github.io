@@ -169,7 +169,7 @@ window.MiamiMap = (() => {
       description: "Software Engineer · Miami",
       note: "Pick a place. Stay a while.",
       objects: [
-        object("work", "Projects", "dock", "#/work", [49, 64], [50, 50], {
+        object("work", "Projects", "computer", "#/projects", [49, 64], [50, 50], {
           description: "Projects on the digital desktop.",
         }),
         object(
@@ -181,7 +181,7 @@ window.MiamiMap = (() => {
           [78, 65],
           { description: "Research, essays, and the bayside bookshop." },
         ),
-        object("bizzy", "Bizzy", "bizzy-club", "https://bizzyu.com/", [17, 66], [22, 65], {
+        object("bizzy", "Bizzy", "bizzy-club", "#/bizzy", [17, 66], [22, 65], {
           description: "The green room for Bizzy.",
         }),
         object("about", "About me", "porch", "#/about", [34, 76], [24, 79], {
@@ -300,8 +300,8 @@ window.MiamiMap = (() => {
     },
     about: {
       title: "About",
-      caption: "The Porch",
-      eyebrow: "03 / THE PORCH",
+      caption: "The Apartment",
+      eyebrow: "03 / THE APARTMENT",
       description: "Miami now. Naples roots.",
       note: "Engineering, mathematics, and a little music.",
       objects: [],
