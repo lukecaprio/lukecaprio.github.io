@@ -13,119 +13,131 @@
       href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/miami-hero.css" />
+    <link rel="stylesheet" href="assets/direction-b.css" />
     <script src="assets/miami-content.js" defer></script>
-    <script src="assets/miami-scene.js" defer></script>
-    <script src="assets/miami-shell.js" defer></script>
+    <script src="assets/direction-b-art.js" defer></script>
+    <script src="assets/direction-b-shell.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#world-content">Skip to world content</a>
     <div class="app-shell">
       <header class="shell-header">
         <nav class="island-nav" aria-label="Main navigation">
-          <a class="bay-link" href="#/bay" data-world="bay" data-destination="Bay / Home" aria-label="Home — Bay"
+          <a
+            class="bay-link"
+            href="#/bay"
+            data-world="bay"
+            data-destination="Bay / Home"
+            aria-label="Home — Bay"
             ><span aria-hidden="true">lc✦</span> Home</a
           >
-          <a href="#/about" data-world="about" data-destination="About" aria-label="About">About</a>
-          <a href="#/work" data-world="work" data-destination="Projects" aria-label="Projects">Projects</a>
-          <a href="#/writing" data-world="writing" data-destination="Writing" aria-label="Writing">Writing</a>
-          <a href="https://bizzyu.com/" target="_blank" rel="noopener" data-world="bizzy" data-destination="Bizzy" aria-label="Bizzy (opens bizzyu.com in a new tab)">Bizzy</a>
-          <a href="#/contact" data-world="contact" data-destination="Contact" aria-label="Contact">Contact</a>
+          <a
+            href="#/about"
+            data-world="about"
+            data-destination="About"
+            aria-label="About"
+            >About</a
+          >
+          <a
+            href="#/projects"
+            data-world="projects"
+            data-destination="Projects"
+            aria-label="Projects"
+            >Projects</a
+          >
+          <a
+            href="#/writing"
+            data-world="writing"
+            data-destination="Writing"
+            aria-label="Writing"
+            >Writing</a
+          >
+          <a
+            href="#/bizzy"
+            data-world="bizzy"
+            data-destination="Bizzy"
+            aria-label="Bizzy"
+            >Bizzy</a
+          >
+          <a
+            href="#/contact"
+            data-world="contact"
+            data-destination="Contact"
+            aria-label="Contact"
+            >Contact</a
+          >
         </nav>
         <div class="shell-toolbar">
           <a id="back-to-bay" href="#/bay"
             ><span aria-hidden="true">←</span> Back to bay</a
           >
-          <div
-            id="view-switch"
-            class="view-switch"
-            role="group"
-            aria-label="World view"
-          >
-            <button type="button" data-view="scene" aria-pressed="true">
-              Scene
-            </button>
-            <button type="button" data-view="list" aria-pressed="false">
-              List
-            </button>
-          </div>
+          <button id="motion-toggle" type="button" aria-pressed="false">
+            Pause motion
+          </button>
         </div>
       </header>
-      <main id="scene-stage" class="miami-hero" data-world="bay">
-        <canvas id="miami-scene" aria-hidden="true"></canvas>
-        <div class="hero-shade" aria-hidden="true"></div>
-        <div id="world-content" tabindex="-1">
-          <noscript>
-            <section class="no-script panel">
-              <h1>Luke Caprio</h1>
-              <p>Software Engineer · Miami</p>
-              <p>
-                The world map needs JavaScript. These destinations are always
-                open:
-              </p>
-              <ul>
-                <li>
-                  <a
-                    href="https://github.com/lukecaprio/Deep-Learning-Based-ECG-Signal-Classification"
-                    >ECG classification — GitHub</a
-                  >
-                </li>
-                <li>
-                  <a href="https://github.com/lukecaprio/metrohealth"
-                    >Metro Health — GitHub</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/lukecaprio/Efficient-Digit-Recognition-Using-K-Means-Clustering-and-KNN"
-                    >Digit recognition — GitHub</a
-                  >
-                </li>
-                <li>
-                  <a href="docs/KNNKMEANSFINALPAPER.pdf?v=20250126"
-                    >Digit recognition paper (PDF)</a
-                  >
-                </li>
-                <li>
-                  <a href="papers/Le%20Bourgeois%20gentilhomme.pdf"
-                    >Le faux noble (PDF)</a
-                  >
-                </li>
-                <li>
-                  <a href="papers/La%20ville%20intelligent.pdf"
-                    >La ville intelligente (PDF)</a
-                  >
-                </li>
-                <li><a href="https://bizzyu.com/">Bizzy</a></li>
-                <li>
-                  <a href="assets/LukeCaprioResume2026.pdf">Résumé (PDF)</a>
-                </li>
-                <li><a href="mailto:lukecaprio1@gmail.com">Email Luke</a></li>
-              </ul>
-            </section>
-          </noscript>
+      <main id="scene-stage" class="miami-hero">
+        <div id="scene-layer" data-world="bay">
+          <canvas id="miami-scene" aria-hidden="true"></canvas>
+          <div id="world-content" tabindex="-1">
+            <noscript>
+              <section class="no-script panel">
+                <h1>Luke Caprio</h1>
+                <p>Software Engineer · Miami</p>
+                <p>
+                  The world map needs JavaScript. These destinations are always
+                  open:
+                </p>
+                <ul>
+                  <li>
+                    <a
+                      href="https://github.com/lukecaprio/Deep-Learning-Based-ECG-Signal-Classification"
+                      >ECG classification — GitHub</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://github.com/lukecaprio/metrohealth"
+                      >Metro Health — GitHub</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/lukecaprio/Efficient-Digit-Recognition-Using-K-Means-Clustering-and-KNN"
+                      >Digit recognition — GitHub</a
+                    >
+                  </li>
+                  <li>
+                    <a href="docs/KNNKMEANSFINALPAPER.pdf?v=20250126"
+                      >Digit recognition paper (PDF)</a
+                    >
+                  </li>
+                  <li>
+                    <a href="papers/Le%20Bourgeois%20gentilhomme.pdf"
+                      >Le faux noble (PDF)</a
+                    >
+                  </li>
+                  <li>
+                    <a href="papers/La%20ville%20intelligent.pdf"
+                      >La ville intelligente (PDF)</a
+                    >
+                  </li>
+                  <li><a href="https://bizzyu.com/">Bizzy</a></li>
+                  <li>
+                    <a href="assets/LukeCaprioResume2026.pdf">Résumé (PDF)</a>
+                  </li>
+                  <li><a href="mailto:lukecaprio1@gmail.com">Email Luke</a></li>
+                  <li>
+                    <a href="https://github.com/lukecaprio">GitHub profile</a>
+                  </li>
+                  <li>
+                    <a href="https://linkedin.com/in/lukecaprio">LinkedIn</a>
+                  </li>
+                </ul>
+              </section>
+            </noscript>
+          </div>
         </div>
       </main>
-      <footer class="shell-footer">
-        <span class="place-caption"
-          ><span aria-hidden="true">✦</span>
-          <span id="place-name">Biscayne Bay</span
-          ><small>MIAMI, FLORIDA</small></span
-        >
-        <span id="scene-hint"
-          >Choose a place to explore. <kbd>Esc</kbd> returns to the bay.</span
-        >
-        <button
-          id="motion-toggle"
-          type="button"
-          aria-label="Pause scene animation"
-          aria-pressed="false"
-          hidden
-        >
-          <span aria-hidden="true">Ⅱ</span
-          ><span class="motion-label">Motion</span>
-        </button>
-      </footer>
       <p id="route-status" class="sr-only" role="status" aria-live="polite"></p>
     </div>
   </body>
